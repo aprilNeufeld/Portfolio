@@ -21,7 +21,7 @@ const history = createBrowserHistory({ basename: baseUrl });
 const store = configureStore(history);
 
 export const pageComponents = [Home, Education, Experience, Projects];
-export const paths = ["/portfolio/", "/portfolio/education", "/portfolio/experience", "/portfolio/projects"];
+export const paths = ["/", "/education", "/experience", "/projects"];
 export const pageNames = ["Home", "Education", "Experience", "Projects"];
 
 

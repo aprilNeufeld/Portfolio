@@ -20,7 +20,7 @@ var history = history_1.createBrowserHistory({ basename: baseUrl });
 // Get the application-wide store instance, prepopulating with state from the server where available.
 var store = configureStore_1.default(history);
 exports.pageComponents = [Home_1.default, Education_1.default, Experience_1.default, Projects_1.default];
-exports.paths = ["/portfolio/", "/portfolio/education", "/portfolio/experience", "/portfolio/projects"];
+exports.paths = ["/", "/education", "/experience", "/projects"];
 exports.pageNames = ["Home", "Education", "Experience", "Projects"];
 ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store },
     React.createElement(connected_react_router_1.ConnectedRouter, { history: history },

@@ -60,5 +60,5 @@
 		"deploy": "gh-pages -d build"
 	},
 	"version": "0.1.0",
-	"homepage": "http://trickstercodess.github.io/portfolio"
+	"homepage": "http://trickstercodess.github.io/Portfolio"
 }
