@@ -17,6 +17,8 @@ import { actions } from '../store/actionCreators';
 import { paths, pageNames } from '..';
 import { useStyles } from '../styles';
 import { Parallax } from 'react-parallax';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 
 const Header: React.FC = () => {
 
@@ -37,7 +39,7 @@ const Header: React.FC = () => {
 
 
 	return (
-		<>
+		<Paper className={styles.headerPaper}>
 			<Parallax bgImage={require("../images/background.png")} blur={1} strength={-200}>
 				<ElevationScroll>
 					<AppBar elevation={0} color="transparent" className="header-bar">
@@ -76,8 +78,8 @@ const Header: React.FC = () => {
 				<Toolbar />
 				<HeaderContent />
 			</Parallax>
-		</>
-	)
+		</Paper>
+	);
 
 };
 

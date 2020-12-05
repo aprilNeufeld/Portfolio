@@ -1,4 +1,11 @@
 /* Provide sufficient contrast against white background */
+
+#root {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
 a {
 	color: #755b96;
 }
@@ -91,7 +98,6 @@ button:focus {
 		height: 200px;
 		border-radius: 100px;
 	}
-
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -114,12 +120,10 @@ button:focus {
 
 /* Large devices (laptops/desktops, 1280px and up) */
 @media only screen and (min-width: 1280px) {
-	
 }
 
 /* Extra large devices (large laptops and desktops, 1920px and up) */
 @media only screen and (min-width: 1920px) {
-	
 }
 
 .MuiChip-outlinedSecondary {

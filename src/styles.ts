@@ -24,8 +24,24 @@ export const theme = responsiveFontSizes(createMuiTheme({
 
 export const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
-		contentContainer: {
-			paddingTop: theme.spacing(6),
+		bodyContainer: {
+			marginTop: -10,
+			marginBottom: -10,
+			flexGrow: 1,
+			display: "flex!important",
+			zIndex: 1,
+			minHeight: 500,
+		},
+		bodyPaper: {
+			padding: theme.spacing(6),
+			flexGrow: 1,
+			flexBasis: "auto",
+		},
+		headerPaper: {
+			zIndex: 2,
+		},
+		footerPaper: {
+			zIndex: 2,
 		},
 		menuButton: {
 			marginRight: theme.spacing(2),
@@ -107,6 +123,13 @@ export const useStyles = makeStyles((theme: Theme) =>
 
 			paddingTop: theme.spacing(4),
 			paddingBottom: theme.spacing(4),
+		},
+		footerParallax: {
+			flexGrow: 0,
+			flexShrink: 1,
+		},
+		footer: {
+			padding: theme.spacing(3, 2),
 		},
 	}),
 );
