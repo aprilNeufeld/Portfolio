@@ -33,9 +33,19 @@ export const useStyles = makeStyles((theme: Theme) =>
 			minHeight: 500,
 		},
 		bodyPaper: {
-			padding: theme.spacing(6),
 			flexGrow: 1,
 			flexBasis: "auto",
+			[theme.breakpoints.down('sm')]: {
+				boxShadow: "none",
+			},
+		},
+		secondBodyContainer: {
+			paddingTop: theme.spacing(6),
+			paddingBottom: theme.spacing(6),
+			[theme.breakpoints.up('md')]: {
+				paddingRight: "48px!important",
+				paddingLeft: "48px!important",
+			}
 		},
 		headerPaper: {
 			zIndex: 2,

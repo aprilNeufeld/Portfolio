@@ -32,10 +32,11 @@ var App = function () {
     return (React.createElement(React.Fragment, null,
         React.createElement(styles_1.ThemeProvider, { theme: styles_2.theme },
             React.createElement(Header_1.default, null),
-            React.createElement(Container_1.default, { maxWidth: "md", className: styles.bodyContainer },
-                React.createElement(Paper_1.default, { elevation: 2, className: styles.bodyPaper }, _1.paths.map(function (path, index) {
-                    return React.createElement(react_router_dom_2.Route, { exact: true, path: path, key: path, component: _1.pageComponents[index] });
-                }))),
+            React.createElement(Container_1.default, { maxWidth: "lg", className: styles.bodyContainer },
+                React.createElement(Paper_1.default, { elevation: 2, className: styles.bodyPaper },
+                    React.createElement(Container_1.default, { maxWidth: "md", className: styles.secondBodyContainer }, _1.paths.map(function (path, index) {
+                        return React.createElement(react_router_dom_2.Route, { exact: true, path: path, key: path, component: _1.pageComponents[index] });
+                    })))),
             React.createElement(Footer_1.default, null))));
 };
 exports.default = App;

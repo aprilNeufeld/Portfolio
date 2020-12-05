@@ -13,7 +13,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { theme, useStyles } from './styles';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-
+import Box from '@material-ui/core/Box';
 
 const App: React.FC = () => {
 
@@ -37,11 +37,13 @@ const App: React.FC = () => {
 		<React.Fragment>
 			<ThemeProvider theme={theme}>
 				<Header />
-				<Container maxWidth="md" className={styles.bodyContainer}>
+				<Container maxWidth="lg" className={styles.bodyContainer}>
 					<Paper elevation={2} className={styles.bodyPaper} >
-						{paths.map((path: string, index: number) =>
+						<Container maxWidth="md" className={styles.secondBodyContainer}>
+							{paths.map((path: string, index: number) =>
 							<Route exact path={path} key={path} component={pageComponents[index]} />
-						)}
+							)}
+						</Container>
 					</Paper>
 				</Container>
 				<Footer />
