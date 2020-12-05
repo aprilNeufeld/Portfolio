@@ -1,0 +1,128 @@
+/* Provide sufficient contrast against white background */
+a {
+	color: #755b96;
+}
+
+	a:hover {
+		color: #a588c7;
+		text-decoration: none;
+	}
+
+.header-link {
+	color: #212529 !important;
+}
+
+	.header-link:hover {
+		color: #212529 !important;
+	}
+
+code {
+	color: #E01A76;
+}
+
+.btn-primary {
+	color: #fff;
+	background-color: #1b6ec2;
+	border-color: #1861ac;
+}
+
+li {
+	list-style: none;
+}
+
+.navbar-expand-sm .navbar-nav .nav-link {
+	padding-right: 1rem;
+	padding-left: 1rem;
+}
+
+.btn:focus {
+	outline: none !important;
+}
+
+button:focus {
+	outline: none !important;
+}
+
+.MuiTabs-flexContainerVertical {
+	align-items: center;
+}
+
+.MuiToolbar-root {
+	justify-content: center;
+}
+
+.MuiPaper-elevation4 {
+	background-color: white !important;
+}
+
+.MuiPaper-root {
+	transition: box-shadow 700ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 500ms cubic-bezier(0.4, 0, 0.2, 1) 0ms !important;
+	transition-property: box-shadow, background-color;
+	transition-duration: 700ms, 500ms;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-delay: 0ms;
+}
+
+.MuiPaper-elevation0 .MuiTab-textColorInherit {
+	color: white !important;
+	transition: color 600ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+	transition-property: color;
+	transition-duration: 600ms;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-delay: 0ms;
+}
+
+.MuiPaper-elevation0 .PrivateTabIndicator-colorSecondary-7 {
+	background-color: white !important;
+}
+
+.profile-picture {
+	border: 5px solid white;
+}
+
+.profile-picture-container {
+	background-color: #ffffff4D;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+	.profile-picture, .profile-picture-container {
+		width: 200px;
+		height: 200px;
+		border-radius: 100px;
+	}
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+	.profile-picture, .profile-picture-container {
+		width: 300px;
+		height: 300px;
+		border-radius: 150px;
+	}
+}
+
+/* Medium devices (landscape tablets, 960px and up) */
+@media only screen and (min-width: 960px) {
+	.profile-picture, .profile-picture-container {
+		width: 300px;
+		height: 300px;
+		border-radius: 150px;
+	}
+}
+
+/* Large devices (laptops/desktops, 1280px and up) */
+@media only screen and (min-width: 1280px) {
+	
+}
+
+/* Extra large devices (large laptops and desktops, 1920px and up) */
+@media only screen and (min-width: 1920px) {
+	
+}
+
+.MuiChip-outlinedSecondary {
+	color: #1ab9c5 !important;
+	border-color: #19b9c3 !important;
+}
