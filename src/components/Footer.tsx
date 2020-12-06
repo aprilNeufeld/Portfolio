@@ -15,7 +15,10 @@ const Footer: React.FC = () => {
 			<Parallax bgImage={require("../images/background.png")} blur={1} strength={-100} className={styles.footerParallax}>
 				<Container maxWidth="md" className={styles.footer}>
 					<Typography variant="body2" style={{ color: "#ffffff" }}>
-						Last Updated {moment().format('MMMM Do YYYY, h:mm:ss a')}
+						{/*	Eventually I'll have the date of each deploy in a database
+							and show it automatically below, but for now I'll update
+							it manually {moment().format('MMMM Do YYYY, h:mm:ss a')} */}
+						Last Updated December 06 2020, 11:57 AM
 					</Typography>
 				</Container>
 			</Parallax>
