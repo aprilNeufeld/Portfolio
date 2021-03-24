@@ -6,22 +6,9 @@
 	min-height: 100vh;
 }
 
-a {
-	color: #755b96;
+a:hover {
+	color: #a588c7;
 }
-
-	a:hover {
-		color: #a588c7;
-		text-decoration: none;
-	}
-
-.header-link {
-	color: #212529 !important;
-}
-
-	.header-link:hover {
-		color: #212529 !important;
-	}
 
 code {
 	color: #E01A76;

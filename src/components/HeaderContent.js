@@ -65,7 +65,7 @@ var HeaderContent = function () {
             React.createElement("img", { src: user.basics.picture, className: classes.profilePicture })),
         React.createElement(core_1.Typography, { variant: "h2" }, user.basics.name),
         React.createElement(core_1.Typography, { variant: "h5", gutterBottom: true },
-            React.createElement(core_1.Link, { href: "https://gitconnected.com/" + user.basics.username, color: "secondary", className: "header-link" },
+            React.createElement(core_1.Link, { href: "https://gitconnected.com/" + user.basics.username },
                 "@",
                 user.basics.username),
             " | she/her"),

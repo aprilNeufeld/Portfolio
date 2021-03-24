@@ -51,7 +51,7 @@ const App: React.FC<Props> = (props) => {
 
 	useEffect(() => {
 		if (!loaded) {
-			dispatch(actions.requestUser());
+			dispatch(actions.fetchUser());
 		}
 	}, [loaded, dispatch]);
 

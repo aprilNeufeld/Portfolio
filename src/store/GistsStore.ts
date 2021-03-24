@@ -1,27 +1,27 @@
 ﻿import { Action, Reducer } from 'redux';
 import { KnownAction } from './actionCreators';
 
-export interface UserState {
-	user: any;
+export interface GistsState {
+	gists: any;
 	loaded: boolean;
 }
 
-export const unloadedUser: UserState = {
-	user: "",
+export const unloadedGists: GistsState = {
+	gists: "",
 	loaded: false
 };
 
-export const reducer: Reducer<UserState> = (state: UserState | undefined, incomingAction: Action): UserState => {
+export const reducer: Reducer<GistsState> = (state: GistsState | undefined, incomingAction: Action): GistsState => {
 	if (state === undefined) {
-		return unloadedUser;
+		return unloadedGists;
 	}
 
 	const action = incomingAction as KnownAction;
 
 	switch (action.type) {
-		case 'FETCH_USER':
+		case 'FETCH_GISTS':
 			return {
-				user: action.user,
+				gists: action.gists,
 				loaded: true
 			};
 		default:

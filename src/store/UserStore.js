@@ -11,7 +11,7 @@ var reducer = function (state, incomingAction) {
     }
     var action = incomingAction;
     switch (action.type) {
-        case 'RECEIVE_USER':
+        case 'FETCH_USER':
             return {
                 user: action.user,
                 loaded: true

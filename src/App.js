@@ -47,7 +47,7 @@ var App = function (props) {
     var classes = useStyles(core_1.useTheme());
     react_1.useEffect(function () {
         if (!loaded) {
-            dispatch(actionCreators_1.actions.requestUser());
+            dispatch(actionCreators_1.actions.fetchUser());
         }
     }, [loaded, dispatch]);
     return (React.createElement(React.Fragment, null, loaded &&

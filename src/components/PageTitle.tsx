@@ -26,7 +26,7 @@ const PageTitle: React.FC<Props> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Typography variant="h2"
+			<Typography variant="h3"
 				gutterBottom
 				className={classes.title}
 			>

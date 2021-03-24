@@ -4,6 +4,7 @@ import {
 	Typography,
 	Box,
 	Chip,
+	Link,
 	makeStyles,
 	Theme,
 	createStyles,
@@ -33,14 +34,15 @@ const Projects: React.FC = () => {
 
 	return (
 		<React.Fragment>
-			<PageTitle text='Projects'/>
-
+			<PageTitle text='Projects' />
 			{user.projects.map((project: any, index: number) => (
 				<Box key={index} >
 					<Typography variant="h5" gutterBottom>
-						{project.name}
+						<Link href={project.githubUrl}>
+							{project.name}
+						</Link>
 					</Typography>
-					<Typography variant="h6" >
+					<Typography variant="body1" >
 						{project.summary}
 					</Typography>
 					<Box className={classes.chipsContainerLeft} >

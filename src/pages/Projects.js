@@ -31,8 +31,9 @@ var Projects = function () {
     return (React.createElement(React.Fragment, null,
         React.createElement(PageTitle_1.default, { text: 'Projects' }),
         user.projects.map(function (project, index) { return (React.createElement(core_1.Box, { key: index },
-            React.createElement(core_1.Typography, { variant: "h5", gutterBottom: true }, project.name),
-            React.createElement(core_1.Typography, { variant: "h6" }, project.summary),
+            React.createElement(core_1.Typography, { variant: "h5", gutterBottom: true },
+                React.createElement(core_1.Link, { href: project.githubUrl }, project.name)),
+            React.createElement(core_1.Typography, { variant: "body1" }, project.summary),
             React.createElement(core_1.Box, { className: classes.chipsContainerLeft }, __spreadArrays(project.languages, project.libraries).map(function (item, index) { return (React.createElement(core_1.Chip, { key: index, color: "secondary", label: item, variant: "outlined" })); })),
             React.createElement(DividerWithSpacing_1.default, null))); })));
 };
