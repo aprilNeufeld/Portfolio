@@ -2,40 +2,61 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var actionCreators_1 = require("./store/actionCreators");
-var react_router_dom_1 = require("react-router-dom");
 require("./custom.css");
 var react_1 = require("react");
 var react_redux_1 = require("react-redux");
 var store_1 = require("./store");
-var react_router_dom_2 = require("react-router-dom");
+var react_router_dom_1 = require("react-router-dom");
 var Header_1 = require("./components/Header");
 var Footer_1 = require("./components/Footer");
-var _1 = require(".");
-var styles_1 = require("@material-ui/core/styles");
-var styles_2 = require("./styles");
-var Container_1 = require("@material-ui/core/Container");
-var Paper_1 = require("@material-ui/core/Paper");
-var App = function () {
-    var isLoading = store_1.useApplicationState(function (state) { return state.user.isLoading; });
+var core_1 = require("@material-ui/core");
+var useStyles = core_1.makeStyles(function (theme) {
+    var _a, _b;
+    return core_1.createStyles({
+        root: {
+            marginTop: -10,
+            marginBottom: -10,
+            flexGrow: 1,
+            display: 'flex',
+            zIndex: 1,
+            minHeight: 500,
+        },
+        paper: (_a = {
+                flexGrow: 1,
+                flexBasis: "auto"
+            },
+            _a[theme.breakpoints.down('sm')] = {
+                boxShadow: "none",
+            },
+            _a),
+        content: (_b = {
+                paddingTop: theme.spacing(6),
+                paddingBottom: theme.spacing(6)
+            },
+            _b[theme.breakpoints.up('md')] = {
+                paddingRight: "48px!important",
+                paddingLeft: "48px!important",
+            },
+            _b),
+    });
+});
+var App = function (props) {
+    var pages = props.pages;
+    var loaded = store_1.useApplicationState(function (state) { return state.user.loaded; });
     var dispatch = react_redux_1.useDispatch();
-    var history = react_router_dom_1.useHistory();
-    var styles = styles_2.useStyles();
+    var classes = useStyles(core_1.useTheme());
     react_1.useEffect(function () {
-        dispatch(actionCreators_1.actions.requestUser());
-        dispatch(actionCreators_1.actions.setTabValue(_1.paths.indexOf(history.location.pathname)));
-    }, 
-    // eslint-disable-next-line
-    []);
-    if (isLoading) {
-        return React.createElement("div", null);
-    }
-    return (React.createElement(React.Fragment, null,
-        React.createElement(styles_1.ThemeProvider, { theme: styles_2.theme },
-            React.createElement(Header_1.default, null),
-            React.createElement(Container_1.default, { maxWidth: "lg", className: styles.bodyContainer },
-                React.createElement(Paper_1.default, { elevation: 2, className: styles.bodyPaper },
-                    React.createElement(Container_1.default, { maxWidth: "md", className: styles.secondBodyContainer }, _1.paths.map(function (path, index) {
-                        return React.createElement(react_router_dom_2.Route, { exact: true, path: path, key: path, component: _1.pageComponents[index] });
+        if (!loaded) {
+            dispatch(actionCreators_1.actions.requestUser());
+        }
+    }, [loaded, dispatch]);
+    return (React.createElement(React.Fragment, null, loaded &&
+        React.createElement(React.Fragment, null,
+            React.createElement(Header_1.default, { pages: pages }),
+            React.createElement(core_1.Container, { maxWidth: "lg", className: classes.root },
+                React.createElement(core_1.Paper, { elevation: 2, className: classes.paper },
+                    React.createElement(core_1.Container, { maxWidth: "md", className: classes.content }, pages.map(function (page) {
+                        return React.createElement(react_router_dom_1.Route, { exact: true, path: page.path, key: page.path, component: page.component });
                     })))),
             React.createElement(Footer_1.default, null))));
 };

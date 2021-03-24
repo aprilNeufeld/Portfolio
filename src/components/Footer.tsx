@@ -1,24 +1,40 @@
 ﻿import * as React from 'react';
-import Typography from '@material-ui/core/Typography';
-import { useStyles } from '../styles';
 import { Parallax } from 'react-parallax';
-import moment from 'moment';
-import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
+import {
+	Typography,
+	Container,
+	Paper,
+	makeStyles,
+	Theme,
+	createStyles,
+	useTheme
+} from '@material-ui/core';
+
+const useStyles = makeStyles((theme: Theme) => {
+	return createStyles({
+		root: {
+			zIndex: 2,
+		},
+		parallax: {
+			flexGrow: 0,
+			flexShrink: 1,
+		},
+		content: {
+			padding: theme.spacing(3, 2),
+		},
+	});
+});
 
 const Footer: React.FC = () => {
 
-	const styles = useStyles();
+	const classes = useStyles(useTheme());
 
 	return (
-		<Paper className={styles.footerPaper}>
-			<Parallax bgImage={require("../images/background.png")} blur={1} strength={-100} className={styles.footerParallax}>
-				<Container maxWidth="md" className={styles.footer}>
+		<Paper className={classes.root}>
+			<Parallax bgImage={require("../images/background.png")} blur={1} strength={-100} className={classes.parallax}>
+				<Container maxWidth="md" className={classes.content}>
 					<Typography variant="body2" style={{ color: "#ffffff" }}>
-						{/*	Eventually I'll have the date of each deploy in a database
-							and show it automatically below, but for now I'll update
-							it manually {moment().format('MMMM Do YYYY, h:mm:ss a')} */}
-						Last Updated December 06 2020, 11:57 AM
+						© 2021 TricksterCodess
 					</Typography>
 				</Container>
 			</Parallax>

@@ -1,24 +1,19 @@
 import * as React from 'react';
 import { useApplicationState } from '../store';
-import { useStyles } from '../styles'
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import {
+	Typography,
+	Box
+} from '@material-ui/core';
+import PageTitle from '../components/PageTitle';
 
-interface Props {
-
-}
-
-const Home: React.FC<Props> = () => {
+const Home: React.FC = () => {
 
 	const user = useApplicationState(state => state.user.user);
-	const styles = useStyles();
 
 	return (
 		<React.Fragment>
 			<Box>
-				<Typography variant="h2" gutterBottom className={styles.pageTitles}>
-					Hi, I'm {user.basics.name}.
-				</Typography>
+				<PageTitle text="Hi, I'm April." />
 				<Typography variant="h6">
 					{user.basics.summary}
 				</Typography>

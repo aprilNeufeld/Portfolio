@@ -1,25 +1,39 @@
 ﻿import * as React from 'react';
 import { useApplicationState } from '../store';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import { useStyles } from '../styles';
-import Divider from '@material-ui/core/Divider';
-import Chip from '@material-ui/core/Chip';
+import {
+	Typography,
+	Box,
+	Chip,
+	makeStyles,
+	Theme,
+	createStyles,
+	useTheme
+} from '@material-ui/core';
+import PageTitle from '../components/PageTitle';
+import DividerWithSpacing from '../components/DividerWithSpacing';
 
-interface Props {
+const useStyles = makeStyles((theme: Theme) => {
+	return createStyles({
+		chipsContainerLeft: {
+			paddingTop: theme.spacing(2),
+			display: 'flex',
+			justifyContent: 'left',
+			flexWrap: 'wrap',
+			'& > *': {
+				margin: theme.spacing(0.5),
+			},
+		},
+	});
+});
 
-}
-
-const Projects: React.FC<Props> = () => {
+const Projects: React.FC = () => {
 
 	const user = useApplicationState(state => state.user.user);
-	const styles = useStyles();
+	const classes = useStyles(useTheme());
 
 	return (
 		<React.Fragment>
-			<Typography variant="h2" gutterBottom className={styles.pageTitles}>
-				Projects
-			</Typography>
+			<PageTitle text='Projects'/>
 
 			{user.projects.map((project: any, index: number) => (
 				<Box key={index} >
@@ -29,7 +43,7 @@ const Projects: React.FC<Props> = () => {
 					<Typography variant="h6" >
 						{project.summary}
 					</Typography>
-					<Box className={styles.chipsContainerLeft} >
+					<Box className={classes.chipsContainerLeft} >
 						{[...project.languages, ...project.libraries].map((item: any, index: number) => (
 							<Chip
 								key={index}
@@ -39,9 +53,8 @@ const Projects: React.FC<Props> = () => {
 							/>
 						))}
 					</Box>
-					<Box className={styles.dividerSpacingBox}>
-						<Divider />
-					</Box>
+
+					<DividerWithSpacing />
 				</Box>
 			))}
 

@@ -3,12 +3,12 @@ import { KnownAction } from './actionCreators';
 
 export interface UserState {
 	user: any;
-	isLoading: boolean;
+	loaded: boolean;
 }
 
 export const unloadedUser: UserState = {
 	user: "",
-	isLoading: true
+	loaded: false
 };
 
 export const reducer: Reducer<UserState> = (state: UserState | undefined, incomingAction: Action): UserState => {
@@ -19,15 +19,10 @@ export const reducer: Reducer<UserState> = (state: UserState | undefined, incomi
 	const action = incomingAction as KnownAction;
 
 	switch (action.type) {
-		case 'REQUEST_USER':
-			return {
-				user: state.user,
-				isLoading: true
-			};
 		case 'RECEIVE_USER':
 			return {
 				user: action.user,
-				isLoading: false
+				loaded: true
 			};
 		default:
 			return state;

@@ -1,61 +1,83 @@
 ﻿import * as React from 'react';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import { useHistory } from 'react-router-dom';
 import '../custom.css'
-import { useState } from 'react';
-import { useDispatch } from 'react-redux'
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Drawer from '@material-ui/core/Drawer';
 import HeaderContent from './HeaderContent';
 import ElevationScroll from './ElevationScroll';
-import { useApplicationState } from '../store';
-import { actions } from '../store/actionCreators';
-import { paths, pageNames } from '..';
-import { useStyles } from '../styles';
 import { Parallax } from 'react-parallax';
-import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
+import {
+	Tabs,
+	Tab,
+	AppBar,
+	Toolbar,
+	IconButton,
+	Drawer,
+	Paper,
+	makeStyles,
+	Theme,
+	createStyles,
+	useTheme
+} from '@material-ui/core';
+import { Page } from '../shared/types';
 
-const Header: React.FC = () => {
+const useStyles = makeStyles((theme: Theme) => {
+	return createStyles({
+		root: {
+			zIndex: 2,
+		},
+		tabsLayout: {
+			[theme.breakpoints.down('sm')]: {
+				visibility: "hidden",
+			},
+		},
+		menuButton: {
+			marginRight: theme.spacing(2),
+			[theme.breakpoints.up('md')]: {
+				display: "none",
+			},
+		},
+	});
+});
 
-	const [drawerOpen, setDrawerOpen] = useState(false);
-	const tabValue = useApplicationState(state => state.values.tabValue);
-	const dispatch = useDispatch();
+interface Props {
+	pages: Page[];
+}
+
+const Header: React.FC<Props> = (props) => {
+
+	const { pages } = props;
+	const [drawerOpen, setDrawerOpen] = React.useState(false);
 	const history = useHistory();
-	const styles = useStyles();
+	const tabValue = React.useRef(pages.findIndex(page => history.location.pathname === page.path));
+	const classes = useStyles(useTheme());
 
 	const handleMenuSelection = (event: React.ChangeEvent<{}>, newValue: number) => {
-		dispatch(actions.setTabValue(newValue));
-		history.push(paths[newValue]);
+		tabValue.current = newValue;
+		history.push(pages[newValue].path);
 	};
 
 	const handleDrawerToggle = () => {
 		setDrawerOpen(!drawerOpen);
 	};
 
-
 	return (
-		<Paper className={styles.headerPaper}>
+		<Paper className={classes.root}>
 			<Parallax bgImage={require("../images/background.png")} blur={1} strength={-200}>
 				<ElevationScroll>
 					<AppBar elevation={0} color="transparent" className="header-bar">
 						<Toolbar>
 							<Tabs
-								value={tabValue}
+								value={tabValue.current}
 								onChange={handleMenuSelection}
-								className={styles.horizontalTabsLayout}
+								className={classes.tabsLayout}
 							>
-								{pageNames.map((page: string) =>
-									<Tab key={page} label={page} />
+								{pages.map((page: Page) =>
+									<Tab key={page.title} label={page.title} />
 								)};
 								</Tabs>
 							<IconButton
 								edge="end"
-								className={styles.menuButton}
+								className={classes.menuButton}
 								color="default"
 								onClick={handleDrawerToggle}
 							>
@@ -63,12 +85,12 @@ const Header: React.FC = () => {
 							</IconButton>
 							<Drawer anchor="top" open={drawerOpen} onClose={handleDrawerToggle}>
 								<Tabs
-									value={tabValue}
+									value={tabValue.current}
 									onChange={handleMenuSelection}
 									orientation="vertical"
 								>
-									{pageNames.map((page: string) =>
-										<Tab key={page} label={page} onClick={handleDrawerToggle} />
+									{pages.map((page: Page) =>
+										<Tab key={page.title} label={page.title} onClick={handleDrawerToggle} />
 									)};
 									</Tabs>
 							</Drawer>
