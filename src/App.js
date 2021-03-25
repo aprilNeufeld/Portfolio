@@ -42,15 +42,19 @@ var useStyles = core_1.makeStyles(function (theme) {
 });
 var App = function (props) {
     var pages = props.pages;
-    var loaded = store_1.useApplicationState(function (state) { return state.user.loaded; });
+    var userLoaded = store_1.useApplicationState(function (state) { return state.user.loaded; });
+    var gistsLoaded = store_1.useApplicationState(function (state) { return state.gists.loaded; });
     var dispatch = react_redux_1.useDispatch();
     var classes = useStyles(core_1.useTheme());
     react_1.useEffect(function () {
-        if (!loaded) {
+        if (!userLoaded) {
             dispatch(actionCreators_1.actions.fetchUser());
         }
-    }, [loaded, dispatch]);
-    return (React.createElement(React.Fragment, null, loaded &&
+        if (!gistsLoaded) {
+            dispatch(actionCreators_1.actions.fetchGists());
+        }
+    }, [userLoaded, gistsLoaded, dispatch]);
+    return (React.createElement(React.Fragment, null, userLoaded &&
         React.createElement(React.Fragment, null,
             React.createElement(Header_1.default, { pages: pages }),
             React.createElement(core_1.Container, { maxWidth: "lg", className: classes.root },

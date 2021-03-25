@@ -8,6 +8,7 @@
 	"dependencies": {
 		"@material-ui/core": "^4.11.3",
 		"@material-ui/icons": "^4.11.2",
+		"@octokit/request": "^5.4.14",
 		"bootstrap": "^4.3.1",
 		"connected-react-router": "6.5.2",
 		"history": "4.10.1",

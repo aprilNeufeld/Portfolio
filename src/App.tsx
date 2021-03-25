@@ -45,19 +45,23 @@ interface Props {
 const App: React.FC<Props> = (props) => {
 
 	const { pages } = props;
-	const loaded = useApplicationState(state => state.user.loaded);
+	const userLoaded = useApplicationState(state => state.user.loaded);
+	const gistsLoaded = useApplicationState(state => state.gists.loaded);
 	const dispatch = useDispatch();
 	const classes = useStyles(useTheme());
 
 	useEffect(() => {
-		if (!loaded) {
+		if (!userLoaded) {
 			dispatch(actions.fetchUser());
 		}
-	}, [loaded, dispatch]);
+		if (!gistsLoaded) {
+			dispatch(actions.fetchGists());
+		}
+	}, [userLoaded, gistsLoaded, dispatch]);
 
 	return (
 		<React.Fragment>
-			{ loaded &&
+			{ userLoaded &&
 				<React.Fragment>
 					<Header pages={pages} />
 					<Container maxWidth="lg" className={classes.root}>

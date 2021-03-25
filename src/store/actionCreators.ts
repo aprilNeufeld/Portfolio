@@ -1,4 +1,5 @@
-﻿import { AppThunkAction } from './';
+﻿import { request } from '@octokit/request';
+import { AppThunkAction } from './';
 
 // -----------------
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
@@ -44,12 +45,14 @@ export const actions = {
 	fetchGists: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
 		// Only load data if it's something we don't already have (and are not already loading)
 		const appState = getState();
-
-		if (appState && appState.user.loaded === false) {
-			fetch('https://gitconnected.com/v1/portfolio/tricksterCodess')
-				.then(response => response.json() as Promise<any>)
-				.then(data => {
-					dispatch({ type: 'FETCH_GISTS', user: data });
+		console.log("in fetchGists()");
+		if (appState && appState.gists.loaded === false) {
+			request({
+				method: "GET",
+				url: "/users/tricksterCodess/gists",
+				username: "tricksterCodess"
+			}).then(response => {
+					dispatch({ type: 'FETCH_GISTS', gists: response.data });
 				});
 		}
 	},

@@ -27,6 +27,7 @@ var useStyles = core_1.makeStyles(function (theme) {
 });
 var Projects = function () {
     var user = store_1.useApplicationState(function (state) { return state.user.user; });
+    var gists = store_1.useApplicationState(function (state) { return state.gists.gists; });
     var classes = useStyles(core_1.useTheme());
     return (React.createElement(React.Fragment, null,
         React.createElement(PageTitle_1.default, { text: 'Projects' }),

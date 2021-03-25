@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) => {
 const Projects: React.FC = () => {
 
 	const user = useApplicationState(state => state.user.user);
+	const gists = useApplicationState(state => state.gists.gists);
 	const classes = useStyles(useTheme());
 
 	return (
