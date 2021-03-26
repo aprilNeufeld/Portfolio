@@ -1,7 +1,11 @@
 ﻿import * as React from 'react';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
-export default function ElevationScroll(props: { children: React.ReactElement }) {
+interface Props {
+	children: React.ReactElement;
+}
+
+const ElevationScroll: React.FC<Props> = (props) => {
 	const { children } = props;
 
 	const trigger = useScrollTrigger({
@@ -13,3 +17,5 @@ export default function ElevationScroll(props: { children: React.ReactElement })
 		elevation: trigger ? 4 : 0,
 	});
 }
+
+export default ElevationScroll;

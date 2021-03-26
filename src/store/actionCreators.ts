@@ -45,7 +45,6 @@ export const actions = {
 	fetchGists: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
 		// Only load data if it's something we don't already have (and are not already loading)
 		const appState = getState();
-		console.log("in fetchGists()");
 		if (appState && appState.gists.loaded === false) {
 			request({
 				method: "GET",

@@ -7,8 +7,16 @@ import { useApplicationState } from './store';
 import { Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { Container, Paper, makeStyles, Theme, createStyles, useTheme } from '@material-ui/core';
+import {
+	Container,
+	Paper,
+	makeStyles,
+	Theme,
+	createStyles,
+	useTheme
+} from '@material-ui/core';
 import { Page } from './shared/types';
+import HeaderContent from './components/HeaderContent';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -63,12 +71,19 @@ const App: React.FC<Props> = (props) => {
 		<React.Fragment>
 			{ userLoaded &&
 				<React.Fragment>
-					<Header pages={pages} />
+					<Header pages={pages}>
+						<HeaderContent />
+					</Header>
 					<Container maxWidth="lg" className={classes.root}>
 						<Paper elevation={2} className={classes.paper} >
 							<Container maxWidth="md" className={classes.content}>
 								{pages.map(page =>
-									<Route exact path={page.path} key={page.path} component={page.component} />
+									<Route
+										exact
+										path={page.path}
+										key={page.path}
+										component={page.component} 
+										/>
 								)}
 							</Container>
 						</Paper>
