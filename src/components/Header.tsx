@@ -18,7 +18,6 @@ import {
 	useTheme
 } from '@material-ui/core';
 import { Page } from '../shared/types';
-import HeaderContent from './HeaderContent';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -52,7 +51,9 @@ interface Props {
  * While at the top of the page, the nav menu has a transparent background
  * and is overlaid atop the content.
  * 
- * When the user scrolls down, the nav menu elevates above the 
+ * When the user scrolls down, the nav menu elevates above the rest of the 
+ * header and the page content, and it transitions to an opaque background
+ * and contrasting foreground.
  * 
  * @param props Holds an array of type Page. Each Tab will correspond to 
  * a Page.
@@ -133,7 +134,7 @@ const Header: React.FC<Props> = (props) => {
 					</AppBar>
 				</ElevationScroll>
 				<Toolbar />
-				<HeaderContent />
+				{children}
 			</Parallax>
 		</Paper>
 	);

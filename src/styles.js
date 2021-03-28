@@ -1,4 +1,3 @@
-"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.theme = void 0;
 var styles_1 = require("@material-ui/core/styles");
