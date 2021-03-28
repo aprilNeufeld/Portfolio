@@ -1,9 +1,10 @@
 ﻿import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import '../custom.css'
+import clsx from 'clsx';
 import MenuIcon from '@material-ui/icons/Menu';
 import ElevationScroll from './ElevationScroll';
 import { Parallax } from 'react-parallax';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import {
 	Tabs,
 	Tab,
@@ -18,6 +19,7 @@ import {
 	useTheme
 } from '@material-ui/core';
 import { Page } from '../shared/types';
+
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -35,13 +37,33 @@ const useStyles = makeStyles((theme: Theme) => {
 				display: "none",
 			},
 		},
+		appBar: {
+			backgroundColor: 'transparent',
+			zIndex: 0,
+			boxShadow: 'none',
+			transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow'], {
+				easing: theme.transitions.easing.sharp,
+				duration: theme.transitions.duration.leavingScreen,
+			}),
+		},
+		appBarElevated: {
+			backgroundColor: 'white',
+			zIndex: 4,
+			boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%),'
+				+ '0px 4px 5px 0px rgb(0 0 0 / 14%),'
+				+ '0px 1px 10px 0px rgb(0 0 0 / 12%)',
+			transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow'], {
+				easing: theme.transitions.easing.easeOut,
+				duration: theme.transitions.duration.enteringScreen,
+			}),
+		},
 	});
 });
 
 interface Props {
 	children?: React.ReactNode;
 	pages: Page[];
-}	
+}
 
 /**
  * A header component that holds a navigation menu above arbitrary
@@ -77,6 +99,11 @@ const Header: React.FC<Props> = (props) => {
 		setDrawerOpen(!drawerOpen);
 	};
 
+	const trigger = useScrollTrigger({
+		disableHysteresis: true,
+		threshold: 0,
+	});
+
 	return (
 		<Paper className={classes.root}>
 			<Parallax
@@ -84,55 +111,55 @@ const Header: React.FC<Props> = (props) => {
 				blur={1}
 				strength={-200}
 			>
-				<ElevationScroll>
-					<AppBar
-						elevation={0}
-						color="transparent"
-						className="header-bar"
-					>
-						<Toolbar>
+				<AppBar
+					className={clsx(classes.appBar, {
+						[classes.appBarElevated]: trigger
+					})}
+					elevation={0}
+					color="transparent"
+				>
+					<Toolbar>
+						<Tabs
+							value={tabValue.current}
+							onChange={handleMenuSelection}
+							className={classes.tabsLayout}
+						>
+							{pages.map((page: Page) =>
+								<Tab
+									key={page.title}
+									label={page.title}
+								/>
+							)};
+								</Tabs>
+						<IconButton
+							edge="end"
+							className={classes.menuButton}
+							color="default"
+							onClick={handleDrawerToggle}
+						>
+							<MenuIcon />
+						</IconButton>
+						<Drawer
+							anchor="top"
+							open={drawerOpen}
+							onClose={handleDrawerToggle}
+						>
 							<Tabs
 								value={tabValue.current}
 								onChange={handleMenuSelection}
-								className={classes.tabsLayout}
+								orientation="vertical"
 							>
 								{pages.map((page: Page) =>
 									<Tab
 										key={page.title}
 										label={page.title}
+										onClick={handleDrawerToggle}
 									/>
 								)};
-								</Tabs>
-							<IconButton
-								edge="end"
-								className={classes.menuButton}
-								color="default"
-								onClick={handleDrawerToggle}
-							>
-								<MenuIcon />
-							</IconButton>
-							<Drawer
-								anchor="top"
-								open={drawerOpen}
-								onClose={handleDrawerToggle}
-							>
-								<Tabs
-									value={tabValue.current}
-									onChange={handleMenuSelection}
-									orientation="vertical"
-								>
-									{pages.map((page: Page) =>
-										<Tab
-											key={page.title}
-											label={page.title}
-											onClick={handleDrawerToggle}
-										/>
-									)};
 									</Tabs>
-							</Drawer>
-						</Toolbar>
-					</AppBar>
-				</ElevationScroll>
+						</Drawer>
+					</Toolbar>
+				</AppBar>
 				<Toolbar />
 				{children}
 			</Parallax>
