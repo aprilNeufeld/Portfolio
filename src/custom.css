@@ -14,12 +14,6 @@ code {
 	color: #E01A76;
 }
 
-.btn-primary {
-	color: #fff;
-	background-color: #1b6ec2;
-	border-color: #1861ac;
-}
-
 li {
 	list-style: none;
 }
@@ -87,8 +81,9 @@ button:focus {
 /* Extra large devices (large laptops and desktops, 1920px and up) */
 @media only screen and (min-width: 1920px) {
 }
-
+/*
 .MuiChip-outlinedSecondary {
 	color: #1ab9c5 !important;
 	border-color: #19b9c3 !important;
 }
+	*/

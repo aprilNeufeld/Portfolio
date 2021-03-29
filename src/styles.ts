@@ -11,8 +11,12 @@ export const theme = responsiveFontSizes(createMuiTheme({
 		},
 		secondary: {
 			main: "#6bd6dd"
-		}
+		},
 	},
 	typography: {
+		caption: {
+			color: '#A4A4A4',
+			fontSize: '1rem',
+		},
 	}
 }));
