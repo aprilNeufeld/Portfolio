@@ -2,7 +2,6 @@
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import MenuIcon from '@material-ui/icons/Menu';
-import ElevationScroll from './ElevationScroll';
 import { Parallax } from 'react-parallax';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import {
@@ -37,18 +36,24 @@ const useStyles = makeStyles((theme: Theme) => {
 				display: "none",
 			},
 		},
+		/*
+		 * When we are at the top of the screen.
+		 */
 		appBar: {
 			backgroundColor: 'transparent',
-			zIndex: 0,
+			zIndex: 10,
 			boxShadow: 'none',
 			transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow'], {
 				easing: theme.transitions.easing.sharp,
 				duration: theme.transitions.duration.leavingScreen,
 			}),
 		},
+		/*
+		 * When we have scrolled down.
+		 */
 		appBarElevated: {
 			backgroundColor: 'white',
-			zIndex: 4,
+			zIndex: 40,
 			boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%),'
 				+ '0px 4px 5px 0px rgb(0 0 0 / 14%),'
 				+ '0px 1px 10px 0px rgb(0 0 0 / 12%)',
@@ -89,17 +94,30 @@ const Header: React.FC<Props> = (props) => {
 		pages.findIndex(page => history.location.pathname === page.path));
 	const classes = useStyles(useTheme());
 
+	/**
+	 * Handles a selection of a menu item by
+	 * pushing the new path to browser history.
+	 * 
+	 * @param newValue the tab index of the selected item.
+	 */
 	const handleMenuSelection =
 		(event: React.ChangeEvent<{}>, newValue: number) => {
 			tabValue.current = newValue;
 			history.push(pages[newValue].path);
 		};
 
+	/**
+	 * Handles selection of the hamburger menu
+	 * icon in mobile.
+	 */
 	const handleDrawerToggle = () => {
 		setDrawerOpen(!drawerOpen);
 	};
 
-	const trigger = useScrollTrigger({
+	/**
+	 * Handles a scroll event.
+	 */
+	const scrolled = useScrollTrigger({
 		disableHysteresis: true,
 		threshold: 0,
 	});
@@ -113,7 +131,7 @@ const Header: React.FC<Props> = (props) => {
 			>
 				<AppBar
 					className={clsx(classes.appBar, {
-						[classes.appBarElevated]: trigger
+						[classes.appBarElevated]: scrolled
 					})}
 					elevation={0}
 					color="transparent"

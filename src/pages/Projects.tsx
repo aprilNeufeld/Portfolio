@@ -39,6 +39,7 @@ const Projects: React.FC = () => {
 			{user.projects.map((project: any, index: number) => (
 				<Box key={index} >
 					<Typography variant="h5" gutterBottom>
+						repos/
 						<Link href={project.githubUrl}>
 							{project.name}
 						</Link>
@@ -47,16 +48,31 @@ const Projects: React.FC = () => {
 						{project.summary}
 					</Typography>
 					<Box className={classes.chipsContainerLeft} >
-						{[...project.languages, ...project.libraries].map((item: any, index: number) => (
-							<Chip
-								key={index}
-								color="secondary"
-								label={item}
-								variant="outlined"
-							/>
-						))}
+						{[...project.languages, ...project.libraries].map(
+							(item: any, index: number) => (
+								<Chip
+									key={index}
+									color="secondary"
+									label={item}
+									variant="outlined"
+								/>
+							))}
 					</Box>
 
+					<DividerWithSpacing />
+				</Box>
+			))}
+			{gists.map((gist: any, index: number) => (
+				<Box key={index} >
+					<Typography variant="h5" gutterBottom>
+						gists/
+						<Link href={gist.html_url}>
+							{(Object.keys(gist.files))[0]}
+						</Link>
+					</Typography>
+					<Typography variant="body1" >
+						{gist.description}
+					</Typography>
 					<DividerWithSpacing />
 				</Box>
 			))}

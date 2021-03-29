@@ -70,10 +70,6 @@ const HeaderContent: React.FC = () => {
 	const user = useApplicationState(state => state.user.user);
 	const classes = useStyles(useTheme());
 
-	React.useEffect(() => {
-		console.log("In HeaderContent");
-	}, []);
-
 	return (
 		<Box
 			display="flex"

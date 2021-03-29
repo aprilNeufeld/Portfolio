@@ -22,9 +22,21 @@ const history = createBrowserHistory({ basename: baseUrl });
 // Get the application-wide store instance, prepopulating with state from the server where available.
 const store = configureStore(history);
 
+/**
+ * The collection of pages that we 
+ * want to render.
+ */
 const pages: Page[] = [
+	/*
 	{
 		component: Home,
+		path: '/',
+		title: 'Home'
+	},
+	*/
+	// Debug
+	{
+		component: Projects,
 		path: '/',
 		title: 'Home'
 	},
@@ -41,7 +53,7 @@ const pages: Page[] = [
 	{
 		component: Projects,
 		path: '/projects',
-		title: 'Projects'
+		title: 'My Work'
 	},
 ]
 
