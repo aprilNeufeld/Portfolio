@@ -1,4 +1,5 @@
 ﻿import { request } from '@octokit/request';
+import sanityClient from '../sanityClient';
 import { AppThunkAction } from './';
 
 // -----------------
@@ -15,6 +16,11 @@ interface FetchGistsAction {
 	gists: any;
 }
 
+interface FetchBlogAction {
+	type: 'FETCH_BLOG_POSTS';
+	posts: any;
+}
+
 interface ResetStoreAction {
 	type: 'RESET_STORE';
 }
@@ -22,7 +28,11 @@ interface ResetStoreAction {
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-export type KnownAction = FetchUserAction | ResetStoreAction | FetchGistsAction;
+export type KnownAction =
+	FetchUserAction
+	| ResetStoreAction
+	| FetchGistsAction
+	| FetchBlogAction;
 
 
 // ----------------
@@ -51,8 +61,28 @@ export const actions = {
 				url: "/users/tricksterCodess/gists",
 				username: "tricksterCodess"
 			}).then(response => {
-					dispatch({ type: 'FETCH_GISTS', gists: response.data });
-				});
+				dispatch({ type: 'FETCH_GISTS', gists: response.data });
+			});
+		}
+	},
+	fetchBlogPosts: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
+		// Only load data if it's something we don't already have (and are not already loading)
+		const appState = getState();
+		if (appState && appState.blog.loaded === false) {
+			try {
+				sanityClient.fetch(
+					`*[_type == "post"]{
+						title,
+						slug,
+						"author": author->name
+					  }`
+				).then(response => {
+					console.log(JSON.stringify(response, null, 2));
+					dispatch({ type: 'FETCH_BLOG_POSTS', posts: response });
+				})
+			} catch (error) {
+				console.log(error.message);
+			}
 		}
 	},
 };
