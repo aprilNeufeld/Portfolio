@@ -30,7 +30,8 @@ const useStyles = makeStyles((theme: Theme) => {
 			borderColor: '#19b9c3',
 		},
 		itemName: {
-			display: 'inline-block',
+			display: 'inline',
+			marginBottom: theme.spacing(2),
 		},
 	});
 });
@@ -80,7 +81,7 @@ const Projects: React.FC = () => {
 					<Typography variant="caption" display={'inline'}>
 						gists/
 					</Typography>
-					<Typography variant="h5" className={classes.itemName} gutterBottom>
+					<Typography variant="h5" className={classes.itemName}>
 						<Link href={gist.html_url}>
 							{(Object.keys(gist.files))[0]}
 						</Link>
