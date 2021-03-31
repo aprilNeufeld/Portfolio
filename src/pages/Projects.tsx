@@ -35,6 +35,10 @@ const useStyles = makeStyles((theme: Theme) => {
 	});
 });
 
+const getLanguage = (lang: string): string => {
+	return (lang === "TSX" ? "TypeScript" : lang)
+}
+
 const Projects: React.FC = () => {
 
 	const user = useApplicationState(state => state.user.user);
@@ -89,7 +93,9 @@ const Projects: React.FC = () => {
 					<Box className={classes.chipsContainerLeft} >
 						<Chip
 							className={classes.chip}
-							label={JSON.stringify((Object.entries(gist.files))[0], null, 2)}
+							label={getLanguage(
+								gist.files[Object.keys(gist.files)[0]].language
+							)}
 							variant="outlined"
 						/>
 					</Box>
