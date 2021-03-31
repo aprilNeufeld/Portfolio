@@ -24,6 +24,7 @@ const PageTitle: React.FC<Props> = (props) => {
 	const { text } = props;
 	const classes = useStyles(useTheme());
 
+	/*
 	return (
 		<React.Fragment>
 			<Typography variant="h3"
@@ -31,6 +32,17 @@ const PageTitle: React.FC<Props> = (props) => {
 				className={classes.title}
 			>
 				{text}
+			</Typography>
+		</React.Fragment>
+	)
+	*/
+	// Debug
+	return (
+		<React.Fragment>
+			<Typography variant="h3"
+				gutterBottom
+				className={classes.title}
+			>
 			</Typography>
 		</React.Fragment>
 	)
