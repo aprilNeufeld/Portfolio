@@ -67,7 +67,6 @@ const App: React.FC<Props> = (props) => {
 		}
 	}, [userLoaded, gistsLoaded, dispatch]);
 
-	/*
 	return (
 		<React.Fragment>
 			{ userLoaded &&
@@ -94,34 +93,7 @@ const App: React.FC<Props> = (props) => {
 			}
 		</React.Fragment>
 	)
-	*/
-
-	// Debug
-	return (
-		<React.Fragment>
-			{ userLoaded && gistsLoaded &&
-				<React.Fragment>
-					<Header pages={pages}>
-					</Header>
-					<Container maxWidth="lg" className={classes.root}>
-						<Paper elevation={2} className={classes.paper} >
-							<Container maxWidth="md" className={classes.content}>
-								{pages.map(page =>
-									<Route
-										exact
-										path={page.path}
-										key={page.path}
-										component={page.component}
-									/>
-								)}
-							</Container>
-						</Paper>
-					</Container>
-					<Footer />
-				</React.Fragment>
-			}
-		</React.Fragment>
-	)
+	
 };
 
 export default App;

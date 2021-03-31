@@ -27,16 +27,8 @@ const store = configureStore(history);
  * want to render.
  */
 const pages: Page[] = [
-	/*
 	{
 		component: Home,
-		path: '/',
-		title: 'Home'
-	},
-	*/
-	// Debug
-	{
-		component: Projects,
 		path: '/',
 		title: 'Home'
 	},
