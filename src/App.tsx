@@ -39,9 +39,13 @@ const useStyles = makeStyles((theme: Theme) => {
 			paddingTop: theme.spacing(6),
 			paddingBottom: theme.spacing(6),
 			[theme.breakpoints.up('md')]: {
-				paddingRight: "48px!important",
-				paddingLeft: "48px!important",
-			}
+				paddingRight: theme.spacing(6),
+				paddingLeft: theme.spacing(6),
+			},
+			[theme.breakpoints.down('sm')]: {
+				paddingRight: 0,
+				paddingLeft: 0,
+			},
 		},
 	});
 });
@@ -70,10 +74,12 @@ const App: React.FC<Props> = (props) => {
 			dispatch(actions.fetchBlogPosts());
 		}
 	}, [userLoaded, gistsLoaded, blogLoaded, dispatch]);
-
+	
 	return (
 		<React.Fragment>
 			{ userLoaded &&
+				gistsLoaded &&
+				blogLoaded &&
 				<React.Fragment>
 					<Header pages={pages}>
 						<HeaderContent />
@@ -86,8 +92,8 @@ const App: React.FC<Props> = (props) => {
 										exact
 										path={page.path}
 										key={page.path}
-										component={page.component} 
-										/>
+										component={page.component}
+									/>
 								)}
 							</Container>
 						</Paper>

@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme: Theme) => {
 			backgroundColor: theme.palette.secondary.main,
 		},
 		contentBox: {
-			maxWidth: theme.breakpoints.width('md'),
 			paddingRight: theme.spacing(3),
 		},
 	});

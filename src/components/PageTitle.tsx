@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
 		title: {
 			marginBottom: theme.spacing(6),
-			fontSize: '3rem',
 			color: theme.palette.primary.main
 		},
 	});

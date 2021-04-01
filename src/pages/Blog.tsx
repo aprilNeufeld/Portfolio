@@ -23,7 +23,6 @@ import PageTitle from '../components/PageTitle';
 import BlockContent from '@sanity/block-content-to-react';
 import FancyChild from '../components/FancyChild';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -52,12 +51,9 @@ const useStyles = makeStyles((theme: Theme) => {
 			marginBottom: '1rem',
 		},
 		postBody: {
-			paddingLeft: theme.spacing(3),
-			paddingRight: theme.spacing(3),
 		},
 		postBodyText: {
 			fontWeight: 300,
-			fontSize: '1.25rem',
 			lineHeight: 1.4,
 			'& p': {
 				marginBottom: theme.spacing(5)
@@ -98,7 +94,7 @@ const Blog: React.FC = () => {
 	return (
 		<React.Fragment>
 			<PageTitle text='Blog' />
-			{blog.loaded && blog.posts &&
+			{blog.posts &&
 				blog.posts.map((post: any, index: number) => (
 					<Card elevation={4} key={index} >
 						<CardMedia
@@ -125,7 +121,11 @@ const Blog: React.FC = () => {
 						</CardActions>
 						<Collapse in={expanded} timeout="auto" unmountOnExit>
 							<CardContent className={classes.postBody}>
-								<Typography variant='h5' className={classes.postBodyText}>
+								<Typography
+									variant='body1'
+									className={classes.postBodyText}
+									component='div'
+								>
 									<BlockContent
 										blocks={post.body}
 										serializers={{ types: { block: BlockRenderer } }}

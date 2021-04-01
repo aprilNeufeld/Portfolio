@@ -84,7 +84,6 @@ export const actions = {
 						body
 					  }`
 				).then(response => {
-					console.log(JSON.stringify(response, null, 2));
 					dispatch({ type: 'FETCH_BLOG_POSTS', posts: response });
 				})
 			} catch (error) {

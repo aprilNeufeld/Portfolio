@@ -44,7 +44,8 @@ const useStyles = makeStyles((theme: Theme) => {
 			zIndex: 10,
 			boxShadow: 'none',
 			color: theme.palette.grey[100],
-			transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow', 'color'], {
+			transition: theme.transitions.create(
+				['background-color', 'z-index', 'box-shadow', 'color'], {
 				easing: theme.transitions.easing.sharp,
 				duration: theme.transitions.duration.leavingScreen,
 			}),
@@ -57,7 +58,8 @@ const useStyles = makeStyles((theme: Theme) => {
 			zIndex: 40,
 			boxShadow: theme.shadows[4],
 			color: theme.palette.text.primary,
-			transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow', 'color'], {
+			transition: theme.transitions.create(
+				['background-color', 'z-index', 'box-shadow', 'color'], {
 				easing: theme.transitions.easing.easeOut,
 				duration: theme.transitions.duration.enteringScreen,
 			}),

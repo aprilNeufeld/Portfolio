@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) => {
 			borderColor: '#19b9c3',
 		},
 		itemName: {
-			display: 'inline-block',
+			display: 'inline',
 			marginBottom: theme.spacing(2),
 		},
 	});
