@@ -55,6 +55,7 @@ const App: React.FC<Props> = (props) => {
 	const { pages } = props;
 	const userLoaded = useApplicationState(state => state.user.loaded);
 	const gistsLoaded = useApplicationState(state => state.gists.loaded);
+	const blogLoaded = useApplicationState(state => state.blog.loaded);
 	const dispatch = useDispatch();
 	const classes = useStyles(useTheme());
 
@@ -65,7 +66,10 @@ const App: React.FC<Props> = (props) => {
 		if (!gistsLoaded) {
 			dispatch(actions.fetchGists());
 		}
-	}, [userLoaded, gistsLoaded, dispatch]);
+		if (!blogLoaded) {
+			dispatch(actions.fetchBlogPosts());
+		}
+	}, [userLoaded, gistsLoaded, blogLoaded, dispatch]);
 
 	return (
 		<React.Fragment>
@@ -93,7 +97,6 @@ const App: React.FC<Props> = (props) => {
 			}
 		</React.Fragment>
 	)
-	
 };
 
 export default App;

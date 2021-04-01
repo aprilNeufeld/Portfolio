@@ -17,6 +17,7 @@ export const theme = responsiveFontSizes(createMuiTheme({
 		caption: {
 			color: '#A4A4A4',
 			fontSize: '1rem',
+			display: 'inline-block',
 		},
 	}
 }));

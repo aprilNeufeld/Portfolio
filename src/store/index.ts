@@ -1,11 +1,13 @@
 import * as UserStore from './UserStore';
 import * as GistsStore from './GistsStore';
+import * as BlogStore from './BlogStore';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 // The top-level state object
 export interface ApplicationState {
     user: UserStore.UserState;
     gists: GistsStore.GistsState;
+    blog: BlogStore.BlogState;
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using
@@ -14,6 +16,7 @@ export interface ApplicationState {
 export const reducers = {
     user: UserStore.reducer,
     gists: GistsStore.reducer,
+    blog: BlogStore.reducer,
 };
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are

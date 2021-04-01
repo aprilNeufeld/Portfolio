@@ -14,6 +14,7 @@ import Projects from './pages/Projects';
 import { theme } from './styles';
 import { ThemeProvider } from '@material-ui/core';
 import { Page } from './shared/types';
+import Blog from './pages/Blog';
 
 // Create browser history to use in the Redux store
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href') as string;
@@ -46,6 +47,11 @@ const pages: Page[] = [
 		component: Projects,
 		path: '/projects',
 		title: 'My Work'
+	},
+	{
+		component: Blog,
+		path: '/blog',
+		title: 'Blog'
 	},
 ]
 
