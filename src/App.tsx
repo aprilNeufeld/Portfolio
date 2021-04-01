@@ -71,7 +71,6 @@ const App: React.FC<Props> = (props) => {
 		}
 	}, [userLoaded, gistsLoaded, blogLoaded, dispatch]);
 
-	/*
 	return (
 		<React.Fragment>
 			{ userLoaded &&
@@ -89,35 +88,6 @@ const App: React.FC<Props> = (props) => {
 										key={page.path}
 										component={page.component} 
 										/>
-								)}
-							</Container>
-						</Paper>
-					</Container>
-					<Footer />
-				</React.Fragment>
-			}
-		</React.Fragment>
-	)
-	*/
-
-	// Debug
-	return (
-		<React.Fragment>
-			{userLoaded && gistsLoaded &&
-				<React.Fragment>
-					<Header pages={pages}>
-						<HeaderContent />
-					</Header>
-					<Container maxWidth="md" className={classes.root}>
-						<Paper elevation={2} className={classes.paper} >
-							<Container maxWidth="md" className={classes.content}>
-								{pages.map(page =>
-									<Route
-										exact
-										path={page.path}
-										key={page.path}
-										component={page.component}
-									/>
 								)}
 							</Container>
 						</Paper>

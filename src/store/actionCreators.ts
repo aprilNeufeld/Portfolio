@@ -34,7 +34,6 @@ export type KnownAction =
 	| FetchGistsAction
 	| FetchBlogAction;
 
-
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
@@ -74,7 +73,15 @@ export const actions = {
 					`*[_type == "post"]{
 						title,
 						slug,
-						"author": author->name
+						"author": author->name,
+						mainImage {
+							  asset->{
+							  _id,
+							  url
+							}
+						},
+						publishedAt,	
+						body
 					  }`
 				).then(response => {
 					console.log(JSON.stringify(response, null, 2));

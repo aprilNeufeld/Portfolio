@@ -10,7 +10,9 @@ import {
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
 		title: {
-			marginBottom: theme.spacing(6)
+			marginBottom: theme.spacing(6),
+			fontSize: '3rem',
+			color: theme.palette.primary.main
 		},
 	});
 });
@@ -24,28 +26,19 @@ const PageTitle: React.FC<Props> = (props) => {
 	const { text } = props;
 	const classes = useStyles(useTheme());
 
-	/*
 	return (
 		<React.Fragment>
-			<Typography variant="h3"
+			<Typography
+				variant="overline"
 				gutterBottom
 				className={classes.title}
+				component='div'
 			>
 				{text}
 			</Typography>
 		</React.Fragment>
 	)
-	*/
-	// Debug
-	return (
-		<React.Fragment>
-			<Typography variant="h3"
-				gutterBottom
-				className={classes.title}
-			>
-			</Typography>
-		</React.Fragment>
-	)
+	
 };
 
 export default PageTitle;
