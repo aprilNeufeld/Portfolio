@@ -43,7 +43,8 @@ const useStyles = makeStyles((theme: Theme) => {
 			backgroundColor: 'transparent',
 			zIndex: 10,
 			boxShadow: 'none',
-			transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow'], {
+			color: theme.palette.grey[100],
+			transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow', 'color'], {
 				easing: theme.transitions.easing.sharp,
 				duration: theme.transitions.duration.leavingScreen,
 			}),
@@ -54,10 +55,9 @@ const useStyles = makeStyles((theme: Theme) => {
 		appBarElevated: {
 			backgroundColor: 'white',
 			zIndex: 40,
-			boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%),'
-				+ '0px 4px 5px 0px rgb(0 0 0 / 14%),'
-				+ '0px 1px 10px 0px rgb(0 0 0 / 12%)',
-			transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow'], {
+			boxShadow: theme.shadows[4],
+			color: theme.palette.text.primary,
+			transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow', 'color'], {
 				easing: theme.transitions.easing.easeOut,
 				duration: theme.transitions.duration.enteringScreen,
 			}),
@@ -133,8 +133,6 @@ const Header: React.FC<Props> = (props) => {
 					className={clsx(classes.appBar, {
 						[classes.appBarElevated]: scrolled
 					})}
-					elevation={0}
-					color="transparent"
 				>
 					<Toolbar>
 						<Tabs

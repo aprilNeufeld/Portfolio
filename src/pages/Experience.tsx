@@ -3,10 +3,12 @@ import { useApplicationState } from '../store';
 import {
 	Box,
 	Typography,
+	ListItem,
+	List
 } from '@material-ui/core';
 import PageTitle from '../components/PageTitle';
 import DividerWithSpacing from '../components/DividerWithSpacing';
-import FancyList from '../components/FancyList';
+import FancyChild from '../components/FancyChild';
 
 const months = [
 	"",
@@ -34,10 +36,10 @@ const Experience: React.FC = () => {
 
 			{[...user.work, ...user.volunteer].map((work: any, index: number) => (
 				<Box key={index} >
-					<Typography variant="h5" >
+					<Typography variant="h5" gutterBottom>
 						{work.position}
 					</Typography>
-					<Typography variant="body1">
+					<Typography variant="h6" gutterBottom>
 						{
 							(work.company || work.organization) + '  |  '
 							+ months[work.start.month] + ' '
@@ -47,9 +49,17 @@ const Experience: React.FC = () => {
 						}
 					</Typography>
 					{work.highlights.length > 0 &&
-						<FancyList
-							items={work.highlights}
-						/>
+						<FancyChild>
+							<List>
+								{work.highlights.map((item: any, index: number) => (
+									<ListItem key={index}>
+										<Typography variant="body1" display={'inline'}>
+											{item}
+										</Typography>
+									</ListItem>
+								))}
+							</List>
+						</FancyChild>
 					}
 					<DividerWithSpacing />
 				</Box>

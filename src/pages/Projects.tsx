@@ -13,6 +13,7 @@ import {
 import PageTitle from '../components/PageTitle';
 import DividerWithSpacing from '../components/DividerWithSpacing';
 import Linkify from 'react-linkify';
+import FancyChild from '../components/FancyChild';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) => {
 			borderColor: '#19b9c3',
 		},
 		itemName: {
-			display: 'inline',
+			display: 'inline-block',
 			marginBottom: theme.spacing(2),
 		},
 	});
@@ -59,9 +60,11 @@ const Projects: React.FC = () => {
 							{project.name}
 						</Link>
 					</Typography>
-					<Typography variant="body1" >
-						{project.summary}
-					</Typography>
+					<FancyChild>
+						<Typography variant="body1" >
+							{project.summary}
+						</Typography>
+					</FancyChild>
 					<Box className={classes.chipsContainerLeft} >
 						{[...project.languages, ...project.libraries].map(
 							(item: any, index: number) => (
@@ -86,11 +89,13 @@ const Projects: React.FC = () => {
 							{(Object.keys(gist.files))[0]}
 						</Link>
 					</Typography>
-					<Typography variant="body1" >
-						<Linkify>
-							{gist.description}
-						</Linkify>
-					</Typography>
+					<FancyChild>
+						<Typography variant="body1" >
+							<Linkify>
+								{gist.description}
+							</Linkify>
+						</Typography>
+					</FancyChild>
 					<Box className={classes.chipsContainerLeft} >
 						<Chip
 							className={classes.chip}

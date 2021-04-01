@@ -103,11 +103,12 @@ const App: React.FC<Props> = (props) => {
 	// Debug
 	return (
 		<React.Fragment>
-			{ userLoaded && gistsLoaded &&
+			{userLoaded && gistsLoaded &&
 				<React.Fragment>
 					<Header pages={pages}>
+						<HeaderContent />
 					</Header>
-					<Container maxWidth="lg" className={classes.root}>
+					<Container maxWidth="md" className={classes.root}>
 						<Paper elevation={2} className={classes.paper} >
 							<Container maxWidth="md" className={classes.content}>
 								{pages.map(page =>
