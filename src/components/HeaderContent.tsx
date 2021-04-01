@@ -79,8 +79,11 @@ const HeaderContent: React.FC = () => {
 			className={classes.root}
 		>	
 			<Box className={classes.profilePictureContainer} >
-				<img src={user.basics.picture}
-					className={classes.profilePicture} />
+				<img
+					src={user.basics.picture}
+					className={classes.profilePicture}
+					alt=''
+				/>
 				</Box>
 			<Typography variant="h2">
 				{user.basics.name}

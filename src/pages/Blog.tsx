@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import {
 	Box,
 	Card,
-	CardActionArea,
 	CardActions,
 	CardContent,
 	CardHeader,
@@ -12,7 +11,6 @@ import {
 	Collapse,
 	Divider,
 	IconButton,
-	Paper,
 	Typography,
 	makeStyles,
 	Theme,
@@ -23,6 +21,7 @@ import PageTitle from '../components/PageTitle';
 import BlockContent from '@sanity/block-content-to-react';
 import FancyChild from '../components/FancyChild';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ShareIcon from '@material-ui/icons/Share';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -50,14 +49,29 @@ const useStyles = makeStyles((theme: Theme) => {
 		blockQuote: {
 			marginBottom: '1rem',
 		},
-		postBody: {
+		collapseContainer: {
+			position: 'relative',
+		},
+		collapse: {
+			position: 'absolute',
+			top: 0,
+			width: '100%',
+			height: '100%',
+			background: 'linear-gradient(0deg, rgba(255,255,255,1) 19%, rgba(255,255,255,0.7829181494661922) 35%, rgba(255,255,255,0.5747330960854092) 57%, rgba(255,255,255,0) 100%)',
+			transition: theme.transitions.create('background')
+		},
+		collapseOpen: {
+			background: 'none',
+			transition: theme.transitions.create('background'),
+		},
+		cardContent: {
 		},
 		postBodyText: {
 			fontWeight: 300,
 			lineHeight: 1.4,
 			'& p': {
 				marginBottom: theme.spacing(5)
-			}
+			},
 		}
 	});
 });
@@ -88,7 +102,9 @@ const Blog: React.FC = () => {
 
 	const formatDate = (datetime: string): string => {
 		const date: Date = new Date(datetime);
-		return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+		return date.toLocaleDateString('en-US', {
+			weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+		});
 	}
 
 	return (
@@ -97,17 +113,21 @@ const Blog: React.FC = () => {
 			{blog.posts &&
 				blog.posts.map((post: any, index: number) => (
 					<Card elevation={4} key={index} >
+						<CardHeader
+							title={post.title}
+							subheader={'by ' + post.author +
+								(post.publishedAt ? ' on ' + formatDate(post.publishedAt) : '')}
+						/>
+						<Divider />
 						<CardMedia
 							image={post.mainImage.asset.url}
 							className={classes.media}
 						/>
 						<Divider />
 						<CardActions disableSpacing>
-							<CardHeader
-								title={post.title}
-								subheader={'by ' + post.author +
-									(post.publishedAt ? ' on ' + formatDate(post.publishedAt) : '')}
-							/>
+							<IconButton aria-label="share">
+								<ShareIcon />
+							</IconButton>
 							<IconButton
 								className={clsx(classes.expand, {
 									[classes.expandOpen]: expanded,
@@ -119,8 +139,18 @@ const Blog: React.FC = () => {
 								<ExpandMoreIcon />
 							</IconButton>
 						</CardActions>
-						<Collapse in={expanded} timeout="auto" unmountOnExit>
-							<CardContent className={classes.postBody}>
+						<Collapse
+							in={expanded}
+							timeout="auto"
+							collapsedHeight="150px"
+							className={classes.collapseContainer}
+						>
+							<Box
+								className={clsx(classes.collapse, {
+									[classes.collapseOpen]: expanded,
+								})}
+							/>
+							<CardContent className={classes.cardContent}>
 								<Typography
 									variant='body1'
 									className={classes.postBodyText}
