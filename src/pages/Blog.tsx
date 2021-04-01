@@ -77,7 +77,7 @@ const BlockRenderer = (props: any) => {
 		)
 	}
 
-	return BlockContent.defaultSerializers.types.block(props);
+	return (BlockContent as any).defaultSerializers.types.block(props);
 }
 
 const Blog: React.FC = () => {
