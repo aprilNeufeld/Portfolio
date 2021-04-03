@@ -1,5 +1,4 @@
 ﻿import * as React from 'react';
-import { useApplicationState } from '../store';
 import clsx from 'clsx';
 import {
 	Box,
@@ -17,7 +16,6 @@ import {
 	createStyles,
 	useTheme
 } from '@material-ui/core';
-import PageTitle from '../components/PageTitle';
 import BlockContent from '@sanity/block-content-to-react';
 import FancyChild from '../components/FancyChild';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -31,7 +29,6 @@ import {
 	LinkedinShareButton,
 	TwitterShareButton
 } from 'react-share'
-import AnchorLink from 'react-anchor-link-smooth-scroll'
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -97,18 +94,18 @@ const BlockRenderer = (props: any) => {
 	return (BlockContent as any).defaultSerializers.types.block(props);
 }
 
-const url = 'https://trickstercodess.com/blog/#';
-
 interface Props {
 	post: any;
 }
+
+const url = 'https://tricksterCodess.com/blog#';
 
 const BlogPost: React.FC<Props> = (props) => {
 
 	const { post } = props;
 	const [expanded, setExpanded] = React.useState(false);
-	const slug = React.useRef((post.title as string).replace(/\s+/g, '-'))
 	const classes = useStyles(useTheme());
+	const slug = React.useRef((post.title as string).replace(/\s+/g, '-'))
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);

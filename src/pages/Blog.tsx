@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import PageTitle from '../components/PageTitle';
 import BlogPost from '../components/BlogPost';
+import AnchorLink from 'react-anchor-link-smooth-scroll'
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -68,6 +69,7 @@ const Blog: React.FC = () => {
 				blog.posts.map((post: any, index: number) => (
 					<BlogPost key={index} post={post} />
 				))}
+			
 		</React.Fragment>
 	)
 };
