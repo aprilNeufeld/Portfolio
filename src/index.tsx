@@ -4,6 +4,7 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
+import { anchorate } from 'anchorate';
 import configureStore from './store/configureStore';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -21,23 +22,8 @@ const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href') as
 const history = createBrowserHistory({ basename: baseUrl });
 
 
-history.listen(location => {
-	const { hash } = location;
-	if (hash !== '') {
-		// Push onto callback queue so it runs after the DOM is updated,
-		// this is required when navigating from a different page so that
-		// the element is rendered on the page before trying to getElementById.
-		setTimeout(
-			() => {
-				const id = hash.replace('#', '');
-				const element = document.getElementById(id);
-				if (element) {
-					element.scrollIntoView();
-				}
-			},
-			0
-		);
-	}
+history.listen(() => {
+	anchorate()
 })
 
 

@@ -13,6 +13,7 @@
 		"@sanity/client": "^2.7.1",
 		"@types/react-anchor-link-smooth-scroll": "^1.0.1",
 		"@types/react-share": "^3.0.3",
+		"anchorate": "^1.2.4",
 		"bootstrap": "^4.3.1",
 		"connected-react-router": "6.5.2",
 		"history": "4.10.1",
