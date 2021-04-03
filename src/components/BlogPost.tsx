@@ -1,4 +1,5 @@
 ﻿import * as React from 'react';
+import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import {
 	Box,
@@ -98,14 +99,15 @@ interface Props {
 	post: any;
 }
 
-const url = 'https://tricksterCodess.com/blog#';
+const url = 'https://trickstercodess.com/blog#';
 
 const BlogPost: React.FC<Props> = (props) => {
 
 	const { post } = props;
-	const [expanded, setExpanded] = React.useState(false);
+	const history = useHistory();
 	const classes = useStyles(useTheme());
-	const slug = React.useRef((post.title as string).replace(/\s+/g, '-'))
+	const slug = React.useRef((post.title as string).replace(/\s+/g, '-').toLowerCase())
+	const [expanded, setExpanded] = React.useState(history.location.hash === '#' + slug.current);
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
@@ -120,10 +122,10 @@ const BlogPost: React.FC<Props> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Card elevation={4}>
+			<Card elevation={4} >
 				<CardHeader
-					title={post.title}
 					id={slug.current}
+					title={post.title}
 					subheader={'by ' + post.author +
 						(post.publishedAt ? ' on ' + formatDate(post.publishedAt) : '')}
 				/>

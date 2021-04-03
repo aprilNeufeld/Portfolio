@@ -4,7 +4,6 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
-import { anchorate } from 'anchorate';
 import configureStore from './store/configureStore';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -16,16 +15,14 @@ import { theme } from './styles';
 import { ThemeProvider } from '@material-ui/core';
 import { Page } from './shared/types';
 import Blog from './pages/Blog';
+import useAnchors from './shared/useAnchors';
 
 // Create browser history to use in the Redux store
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href') as string;
+
 const history = createBrowserHistory({ basename: baseUrl });
 
-
-history.listen(() => {
-	anchorate()
-})
-
+useAnchors(history, 750);
 
 // Get the application-wide store instance, prepopulating with state from the server where available.
 const store = configureStore(history);
