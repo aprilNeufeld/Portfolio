@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
 
 	return (
 		<Paper className={classes.root}>
-			<Parallax bgImage={require("../images/background.png")} blur={1} strength={-100} className={classes.parallax}>
+			<Parallax bgImage={'/images/background.png'} blur={1} strength={-100} className={classes.parallax}>
 				<Container maxWidth="md" className={classes.content}>
 					<Typography variant="body2" style={{ color: "#ffffff" }}>
 						© 2021 TricksterCodess

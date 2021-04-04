@@ -1,6 +1,8 @@
 ﻿import * as React from 'react';
-import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
+import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux';
+import { push } from 'connected-next-router'
 import MenuIcon from '@material-ui/icons/Menu';
 import { Parallax } from 'react-parallax';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
@@ -17,8 +19,6 @@ import {
 	createStyles,
 	useTheme
 } from '@material-ui/core';
-import { Page } from '../shared/types';
-
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -67,9 +67,45 @@ const useStyles = makeStyles((theme: Theme) => {
 	});
 });
 
+/**
+ * Holds information about a particular
+ * page to be rendered, including the component,
+ * its name, and its path.
+ */
+type Page = {
+	title: string,
+	path: string
+}
+
+/**
+ * The collection of pages that we 
+ * want to render.
+ */
+const pages: Page[] = [
+	{
+		path: '/',
+		title: 'Home'
+	},
+	{
+		path: '/education',
+		title: 'Education'
+	},
+	{
+		path: '/experience',
+		title: 'Experience'
+	},
+	{
+		path: '/projects',
+		title: 'My Work'
+	},
+	{
+		path: '/blog',
+		title: 'Blog'
+	},
+]
+
 interface Props {
 	children?: React.ReactNode;
-	pages: Page[];
 }
 
 /**
@@ -83,18 +119,22 @@ interface Props {
  * When the user scrolls down, the nav menu elevates above the rest of the 
  * header and the page content, and it transitions to an opaque background
  * and contrasting foreground.
- * 
- * @param props Holds an array of type Page. Each Tab will correspond to 
- * a Page.
  */
 const Header: React.FC<Props> = (props) => {
 
-	const { pages, children } = props;
+	const { children } = props;
+	const router = useRouter();
+	const dispatch = useDispatch();
 	const [drawerOpen, setDrawerOpen] = React.useState(false);
-	const history = useHistory();
 	const tabValue = React.useRef(
-		pages.findIndex(page => history.location.pathname === page.path));
+		pages.findIndex(page => router.asPath === page.path)
+	);
 	const classes = useStyles(useTheme());
+
+	React.useEffect(() => {
+		console.log("Tab value: " + tabValue.current)
+		console.log("Router path: " + router.asPath);
+	}, [tabValue.current])
 
 	/**
 	 * Handles a selection of a menu item by
@@ -104,8 +144,9 @@ const Header: React.FC<Props> = (props) => {
 	 */
 	const handleMenuSelection =
 		(event: React.ChangeEvent<{}>, newValue: number) => {
+			console.log("SELECTED TAB: " + newValue);
 			tabValue.current = newValue;
-			history.push(pages[newValue].path);
+			dispatch(push({ pathname: pages[newValue].path }));
 		};
 
 	/**
@@ -127,7 +168,7 @@ const Header: React.FC<Props> = (props) => {
 	return (
 		<Paper className={classes.root}>
 			<Parallax
-				bgImage={require("../images/background.png")}
+				bgImage={'/images/background.png'}
 				blur={1}
 				strength={-200}
 			>

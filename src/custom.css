@@ -1,9 +1,13 @@
 /* Provide sufficient contrast against white background */
 
-#root {
+#__next {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+}
+
+body {
+	margin: 0;
 }
 
 a:hover {

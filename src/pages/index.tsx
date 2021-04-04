@@ -20,7 +20,6 @@ const Home: React.FC = () => {
 			</Box>
 		</React.Fragment>
 	)
-
 };
 
 export default Home;

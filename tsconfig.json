@@ -1,28 +1,31 @@
 {
-	"compileOnSave": true,
-	"compilerOptions": {
-		"target": "es5",
-		"allowJs": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"forceConsistentCasingInFileNames": true,
-		"module": "esnext",
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"noEmit": true,
-		"jsx": "preserve",
-		"lib": [
-			"es2015",
-			"dom"
-		],
-		"skipLibCheck": true,
-		"strict": true
-	},
-	"include": [
-		"src"
-	],
-	"files": [
-		"@types/block-content-to-react.d.ts"
-	]
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es5",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "skipLibCheck": true,
+    "strict": true
+  },
+  "include": [
+    "src"
+  ],
+  "files": [
+    "@types/block-content-to-react.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

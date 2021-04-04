@@ -2,9 +2,11 @@ import * as UserStore from './UserStore';
 import * as GistsStore from './GistsStore';
 import * as BlogStore from './BlogStore';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { RouterState } from 'connected-next-router/types';
 
 // The top-level state object
 export interface ApplicationState {
+    router: RouterState;
     user: UserStore.UserState;
     gists: GistsStore.GistsState;
     blog: BlogStore.BlogState;

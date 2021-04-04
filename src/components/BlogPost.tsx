@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
-import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
+import { useRouter } from 'next/router';
 import {
 	Box,
 	Card,
@@ -104,10 +104,10 @@ const url = 'https://trickstercodess.com/blog#';
 const BlogPost: React.FC<Props> = (props) => {
 
 	const { post } = props;
-	const history = useHistory();
+	const router = useRouter();
 	const classes = useStyles(useTheme());
 	const slug = React.useRef((post.title as string).replace(/\s+/g, '-').toLowerCase())
-	const [expanded, setExpanded] = React.useState(history.location.hash === '#' + slug.current);
+	const [expanded, setExpanded] = React.useState(false);
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
