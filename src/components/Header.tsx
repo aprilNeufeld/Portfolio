@@ -131,11 +131,6 @@ const Header: React.FC<Props> = (props) => {
 	);
 	const classes = useStyles(useTheme());
 
-	React.useEffect(() => {
-		console.log("Tab value: " + tabValue.current)
-		console.log("Router path: " + router.asPath);
-	}, [tabValue.current])
-
 	/**
 	 * Handles a selection of a menu item by
 	 * pushing the new path to browser history.
@@ -144,7 +139,6 @@ const Header: React.FC<Props> = (props) => {
 	 */
 	const handleMenuSelection =
 		(event: React.ChangeEvent<{}>, newValue: number) => {
-			console.log("SELECTED TAB: " + newValue);
 			tabValue.current = newValue;
 			dispatch(push({ pathname: pages[newValue].path }));
 		};
