@@ -9,6 +9,7 @@ import {
 import PageTitle from '../components/PageTitle';
 import DividerWithSpacing from '../components/DividerWithSpacing';
 import FancyChild from '../components/FancyChild';
+import Layout from '../components/Layout';
 
 const months = [
 	"",
@@ -31,7 +32,7 @@ const Experience: React.FC = () => {
 	const user = useApplicationState(state => state.user.user);
 
 	return (
-		<React.Fragment>
+		<Layout user={user}>
 			<PageTitle text="Experience" />
 
 			{[...user.work, ...user.volunteer].map((work: any, index: number) => (
@@ -64,7 +65,7 @@ const Experience: React.FC = () => {
 					<DividerWithSpacing />
 				</Box>
 			))}
-		</React.Fragment>
+		</Layout>
 	)
 
 };

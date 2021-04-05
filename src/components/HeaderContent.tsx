@@ -65,9 +65,13 @@ const useStyles = makeStyles((theme: Theme) => {
 	});
 });
 
-const HeaderContent: React.FC = () => {
+interface Props {
+	user: any;
+}
 
-	const user = useApplicationState(state => state.user.user);
+const HeaderContent: React.FC<Props> = (props) => {
+
+	const { user } = props;
 	const classes = useStyles(useTheme());
 
 	return (
@@ -77,14 +81,14 @@ const HeaderContent: React.FC = () => {
 			alignItems="center"
 			flexDirection="column"
 			className={classes.root}
-		>	
+		>
 			<Box className={classes.profilePictureContainer} >
 				<img
 					src={user.basics.picture}
 					className={classes.profilePicture}
 					alt=''
 				/>
-				</Box>
+			</Box>
 			<Typography variant="h2">
 				{user.basics.name}
 			</Typography>
@@ -92,7 +96,7 @@ const HeaderContent: React.FC = () => {
 				<Link href={`https://gitconnected.com/${user.basics.username}`}>
 					@{user.basics.username}
 				</Link> | she/her
-			</Typography>
+					</Typography>
 			<Typography variant="body1" align="center" gutterBottom>
 				{user.basics.label}
 			</Typography>

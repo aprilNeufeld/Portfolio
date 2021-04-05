@@ -1,8 +1,11 @@
 import * as UserStore from './UserStore';
 import * as GistsStore from './GistsStore';
 import * as BlogStore from './BlogStore';
-import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { RouterState } from 'connected-next-router/types';
+import { ActionCreator, AnyAction } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { KnownAction } from './actionCreators';
 
 // The top-level state object
 export interface ApplicationState {
@@ -23,8 +26,11 @@ export const reducers = {
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are
 // correctly typed to match your store.
-export interface AppThunkAction<TAction> {
+export type AppThunkAction<TAction> = {
     (dispatch: (action: TAction) => void, getState: () => ApplicationState): void;
 }
+
+export type ThunkCreator<R = Promise<any>> =
+    ActionCreator<ThunkAction<R, ApplicationState, KnownAction, AnyAction>>;
 
 export const useApplicationState: TypedUseSelectorHook<ApplicationState> = useSelector;

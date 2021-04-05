@@ -1,5 +1,6 @@
 ﻿import * as React from 'react';
 import { useApplicationState } from '../store';
+import { GetStaticProps } from 'next'
 import {
 	Typography,
 	Box,
@@ -14,6 +15,7 @@ import PageTitle from '../components/PageTitle';
 import DividerWithSpacing from '../components/DividerWithSpacing';
 import Linkify from 'react-linkify';
 import FancyChild from '../components/FancyChild';
+import Layout from '../components/Layout';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -48,7 +50,7 @@ const Projects: React.FC = () => {
 	const classes = useStyles(useTheme());
 
 	return (
-		<React.Fragment>
+		<Layout user={user}>
 			<PageTitle text='Projects' />
 			{user.projects.map((project: any, index: number) => (
 				<Box key={index} >
@@ -109,7 +111,7 @@ const Projects: React.FC = () => {
 				</Box>
 			))}
 
-		</React.Fragment>
+		</Layout>
 	)
 };
 

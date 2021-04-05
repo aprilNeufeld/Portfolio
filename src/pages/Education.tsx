@@ -6,13 +6,14 @@ import {
 } from '@material-ui/core';
 import PageTitle from '../components/PageTitle';
 import DividerWithSpacing from '../components/DividerWithSpacing';
+import Layout from '../components/Layout';
 
 const Education: React.FC = () => {
 
 	const user = useApplicationState(state => state.user.user);
 
 	return (
-		<React.Fragment>
+		<Layout user={user}>
 			<PageTitle text="Education" />
 			{user.education.map((education: any, index: number) => (
 				<Box key={index} >
@@ -27,7 +28,7 @@ const Education: React.FC = () => {
 				</Box>
 			))}
 
-		</React.Fragment>
+		</Layout>
 	)
 
 };

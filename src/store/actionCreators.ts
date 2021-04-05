@@ -42,7 +42,7 @@ export const actions = {
 	fetchUser: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
 		// Only load data if it's something we don't already have (and are not already loading)
 		const appState = getState();
-
+		console.log('in fetchUser action');
 		if (appState && appState.user.loaded === false) {
 			fetch('https://gitconnected.com/v1/portfolio/tricksterCodess')
 				.then(response => response.json() as Promise<any>)
