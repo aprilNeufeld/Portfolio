@@ -1,5 +1,4 @@
 ﻿import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { HYDRATE} from 'next-redux-wrapper';
 
 interface UserState {
 	user: any;
