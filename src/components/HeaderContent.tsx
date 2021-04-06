@@ -1,5 +1,4 @@
 ﻿import * as React from 'react';
-import { useApplicationState } from '../store';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import {
 	Typography,

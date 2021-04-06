@@ -1,6 +1,5 @@
 ﻿import * as React from 'react';
 import clsx from 'clsx';
-import { useRouter } from 'next/router';
 import {
 	Box,
 	Card,
@@ -104,7 +103,6 @@ const url = 'https://trickstercodess.com/blog#';
 const BlogPost: React.FC<Props> = (props) => {
 
 	const { post } = props;
-	const router = useRouter();
 	const classes = useStyles(useTheme());
 	const slug = React.useRef((post.title as string).replace(/\s+/g, '-').toLowerCase())
 	const [expanded, setExpanded] = React.useState(false);

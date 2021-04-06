@@ -1,7 +1,6 @@
 ﻿import * as React from 'react';
 import clsx from 'clsx';
-import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux';
+import { useRouter, NextRouter } from 'next/router'
 import { push } from 'connected-next-router'
 import MenuIcon from '@material-ui/icons/Menu';
 import { Parallax } from 'react-parallax';
@@ -19,6 +18,7 @@ import {
 	createStyles,
 	useTheme
 } from '@material-ui/core';
+import { useAppDispatch } from '../store';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -105,6 +105,7 @@ const pages: Page[] = [
 ]
 
 interface Props {
+	router: NextRouter;
 	children?: React.ReactNode;
 }
 
@@ -122,9 +123,8 @@ interface Props {
  */
 const Header: React.FC<Props> = (props) => {
 
-	const { children } = props;
-	const router = useRouter();
-	const dispatch = useDispatch();
+	const { router, children } = props;
+	const dispatch = useAppDispatch();
 	const [drawerOpen, setDrawerOpen] = React.useState(false);
 	const tabValue = React.useRef(
 		pages.findIndex(page => router.asPath === page.path)

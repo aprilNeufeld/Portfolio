@@ -9,6 +9,7 @@
 		"@material-ui/icons": "^4.11.2",
 		"@material-ui/lab": "^4.0.0-alpha.57",
 		"@octokit/request": "^5.4.14",
+		"@reduxjs/toolkit": "^1.5.1",
 		"@sanity/block-content-to-react": "^2.0.7",
 		"@sanity/client": "^2.7.1",
 		"@types/react-share": "^3.0.3",

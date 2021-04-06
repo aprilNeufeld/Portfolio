@@ -1,36 +1,20 @@
-import * as UserStore from './UserStore';
-import * as GistsStore from './GistsStore';
-import * as BlogStore from './BlogStore';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { RouterState } from 'connected-next-router/types';
-import { ActionCreator, AnyAction } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { KnownAction } from './actionCreators';
+import * as User from './userSlice';
+import * as Gists from './gistsSlice';
+import * as Blog from './blogSlice';
+import { AppDispatch, RootState } from './configureStore';
 
-// The top-level state object
-export interface ApplicationState {
-    router: RouterState;
-    user: UserStore.UserState;
-    gists: GistsStore.GistsState;
-    blog: BlogStore.BlogState;
-}
-
-// Whenever an action is dispatched, Redux will update each top-level application state property using
-// the reducer with the matching name. It's important that the names match exactly, and that the reducer
-// acts on the corresponding ApplicationState property type.
 export const reducers = {
-    user: UserStore.reducer,
-    gists: GistsStore.reducer,
-    blog: BlogStore.reducer,
+    user: User.default,
+    gists: Gists.default,
+    blog: Blog.default,
 };
 
-// This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are
-// correctly typed to match your store.
-export type AppThunkAction<TAction> = {
-    (dispatch: (action: TAction) => void, getState: () => ApplicationState): void;
+// Use throughout your app instead of plain `useDispatch` and `useSelector`
+export const useAppDispatch = () => useDispatch<AppDispatch>()
+
+export const useApplicationState: TypedUseSelectorHook<RootState> = useSelector
+
+export function withPayloadType<T>() {
+    return (t: T) => ({ payload: t })
 }
-
-export type ThunkCreator<R = Promise<any>> =
-    ActionCreator<ThunkAction<R, ApplicationState, KnownAction, AnyAction>>;
-
-export const useApplicationState: TypedUseSelectorHook<ApplicationState> = useSelector;
