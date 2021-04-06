@@ -105,7 +105,6 @@ const pages: Page[] = [
 ]
 
 interface Props {
-	router: NextRouter;
 	children?: React.ReactNode;
 }
 
@@ -123,8 +122,9 @@ interface Props {
  */
 const Header: React.FC<Props> = (props) => {
 
-	const { router, children } = props;
+	const { children } = props;
 	const dispatch = useAppDispatch();
+	const router = useRouter();
 	const [drawerOpen, setDrawerOpen] = React.useState(false);
 	const tabValue = React.useRef(
 		pages.findIndex(page => router.asPath === page.path)

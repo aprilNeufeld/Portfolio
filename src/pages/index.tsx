@@ -25,7 +25,7 @@ const Home: React.FC = () => {
 	return (
 		<React.Fragment>
 			{userLoaded &&
-				<Layout router={router} user={user}>
+				<Layout user={user}>
 				<Box>
 						<PageTitle text="Hi, I'm April." />
 						<Typography variant="h6">

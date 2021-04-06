@@ -10,6 +10,7 @@ import {
 	useTheme
 } from '@material-ui/core';
 import HeaderContent from '../components/HeaderContent';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -52,6 +53,7 @@ const Layout: React.FC<Props> = (props) => {
 
 	const { user, children } = props;
 	const classes = useStyles(useTheme());
+	const router = useRouter();
 
 	return (
 		<React.Fragment>
