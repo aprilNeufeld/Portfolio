@@ -1,4 +1,5 @@
 ﻿import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { HYDRATE} from 'next-redux-wrapper';
 
 interface UserState {
 	user: any;
@@ -25,7 +26,7 @@ export const fetchUserData = createAsyncThunk(
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
-	reducers: {},
+	reducers: {	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchUserData.pending, (state, action) => {
 			state.loaded = false;

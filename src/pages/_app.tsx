@@ -4,16 +4,21 @@ import type { AppProps } from 'next/app';
 import { theme } from '../styles';
 import { ThemeProvider } from '@material-ui/core';
 import { ConnectedRouter } from 'connected-next-router';
-import { wrapper } from '../store/configureStore';
+import { useStore } from '../store/configureStore';
+import { Provider } from 'react-redux';
 
 const PortfolioApp: React.FC<AppProps> = ({ Component, pageProps }) => {
+	const store = useStore(pageProps.initialReduxState);
+
 	return (
-		<ConnectedRouter>
-			<ThemeProvider theme={theme}>
-				<Component {...pageProps} />
-			</ThemeProvider>
-		</ConnectedRouter>
+		<Provider store={store}>
+			<ConnectedRouter>
+				<ThemeProvider theme={theme}>
+					<Component {...pageProps} />
+				</ThemeProvider>
+			</ConnectedRouter>
+		</Provider>
 	)
 };
 
-export default wrapper.withRedux(PortfolioApp);
+export default PortfolioApp;

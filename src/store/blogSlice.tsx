@@ -15,18 +15,18 @@ export const fetchBlogPosts = createAsyncThunk(
 	'blog/fetch', async (arg, thunkApi) => {
 		const response = await sanityClient.fetch(
 			`*[_type == "post"]{
-						title,
-						slug,
-						"author": author->name,
-						mainImage {
-							  asset->{
-							  _id,
-							  url
-							}
-						},
-						publishedAt,	
-						body
-					  }`
+				title,
+				slug,
+				"author": author->name,
+				mainImage {
+						asset->{
+						_id,
+						url
+					}
+				},
+				publishedAt,	
+				body
+				}`
 		);
 		return {
 			posts: response

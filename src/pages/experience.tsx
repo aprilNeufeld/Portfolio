@@ -39,7 +39,6 @@ const Experience: React.FC = () => {
 		}
 	}, [user, dispatch]);
 
-
 	return (
 		<React.Fragment>
 			{user.loaded &&

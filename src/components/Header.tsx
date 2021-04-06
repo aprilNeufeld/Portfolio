@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import clsx from 'clsx';
-import { useRouter, NextRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { push } from 'connected-next-router'
 import MenuIcon from '@material-ui/icons/Menu';
 import { Parallax } from 'react-parallax';
@@ -140,7 +140,7 @@ const Header: React.FC<Props> = (props) => {
 	const handleMenuSelection =
 		(event: React.ChangeEvent<{}>, newValue: number) => {
 			tabValue.current = newValue;
-			router.push(pages[newValue].path);
+			dispatch(push(pages[newValue].path));
 		};
 
 	/**
