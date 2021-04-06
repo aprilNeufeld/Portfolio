@@ -66,8 +66,6 @@
 		"dev": "next dev",
 		"build": "next build && next export",
 		"start": "next start",
-		"predeploy": "npm run build",
-		"deploy": "gh-pages -d out",
 		"test": "cross-env CI=true next test --env=jsdom",
 		"lint": "eslint ./src/**/*.ts ./src/**/*.tsx"
 	},
