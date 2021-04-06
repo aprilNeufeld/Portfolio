@@ -11,6 +11,7 @@ import {
 	useTheme,
 	colors
 } from '@material-ui/core';
+import { useApplicationState } from '../store';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -64,13 +65,9 @@ const useStyles = makeStyles((theme: Theme) => {
 	});
 });
 
-interface Props {
-	user: any;
-}
-
-const HeaderContent: React.FC<Props> = (props) => {
-
-	const { user } = props;
+const HeaderContent: React.FC = () => {
+	 
+	const user = useApplicationState(state => state.user.user);
 	const classes = useStyles(useTheme());
 
 	return (

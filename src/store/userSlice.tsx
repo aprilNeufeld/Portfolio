@@ -12,7 +12,6 @@ const initialState: UserState = {
 
 export const fetchUserData = createAsyncThunk(
 	'user/fetch', async (arg, thunkApi) => {
-		console.log("fetching user data");
 		const response = await fetch(
 			'https://gitconnected.com/v1/portfolio/tricksterCodess'
 		);

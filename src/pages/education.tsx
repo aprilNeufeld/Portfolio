@@ -1,5 +1,4 @@
 ﻿import * as React from 'react';
-import { useApplicationState } from '../store';
 import {
 	Typography,
 	Box,
@@ -7,28 +6,40 @@ import {
 import PageTitle from '../components/PageTitle';
 import DividerWithSpacing from '../components/DividerWithSpacing';
 import Layout from '../components/Layout';
+import { useApplicationState, useAppDispatch } from '../store';
+import { fetchUserData } from '../store/userSlice';
 
 const Education: React.FC = () => {
 
-	const user = useApplicationState(state => state.user.user);
+	const user = useApplicationState(state => state.user);
+	const dispatch = useAppDispatch();
+
+	React.useEffect(() => {
+		if (!user.loaded) {
+			dispatch(fetchUserData());
+		}
+	}, [user, dispatch]);
 
 	return (
-		<Layout user={user}>
-			<PageTitle text="Education" />
-			{user.education.map((education: any, index: number) => (
-				<Box key={index} >
-					<Typography variant="h5" >
-						{education.institution}
-					</Typography>
-					<Typography variant="h6">
-						{education.studyType}  |  {education.area}
-					</Typography>
+		<React.Fragment>
+			{user.loaded &&
+				<Layout>
+					<PageTitle text="Education" />
+					{user.user.education.map((education: any, index: number) => (
+						<Box key={index} >
+							<Typography variant="h5" >
+								{education.institution}
+							</Typography>
+							<Typography variant="h6">
+								{education.studyType}  |  {education.area}
+							</Typography>
 
-					<DividerWithSpacing />
-				</Box>
-			))}
-
-		</Layout>
+							<DividerWithSpacing />
+						</Box>
+					))}
+				</Layout>
+			}
+		</React.Fragment>
 	)
 
 };

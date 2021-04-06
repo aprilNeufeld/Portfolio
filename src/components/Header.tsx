@@ -140,7 +140,7 @@ const Header: React.FC<Props> = (props) => {
 	const handleMenuSelection =
 		(event: React.ChangeEvent<{}>, newValue: number) => {
 			tabValue.current = newValue;
-			dispatch(push({ pathname: pages[newValue].path }));
+			router.push(pages[newValue].path);
 		};
 
 	/**

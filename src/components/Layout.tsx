@@ -10,7 +10,10 @@ import {
 	useTheme
 } from '@material-ui/core';
 import HeaderContent from '../components/HeaderContent';
-import { useRouter } from 'next/router';
+import { useAppDispatch, useApplicationState } from '../store';
+import { fetchBlogPosts } from '../store/blogSlice';
+import { fetchGists } from '../store/gistsSlice';
+import { fetchUserData } from '../store/userSlice';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -45,20 +48,18 @@ const useStyles = makeStyles((theme: Theme) => {
 });
 
 interface Props {
-	user: any;
 	children?: React.ReactNode;
 }
 
 const Layout: React.FC<Props> = (props) => {
 
-	const { user, children } = props;
+	const { children } = props;
 	const classes = useStyles(useTheme());
-	const router = useRouter();
 
 	return (
 		<React.Fragment>
 			<Header>
-				<HeaderContent user={user}/>
+				<HeaderContent />
 			</Header>
 			<Container maxWidth="lg" className={classes.root}>
 				<Paper elevation={2} className={classes.paper} >

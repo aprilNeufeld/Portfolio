@@ -1,37 +1,34 @@
 import * as React from 'react';
-import { useApplicationState, useAppDispatch } from '../store';
 import {
 	Typography,
 	Box
 } from '@material-ui/core';
 import PageTitle from '../components/PageTitle';
 import Layout from '../components/Layout';
+import { useApplicationState, useAppDispatch } from '../store';
 import { fetchUserData } from '../store/userSlice';
-import { useRouter } from 'next/router';
 
 const Home: React.FC = () => {
-	const user = useApplicationState(state => state.user.user);
-	const userLoaded = useApplicationState(state => state.user.loaded);
+
+	const user = useApplicationState(state => state.user);
 	const dispatch = useAppDispatch();
-	const router = useRouter();
 
 	React.useEffect(() => {
-		if (!userLoaded) {
-			console.log("in dispatch");
-			console.log(JSON.stringify(dispatch(fetchUserData()), null, 2));
+		if (!user.loaded) {
+			dispatch(fetchUserData());
 		}
-	}, []);
+	}, [user, dispatch]);
 
 	return (
 		<React.Fragment>
-			{userLoaded &&
-				<Layout user={user}>
-				<Box>
+			{user.loaded &&
+				<Layout>
+					<Box>
 						<PageTitle text="Hi, I'm April." />
 						<Typography variant="h6">
-							{user.basics.summary}
+							{user.user.basics.summary}
 						</Typography>
-				</Box>
+					</Box>
 				</Layout>
 			}
 		</React.Fragment>
