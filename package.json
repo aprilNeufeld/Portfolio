@@ -21,7 +21,6 @@
 		"merge": "1.2.1",
 		"moment": "^2.29.1",
 		"next": "^10.1.3",
-		"next-redux-wrapper": "^6.0.2",
 		"popper.js": "^1.16.0",
 		"react": "16.11.0",
 		"react-dom": "16.11.0",
@@ -64,7 +63,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build && next export",
+		"build": "next build",
 		"start": "next start",
 		"test": "cross-env CI=true next test --env=jsdom",
 		"lint": "eslint ./src/**/*.ts ./src/**/*.tsx"

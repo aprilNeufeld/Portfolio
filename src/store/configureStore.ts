@@ -6,8 +6,8 @@ import {
 	routerReducer,
 } from 'connected-next-router';
 import Router from 'next/router';
-import React from 'react';
 import { reducers } from './';
+import { useMemo } from 'react';
 
 
 const rootReducer = combineReducers({
@@ -17,15 +17,20 @@ const rootReducer = combineReducers({
 
 export type RootState = ReturnType<typeof rootReducer>
 
-// Using next-redux-wrapper's initStore
+/*
 const reducer: Reducer<RootState> = (state, action) => {
-	if (action.type === LOCATION_CHANGE) {
+	if (action.type === LOCATION_CHANGE && state) {
 		console.log("change location");
+		console.log("state.router: " + JSON.stringify(state.router, null, 1));
+		console.log("action.payload: " + JSON.stringify(action.payload, null, 1));
+
 		const nextState = {
 			...state, // use previous state
 		}
 		if (typeof window !== 'undefined' && state?.router) {
+			console.log("client side nav");
 			// preserve router value on client side navigation
+			console.log("nextState.router: " + JSON.stringify(nextState.router, null, 1));
 			nextState.router = state.router
 		}
 		return nextState
@@ -33,12 +38,13 @@ const reducer: Reducer<RootState> = (state, action) => {
 		return rootReducer(state, action)
 	}
 }
+*/
 
 const routerMiddleware = createRouterMiddleware();
 
 export const createStore = (initialState?: Partial<RootState>) =>
 	configureStore({
-		reducer: reducer,
+		reducer: rootReducer,
 		middleware: getDefaultMiddleware =>
 			getDefaultMiddleware().prepend(routerMiddleware),
 		preloadedState: initialState,
@@ -86,6 +92,6 @@ export const initializeStore = (initialState?: Partial<RootState>) => {
 }
 
 export function useStore(initialState?: RootState) {
-	const store = React.useMemo(() => initializeStore(initialState), [initialState])
+	const store = useMemo(() => initializeStore(initialState), [initialState])
 	return store
 }
