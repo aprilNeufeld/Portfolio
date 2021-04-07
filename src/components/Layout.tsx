@@ -10,10 +10,6 @@ import {
 	useTheme
 } from '@material-ui/core';
 import HeaderContent from '../components/HeaderContent';
-import { useAppDispatch, useApplicationState } from '../store';
-import { fetchBlogPosts } from '../store/blogSlice';
-import { fetchGists } from '../store/gistsSlice';
-import { fetchUserData } from '../store/userSlice';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({

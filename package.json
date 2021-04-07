@@ -67,7 +67,7 @@
 		"build": "next build",
 		"start": "next start",
 		"test": "cross-env CI=true next test --env=jsdom",
-		"lint": "eslint ./src/**/*.ts ./src/**/*.tsx"
+		"lint": "eslint ./src/**/*.ts ./src/**/*.tsx --fix"
 	},
 	"version": "0.1.0",
 	"homepage": "https://trickstercodess.com"

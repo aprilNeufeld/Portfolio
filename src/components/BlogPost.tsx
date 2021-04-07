@@ -29,7 +29,7 @@ import {
 	LinkedinShareButton,
 	TwitterShareButton
 } from 'react-share'
-import { useAppDispatch, useApplicationState } from '../store';
+import { useAppDispatch } from '../store';
 import { push } from 'connected-next-router';
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -98,32 +98,28 @@ const BlockRenderer = (props: any) => {
 
 interface Props {
 	post: any;
+	url: string;
+	hash: string;
 }
-
-const url = 'https://www.trickstercodess.com/blog#';
-
+					
 /**
  * A single blog post, held in a Material-UI Card.
- * @param props
  */
 const BlogPost: React.FC<Props> = (props) => {
 
-	const { post } = props;
+	const { post, url, hash } = props;
 	const classes = useStyles(useTheme());
 	const slug = React.useRef((post.title as string).replace(/\s+/g, '-').toLowerCase())
+	const shareUrl = React.useRef(url + '#' + slug.current);
 	const [expanded, setExpanded] = React.useState(false);
-	const stateRouter = useApplicationState(state => state.router);
-	const [hash, setHash] = React.useState(stateRouter.location.hash);
 	const dispatch = useAppDispatch();
 
 	React.useEffect(() => {
-		if (hash !== '') {
+		if (hash === '#' + slug.current) {
+			setExpanded(true);
 			dispatch(push(hash, undefined, { shallow: true }));
 		}
-		else if (stateRouter.location.hash !== '') {
-			setHash(stateRouter.location.hash);
-		}
-	}, [hash])
+	}, [hash, slug.current, dispatch])
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
@@ -177,28 +173,28 @@ const BlogPost: React.FC<Props> = (props) => {
 				</Collapse>
 				<CardActions disableSpacing className='notranslate'>
 					<FacebookShareButton
-						url={url + slug.current}
+						url={shareUrl.current}
 						quote={post.title}
 						translate='yes'
 					>
 						<FacebookIcon className={classes.shareIcon} />
 					</FacebookShareButton>
 					<TwitterShareButton
-						url={url + slug.current}
+						url={shareUrl.current}
 						title={post.title}
 						translate='yes'
 					>
 						<TwitterIcon className={classes.shareIcon} />
 					</TwitterShareButton>
 					<LinkedinShareButton
-						url={url + slug.current}
+						url={shareUrl.current}
 						title={post.title}
 						translate='yes'
 					>
 						<LinkedInIcon className={classes.shareIcon} />
 					</LinkedinShareButton>
 					<RedditShareButton
-						url={url + slug.current}
+						url={shareUrl.current}
 						title={post.title}
 						translate='yes'
 					>

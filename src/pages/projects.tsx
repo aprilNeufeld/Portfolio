@@ -16,7 +16,6 @@ import FancyChild from '../components/FancyChild';
 import Layout from '../components/Layout';
 import { useApplicationState, useAppDispatch } from '../store';
 import { fetchUserData } from '../store/userSlice';
-import { fetchBlogPosts } from '../store/blogSlice';
 import { fetchGists } from '../store/gistsSlice';
 
 const useStyles = makeStyles((theme: Theme) => {
