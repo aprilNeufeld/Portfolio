@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import { useRouter } from 'next/router'
 import { push } from 'connected-next-router'
 import MenuIcon from '@material-ui/icons/Menu';
-import { Parallax } from 'react-parallax';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import {
 	Tabs,
@@ -16,7 +15,8 @@ import {
 	makeStyles,
 	Theme,
 	createStyles,
-	useTheme
+	useTheme,
+	Container
 } from '@material-ui/core';
 import { useAppDispatch } from '../store';
 
@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
 		root: {
 			zIndex: 2,
+			backgroundImage: "url('/images/background.png')",
+			backgroundRepeat: 'no-repeat',
+			backgroundSize: 'cover',
 		},
 		tabsLayout: {
 			[theme.breakpoints.down('sm')]: {
@@ -161,64 +164,57 @@ const Header: React.FC<Props> = (props) => {
 
 	return (
 		<Paper className={classes.root}>
-			<Parallax
-				bgImage={'/images/background.png'}
-				blur={1}
-				strength={-200}
+			<AppBar
+				className={clsx(classes.appBar, {
+					[classes.appBarElevated]: scrolled
+				})}
 			>
-				<AppBar
-					className={clsx(classes.appBar, {
-						[classes.appBarElevated]: scrolled
-					})}
-				>
-					<Toolbar>
+				<Toolbar>
+					<Tabs
+						value={tabValue.current}
+						onChange={handleMenuSelection}
+						className={classes.tabsLayout}
+					>
+						{pages.map((page: Page) =>
+							<Tab
+								key={page.title}
+								label={page.title}
+							/>
+						)};
+								</Tabs>
+					<IconButton
+						edge="end"
+						className={classes.menuButton}
+						color="default"
+						onClick={handleDrawerToggle}
+					>
+						<MenuIcon />
+					</IconButton>
+					<Drawer
+						anchor="top"
+						open={drawerOpen}
+						onClose={handleDrawerToggle}
+					>
 						<Tabs
 							value={tabValue.current}
 							onChange={handleMenuSelection}
-							className={classes.tabsLayout}
+							orientation="vertical"
 						>
 							{pages.map((page: Page) =>
 								<Tab
 									key={page.title}
 									label={page.title}
+									onClick={handleDrawerToggle}
 								/>
 							)};
-								</Tabs>
-						<IconButton
-							edge="end"
-							className={classes.menuButton}
-							color="default"
-							onClick={handleDrawerToggle}
-						>
-							<MenuIcon />
-						</IconButton>
-						<Drawer
-							anchor="top"
-							open={drawerOpen}
-							onClose={handleDrawerToggle}
-						>
-							<Tabs
-								value={tabValue.current}
-								onChange={handleMenuSelection}
-								orientation="vertical"
-							>
-								{pages.map((page: Page) =>
-									<Tab
-										key={page.title}
-										label={page.title}
-										onClick={handleDrawerToggle}
-									/>
-								)};
 									</Tabs>
-						</Drawer>
-					</Toolbar>
-				</AppBar>
-				<Toolbar />
-				{children}
-			</Parallax>
+					</Drawer>
+				</Toolbar>
+			</AppBar>
+			<Toolbar />
+			{children}
 		</Paper>
 	);
-
 };
 
 export default Header;

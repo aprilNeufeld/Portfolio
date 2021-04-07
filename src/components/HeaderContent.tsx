@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) => {
 			[theme.breakpoints.up('md')]: {
 				paddingTop: theme.spacing(6)
 			},
+			position: 'relative',
 		},
 		profilePictureContainer: {
 			[theme.breakpoints.down('sm')]: {

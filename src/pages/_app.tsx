@@ -6,6 +6,7 @@ import { ThemeProvider } from '@material-ui/core';
 import { ConnectedRouter } from 'connected-next-router';
 import { useStore } from '../store/configureStore';
 import { Provider } from 'react-redux';
+import { ParallaxProvider } from 'react-scroll-parallax';
 
 const PortfolioApp: React.FC<AppProps> = ({ Component, pageProps }) => {
 	const store = useStore(pageProps.initialReduxState);
@@ -14,7 +15,9 @@ const PortfolioApp: React.FC<AppProps> = ({ Component, pageProps }) => {
 		<Provider store={store}>
 			<ConnectedRouter>
 				<ThemeProvider theme={theme}>
-					<Component {...pageProps} />
+					<ParallaxProvider>
+						<Component {...pageProps} />
+					</ParallaxProvider>
 				</ThemeProvider>
 			</ConnectedRouter>
 		</Provider>
