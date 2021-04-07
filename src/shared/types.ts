@@ -1,4 +1,4 @@
-﻿
+
 /**
  * Holds information about a particular
  * page to be rendered, including the component,

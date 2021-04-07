@@ -1,4 +1,4 @@
-﻿import * as React from 'react';
+import * as React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router'
 import { push } from 'connected-next-router'
@@ -16,7 +16,6 @@ import {
 	Theme,
 	createStyles,
 	useTheme,
-	Container
 } from '@material-ui/core';
 import { useAppDispatch } from '../store';
 
@@ -130,7 +129,7 @@ const Header: React.FC<Props> = (props) => {
 	const router = useRouter();
 	const [drawerOpen, setDrawerOpen] = React.useState(false);
 	const tabValue = React.useRef(
-		pages.findIndex(page => router.asPath === page.path)
+		pages.findIndex(page => router.pathname === page.path)
 	);
 	const classes = useStyles(useTheme());
 

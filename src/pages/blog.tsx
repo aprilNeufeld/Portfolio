@@ -1,4 +1,4 @@
-﻿import * as React from 'react';
+import * as React from 'react';
 import PageTitle from '../components/PageTitle';
 import BlogPost from '../components/BlogPost';
 import Layout from '../components/Layout';
@@ -11,7 +11,7 @@ const Blog: React.FC = () => {
 	const user = useApplicationState(state => state.user);
 	const blog = useApplicationState(state => state.blog);
 	const dispatch = useAppDispatch();
-
+	
 	React.useEffect(() => {
 		if (!user.loaded) {
 			dispatch(fetchUserData());

@@ -1,4 +1,4 @@
-﻿import * as React from 'react';
+import * as React from 'react';
 import clsx from 'clsx';
 import {
 	Box,
@@ -29,6 +29,8 @@ import {
 	LinkedinShareButton,
 	TwitterShareButton
 } from 'react-share'
+import { useAppDispatch, useApplicationState } from '../store';
+import { push } from 'connected-next-router';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -98,14 +100,30 @@ interface Props {
 	post: any;
 }
 
-const url = 'https://trickstercodess.com/blog#';
+const url = 'https://www.trickstercodess.com/blog#';
 
+/**
+ * A single blog post, held in a Material-UI Card.
+ * @param props
+ */
 const BlogPost: React.FC<Props> = (props) => {
 
 	const { post } = props;
 	const classes = useStyles(useTheme());
 	const slug = React.useRef((post.title as string).replace(/\s+/g, '-').toLowerCase())
 	const [expanded, setExpanded] = React.useState(false);
+	const stateRouter = useApplicationState(state => state.router);
+	const [hash, setHash] = React.useState(stateRouter.location.hash);
+	const dispatch = useAppDispatch();
+
+	React.useEffect(() => {
+		if (hash !== '') {
+			dispatch(push(hash, undefined, { shallow: true }));
+		}
+		else if (stateRouter.location.hash !== '') {
+			setHash(stateRouter.location.hash);
+		}
+	}, [hash])
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);

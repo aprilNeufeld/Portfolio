@@ -1,8 +1,7 @@
-import { configureStore, combineReducers, Reducer } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import {
 	createRouterMiddleware,
 	initialRouterState,
-    LOCATION_CHANGE,
 	routerReducer,
 } from 'connected-next-router';
 import Router from 'next/router';

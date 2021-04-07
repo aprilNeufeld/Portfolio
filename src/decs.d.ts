@@ -1,2 +1,2 @@
-﻿
+
 declare module "anchorate";

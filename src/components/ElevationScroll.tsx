@@ -1,4 +1,4 @@
-﻿import * as React from 'react';
+import * as React from 'react';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
 interface Props {
