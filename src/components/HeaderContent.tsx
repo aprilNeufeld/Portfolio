@@ -26,15 +26,16 @@ const useStyles = makeStyles((theme: Theme) => {
 		},
 		profilePictureContainer: {
 			[theme.breakpoints.down('sm')]: {
-				width: "200px",
 				height: "200px",
-				borderRadius: "100px"
 			},
 			[theme.breakpoints.up('md')]: {
-				width: "300px",
 				height: "300px",
-				borderRadius: "150px"
 			},
+			width: "auto",
+			border: 5,
+			borderColor: colors.common.white,
+			borderStyle: "solid",
+			borderRadius: "300px",
 			backgroundColor: "#ffffff4D",
 			marginBottom: theme.spacing(2),
 		},
@@ -42,16 +43,12 @@ const useStyles = makeStyles((theme: Theme) => {
 			[theme.breakpoints.down('sm')]: {
 				width: "200px",
 				height: "200px",
-				borderRadius: "100px"
 			},
 			[theme.breakpoints.up('md')]: {
 				width: "300px",
 				height: "300px",
-				borderRadius: "150px"
 			},
-			border: 5,
-			borderColor: colors.common.white,
-			borderStyle: "solid",
+			borderRadius: "300px",
 		},
 		chipsContainer: {
 			paddingTop: theme.spacing(2),

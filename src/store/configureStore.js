@@ -18,28 +18,6 @@ var router_1 = require("next/router");
 var _1 = require("./");
 var react_1 = require("react");
 var rootReducer = toolkit_1.combineReducers(__assign(__assign({}, _1.reducers), { router: connected_next_router_1.routerReducer }));
-/*
-const reducer: Reducer<RootState> = (state, action) => {
-    if (action.type === LOCATION_CHANGE && state) {
-        console.log("change location");
-        console.log("state.router: " + JSON.stringify(state.router, null, 1));
-        console.log("action.payload: " + JSON.stringify(action.payload, null, 1));
-
-        const nextState = {
-            ...state, // use previous state
-        }
-        if (typeof window !== 'undefined' && state?.router) {
-            console.log("client side nav");
-            // preserve router value on client side navigation
-            console.log("nextState.router: " + JSON.stringify(nextState.router, null, 1));
-            nextState.router = state.router
-        }
-        return nextState
-    } else {
-        return rootReducer(state, action)
-    }
-}
-*/
 var routerMiddleware = connected_next_router_1.createRouterMiddleware();
 exports.createStore = function (initialState) {
     return toolkit_1.configureStore({

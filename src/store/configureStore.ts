@@ -17,29 +17,6 @@ const rootReducer = combineReducers({
 
 export type RootState = ReturnType<typeof rootReducer>
 
-/*
-const reducer: Reducer<RootState> = (state, action) => {
-	if (action.type === LOCATION_CHANGE && state) {
-		console.log("change location");
-		console.log("state.router: " + JSON.stringify(state.router, null, 1));
-		console.log("action.payload: " + JSON.stringify(action.payload, null, 1));
-
-		const nextState = {
-			...state, // use previous state
-		}
-		if (typeof window !== 'undefined' && state?.router) {
-			console.log("client side nav");
-			// preserve router value on client side navigation
-			console.log("nextState.router: " + JSON.stringify(nextState.router, null, 1));
-			nextState.router = state.router
-		}
-		return nextState
-	} else {
-		return rootReducer(state, action)
-	}
-}
-*/
-
 const routerMiddleware = createRouterMiddleware();
 
 export const createStore = (initialState?: Partial<RootState>) =>
