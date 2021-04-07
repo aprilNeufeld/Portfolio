@@ -13,17 +13,13 @@ const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
 		root: {
 			zIndex: 2,
-		},
-		parallax: {
-			flexGrow: 0,
-			flexShrink: 1,
-		},
-		content: {
-			padding: theme.spacing(3, 2),
 			backgroundImage: "url('/images/background.png')",
 			backgroundRepeat: 'no-repeat',
 			backgroundSize: 'cover',
 			backgroundPosition: 'top',
+		},
+		content: {
+			padding: theme.spacing(3, 2),
 		},
 	});
 });
@@ -37,7 +33,7 @@ const Footer: React.FC = () => {
 		<Paper
 			className={classes.root}
 		>
-			<Container maxWidth="md" className={classes.content}>
+			<Container maxWidth='xl' className={classes.content}>
 				<Typography variant="body2" style={{ color: "#ffffff" }}>
 					© 2021 TricksterCodess
 					</Typography>

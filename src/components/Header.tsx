@@ -26,6 +26,10 @@ const useStyles = makeStyles((theme: Theme) => {
 			backgroundImage: "url('/images/background.png')",
 			backgroundRepeat: 'no-repeat',
 			backgroundSize: 'cover',
+			color: 'white',
+			'& a': {
+				color: 'white',
+			},
 		},
 		tabsLayout: {
 			[theme.breakpoints.down('sm')]: {

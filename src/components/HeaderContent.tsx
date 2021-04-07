@@ -87,7 +87,10 @@ const HeaderContent: React.FC = () => {
 				{user.basics.name}
 			</Typography>
 			<Typography variant="h5" gutterBottom>
-				<Link href={`https://gitconnected.com/${user.basics.username}`}>
+				<Link
+					href={`https://gitconnected.com/${user.basics.username}`}
+					underline='always'
+				>
 					@{user.basics.username}
 				</Link> | she/her
 					</Typography>
