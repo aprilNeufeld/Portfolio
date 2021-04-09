@@ -71,14 +71,6 @@ var pages = [
         title: 'Home'
     },
     {
-        path: '/education',
-        title: 'Education'
-    },
-    {
-        path: '/experience',
-        title: 'Experience'
-    },
-    {
         path: '/projects',
         title: 'My Work'
     },
