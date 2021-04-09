@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme: Theme) => {
 			whiteSpace: "pre-wrap",
 		},
 		plug: {
-			marginTop: theme.spacing(2),
+			marginTop: theme.spacing(4),
+			marginBottom: theme.spacing(4),
 		},
 	});
 });
@@ -51,6 +52,11 @@ const Home: React.FC = () => {
 						<Typography variant="h6" className={classes.summary} gutterBottom>
 							{user.user.basics.summary}
 						</Typography>
+						<Typography variant='h6' className={classes.plug}>
+							Check out <Link href='/projects'>
+								my repos and gists
+							</Link> for examples of my work!
+						</Typography>
 						<Typography variant="h6" gutterBottom>
 							Things I love:
 						</Typography>
@@ -61,7 +67,7 @@ const Home: React.FC = () => {
 										<Typography variant="body1" className={classes.interests}>
 											{item.name}  {item.keywords.map((keyword: any, i: number,) => (
 												<span key={keyword} >
-													{(i % 2 == 0) &&
+													{(i % 2 === 0) &&
 														<span role='img' aria-label={item.keywords[i + 1]}>
 															{keyword}
 														</span>
@@ -74,10 +80,7 @@ const Home: React.FC = () => {
 								))}
 							</List>
 						</FancyChild>
-						<Typography variant='h6' className={classes.plug}>
-							Check out <Link href='/projects'>
-								my repos and gists </Link> for examples of my work!
-						</Typography>
+
 					</Box>
 				</Layout>
 			}

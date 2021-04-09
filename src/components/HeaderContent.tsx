@@ -39,10 +39,10 @@ const useStyles = makeStyles((theme: Theme) => {
 		},
 		profilePictureContainer: {
 			[theme.breakpoints.down('sm')]: {
-				height: "200px",
+				height: "150px",
 			},
 			[theme.breakpoints.up('md')]: {
-				height: "300px",
+				height: "200px",
 			},
 			width: "auto",
 			border: 5,
@@ -54,12 +54,12 @@ const useStyles = makeStyles((theme: Theme) => {
 		},
 		profilePicture: {
 			[theme.breakpoints.down('sm')]: {
-				width: "200px",
-				height: "200px",
+				width: "150px",
+				height: "150px",
 			},
 			[theme.breakpoints.up('md')]: {
-				width: "300px",
-				height: "300px",
+				width: "200px",
+				height: "200px",
 			},
 			borderRadius: "300px",
 		},
@@ -96,17 +96,17 @@ const HeaderContent: React.FC = () => {
 				/>
 			</Box>
 			<Box className={classes.nameAndPronouns}>
-				<Typography variant="h3" className={classes.name}>
+				<Typography variant="h4" className={classes.name}>
 					{user.basics.name}
 				</Typography>
-				<Typography variant="h4">
+				<Typography variant="h5">
 					(She/Her)
 			</Typography>
 			</Box>
-			<Typography variant="h4" gutterBottom>
+			<Typography variant="h6" gutterBottom>
 				{user.basics.label}
 			</Typography>
-			<Typography variant="h6" align="center" gutterBottom>
+			<Typography variant="body1" align="center" gutterBottom>
 				@tricksterCodess: <Link
 					href={`https://github.com/${user.basics.username}`}
 					underline='always'
