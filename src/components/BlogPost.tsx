@@ -9,28 +9,14 @@ import {
 	CardMedia,
 	Collapse,
 	Divider,
-	IconButton,
 	Typography,
 	makeStyles,
 	Theme,
 	createStyles,
 	useTheme
 } from '@material-ui/core';
-import BlockContent from '@sanity/block-content-to-react';
-import FancyChild from '../components/FancyChild';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import RedditIcon from '@material-ui/icons/Reddit';
-import {
-	FacebookShareButton,
-	RedditShareButton,
-	LinkedinShareButton,
-	TwitterShareButton
-} from 'react-share'
-import { useAppDispatch } from '../store';
-import { push } from 'connected-next-router';
+import HorizontalExpandButton from './HorizontalExpandButton';
+import BlockRenderer from './BlockRenderer';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -52,6 +38,9 @@ const useStyles = makeStyles((theme: Theme) => {
 		blockQuote: {
 			marginBottom: '1rem',
 		},
+		cardActions: {
+			padding: 0,
+		},
 		collapseContainer: {
 			position: 'relative',
 		},
@@ -60,14 +49,12 @@ const useStyles = makeStyles((theme: Theme) => {
 			top: 0,
 			width: '100%',
 			height: '100%',
-			background: 'linear-gradient(0deg, rgba(255,255,255,1) 19%, rgba(255,255,255,0.7829181494661922) 35%, rgba(255,255,255,0.5747330960854092) 57%, rgba(255,255,255,0) 100%)',
+			background: 'linear-gradient(0deg, rgba(255,255,255,1) 1%, rgba(255,255,255,0.7) 15%, rgba(255,255,255,0.5747330960854092) 20%, rgba(255,255,255,0) 80%)',
 			transition: theme.transitions.create('background')
 		},
 		collapseOpen: {
 			background: 'none',
 			transition: theme.transitions.create('background'),
-		},
-		cardContent: {
 		},
 		postBodyText: {
 			fontWeight: 300,
@@ -82,44 +69,18 @@ const useStyles = makeStyles((theme: Theme) => {
 	});
 });
 
-const BlockRenderer = (props: any) => {
-	const { style = 'normal' } = props.node;
-
-	if (style === 'blockquote') {
-		return (
-			<FancyChild variant={'blockquote'}>
-				{props.children}
-			</FancyChild >
-		)
-	}
-
-	return (BlockContent as any).defaultSerializers.types.block(props);
-}
-
 interface Props {
 	post: any;
-	url: string;
-	hash: string;
 }
-					
+
 /**
  * A single blog post, held in a Material-UI Card.
  */
 const BlogPost: React.FC<Props> = (props) => {
 
-	const { post, url, hash } = props;
+	const { post } = props;
 	const classes = useStyles(useTheme());
-	const slug = React.useRef((post.title as string).replace(/\s+/g, '-').toLowerCase())
-	const shareUrl = React.useRef(url + '#' + slug.current);
 	const [expanded, setExpanded] = React.useState(false);
-	const dispatch = useAppDispatch();
-
-	React.useEffect(() => {
-		if (hash === '#' + slug.current) {
-			setExpanded(true);
-			dispatch(push(hash, undefined, { shallow: true }));
-		}
-	}, [hash, slug.current, dispatch])
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
@@ -136,7 +97,6 @@ const BlogPost: React.FC<Props> = (props) => {
 		<React.Fragment>
 			<Card elevation={4} >
 				<CardHeader
-					id={slug.current}
 					title={post.title}
 					subheader={'by ' + post.author +
 						(post.publishedAt ? ' on ' + formatDate(post.publishedAt) : '')}
@@ -150,7 +110,7 @@ const BlogPost: React.FC<Props> = (props) => {
 				<Collapse
 					in={expanded}
 					timeout="auto"
-					collapsedHeight="150px"
+					collapsedHeight="200px"
 					className={classes.collapseContainer}
 				>
 					<Box
@@ -158,58 +118,28 @@ const BlogPost: React.FC<Props> = (props) => {
 							[classes.collapseOpen]: expanded,
 						})}
 					/>
-					<CardContent className={classes.cardContent}>
+					<CardContent>
 						<Typography
 							variant='body1'
 							className={classes.postBodyText}
 							component='div'
 						>
-							<BlockContent
-								blocks={post.body}
-								serializers={{ types: { block: BlockRenderer } }}
+							<BlockRenderer
+								content={post.body}
 							/>
 						</Typography>
 					</CardContent>
 				</Collapse>
-				<CardActions disableSpacing className='notranslate'>
-					<FacebookShareButton
-						url={shareUrl.current}
-						quote={post.title}
-						translate='yes'
-					>
-						<FacebookIcon className={classes.shareIcon} />
-					</FacebookShareButton>
-					<TwitterShareButton
-						url={shareUrl.current}
-						title={post.title}
-						translate='yes'
-					>
-						<TwitterIcon className={classes.shareIcon} />
-					</TwitterShareButton>
-					<LinkedinShareButton
-						url={shareUrl.current}
-						title={post.title}
-						translate='yes'
-					>
-						<LinkedInIcon className={classes.shareIcon} />
-					</LinkedinShareButton>
-					<RedditShareButton
-						url={shareUrl.current}
-						title={post.title}
-						translate='yes'
-					>
-						<RedditIcon className={classes.shareIcon} />
-					</RedditShareButton>
-					<IconButton
-						className={clsx(classes.expand, {
-							[classes.expandOpen]: expanded,
-						})}
+				<CardActions
+					disableSpacing
+					className={classes.cardActions}
+				>
+					<HorizontalExpandButton
 						onClick={handleExpandClick}
+						expanded={expanded}
 						aria-expanded={expanded}
 						aria-label="show more"
-					>
-						<ExpandMoreIcon />
-					</IconButton>
+					/>
 				</CardActions>
 			</Card>
 		</React.Fragment>

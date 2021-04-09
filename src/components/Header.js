@@ -16,10 +16,6 @@ var useStyles = core_1.makeStyles(function (theme) {
             backgroundImage: "url('/images/background.png')",
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
-            color: 'white',
-            '& a': {
-                color: 'white',
-            },
         },
         tabsLayout: (_a = {},
             _a[theme.breakpoints.down('sm')] = {

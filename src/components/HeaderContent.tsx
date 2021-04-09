@@ -24,6 +24,18 @@ const useStyles = makeStyles((theme: Theme) => {
 				paddingTop: theme.spacing(6)
 			},
 			position: 'relative',
+			color: 'white',
+			'& a:not(:hover)': {
+				color: 'white',
+			},
+		},
+		name: {
+			marginRight: theme.spacing(1),
+		},
+		nameAndPronouns: {
+			display: 'flex',
+			alignItems: 'center',
+			marginBottom: theme.spacing(1),
 		},
 		profilePictureContainer: {
 			[theme.breakpoints.down('sm')]: {
@@ -64,7 +76,7 @@ const useStyles = makeStyles((theme: Theme) => {
 });
 
 const HeaderContent: React.FC = () => {
-	 
+
 	const user = useApplicationState(state => state.user.user);
 	const classes = useStyles(useTheme());
 
@@ -83,22 +95,25 @@ const HeaderContent: React.FC = () => {
 					alt=''
 				/>
 			</Box>
-			<Typography variant="h2">
-				{user.basics.name}
+			<Box className={classes.nameAndPronouns}>
+				<Typography variant="h3" className={classes.name}>
+					{user.basics.name}
+				</Typography>
+				<Typography variant="h4">
+					(She/Her)
 			</Typography>
-			<Typography variant="h5" gutterBottom>
-				<Link
-					href={`https://gitconnected.com/${user.basics.username}`}
-					underline='always'
-				>
-					@{user.basics.username}
-				</Link> | she/her
-					</Typography>
-			<Typography variant="body1" align="center" gutterBottom>
+			</Box>
+			<Typography variant="h4" gutterBottom>
 				{user.basics.label}
 			</Typography>
-			<Typography variant="body1" gutterBottom>
-				<LocationOnOutlinedIcon /> {user.basics.region}
+			<Typography variant="h6" align="center" gutterBottom>
+				@tricksterCodess: <Link
+					href={`https://github.com/${user.basics.username}`}
+					underline='always'
+				> gitHub</Link>  |  <Link
+					href={`https://gitconnected.com/${user.basics.username}`}
+					underline='always'
+				>gitConnected	</Link>
 			</Typography>
 			<Box className={classes.chipsContainer}>
 				{user.skills.map((skill: any, index: number) => (

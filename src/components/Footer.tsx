@@ -6,7 +6,8 @@ import {
 	makeStyles,
 	Theme,
 	createStyles,
-	useTheme
+	useTheme,
+    Link
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -20,6 +21,10 @@ const useStyles = makeStyles((theme: Theme) => {
 		},
 		content: {
 			padding: theme.spacing(3, 2),
+			color: 'white',
+			'& a:not(:hover)': {
+				color: 'white',
+			},
 		},
 	});
 });
@@ -34,9 +39,15 @@ const Footer: React.FC = () => {
 			className={classes.root}
 		>
 			<Container maxWidth='xl' className={classes.content}>
-				<Typography variant="body2" style={{ color: "#ffffff" }}>
-					© 2021 TricksterCodess
-					</Typography>
+				<Typography variant="body2">
+					© 2021 TricksterCodess: <Link
+						href='https://github.com/tricksterCodess'
+						underline='always'
+					> gitHub</Link>  |  <Link
+						href='https://gitconnected.com/tricksterCodess'
+						underline='always'
+					>gitConnected	</Link>
+				</Typography>
 			</Container>
 		</Paper>
 

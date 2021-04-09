@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme: Theme) => {
 			color: '#1ab9c5',
 			borderColor: '#19b9c3',
 		},
+		introduction: {
+
+		},
 		itemName: {
 			display: 'inline',
 			marginBottom: theme.spacing(2),
@@ -64,7 +67,7 @@ const Projects: React.FC = () => {
 		<React.Fragment>
 			{user.loaded && gists.loaded &&
 				<Layout>
-					<PageTitle text='Projects' />
+					<PageTitle text='Projects & Samples' />
 					{user.user.projects.map((project: any, index: number) => (
 						<Box key={index} >
 							<Typography variant="caption" display={'inline'}>

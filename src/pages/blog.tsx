@@ -11,9 +11,6 @@ const Blog: React.FC = () => {
 	const user = useApplicationState(state => state.user);
 	const blog = useApplicationState(state => state.blog);
 	const dispatch = useAppDispatch();
-	const stateRouter = useApplicationState(state => state.router);
-	const [hash, setHash] = React.useState(stateRouter.location.hash);
-	const url = React.useRef("https://www.trickstercodess.com/blog");
 
 	React.useEffect(() => {
 		if (!user.loaded) {
@@ -22,12 +19,7 @@ const Blog: React.FC = () => {
 		if (!blog.loaded) {
 			dispatch(fetchBlogPosts());
 		}
-		else {
-			if (hash !== stateRouter.location.hash) {
-				setHash(stateRouter.location.hash);
-			}
-		}
-	}, [user, blog, dispatch, stateRouter.location.hash]);
+	}, [user, blog, dispatch]);
 
 	return (
 		<React.Fragment>
@@ -39,8 +31,6 @@ const Blog: React.FC = () => {
 							<BlogPost
 								key={index}
 								post={post}
-								url={url.current}
-								hash={hash}
 							/>
 						))}
 				</Layout>
