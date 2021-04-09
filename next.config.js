@@ -9,7 +9,7 @@ module.exports = {
     webpack(config) {
         config.plugins.push(new ESLintPlugin({
             // Plugin options
-            extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
+            extensions: ['ts', 'tsx'],
             eslintPath: require.resolve('eslint'),
             context: resolveApp('src'),
             cache: true,

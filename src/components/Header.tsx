@@ -18,6 +18,7 @@ import {
 	useTheme,
 } from '@material-ui/core';
 import { useAppDispatch } from '../store';
+import { Page } from '../shared/types';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -68,16 +69,6 @@ const useStyles = makeStyles((theme: Theme) => {
 		},
 	});
 });
-
-/**
- * Holds information about a particular
- * page to be rendered, including the component,
- * its name, and its path.
- */
-type Page = {
-	title: string,
-	path: string
-}
 
 /**
  * The collection of pages that we 

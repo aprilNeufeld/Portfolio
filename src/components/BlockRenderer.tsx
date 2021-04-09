@@ -1,4 +1,4 @@
-﻿import * as React from 'react';
+import * as React from 'react';
 import BlockContent from '@sanity/block-content-to-react';
 import FancyChild from '../components/FancyChild';
 

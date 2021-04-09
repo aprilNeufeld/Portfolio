@@ -1,44 +1,29 @@
 import * as React from 'react';
 import {
-	Typography,
-	Box,
-	Chip,
-	Link,
+	GridList,
 	makeStyles,
 	Theme,
 	createStyles,
 	useTheme
 } from '@material-ui/core';
 import PageTitle from '../components/PageTitle';
-import DividerWithSpacing from '../components/DividerWithSpacing';
-import Linkify from 'react-linkify';
-import FancyChild from '../components/FancyChild';
 import Layout from '../components/Layout';
 import { useApplicationState, useAppDispatch } from '../store';
 import { fetchUserData } from '../store/userSlice';
 import { fetchGists } from '../store/gistsSlice';
+import { ProjectType } from '../shared/types';
+import { useReducer } from 'react';
+import Project from '../components/Project';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
-		chipsContainerLeft: {
-			paddingTop: theme.spacing(2),
+		gridList: {
+			width: '100%',
 			display: 'flex',
-			justifyContent: 'left',
 			flexWrap: 'wrap',
-			'& > *': {
-				margin: theme.spacing(0.5),
-			},
-		},
-		chip: {
-			color: '#1ab9c5',
-			borderColor: '#19b9c3',
-		},
-		introduction: {
-
-		},
-		itemName: {
-			display: 'inline',
-			marginBottom: theme.spacing(2),
+			justifyContent: 'space-around',
+			overflow: 'hidden',
+			backgroundColor: theme.palette.background.paper,
 		},
 	});
 });
@@ -47,10 +32,98 @@ const getLanguage = (lang: string): string => {
 	return (lang === "TSX" ? "TypeScript" : lang)
 }
 
+const mapProjects = (projects: any[]): ProjectType[] => {
+	let array: ProjectType[] = projects.map(
+		(project: any) => {
+			let p: ProjectType;
+			if ('githubUrl' in project) {
+				p = {
+					description: project.summary,
+					languages: [...project.languages, ...project.libraries],
+					name: project.name,
+					type: 'repo',
+					url: project.githubUrl
+				}
+			}
+			else {
+				p = {
+					description: project.description,
+					languages: [
+						getLanguage(
+							project.files[Object.keys(project.files)[0]].language
+						)
+					],
+					name: (Object.keys(project.files))[0],
+					type: 'gist',
+					url: project.html_url
+				}
+			}
+			return p;
+		});
+
+	return array;
+}
+
+interface MapReposAction {
+	type: 'map-repos';
+	payload: any[];
+}
+
+interface MapGistsAction {
+	type: 'map-gists';
+	payload: any[];
+}
+
+type MapAction = MapReposAction | MapGistsAction;
+
+type PageState = {
+	projects: ProjectType[],
+	reposLoaded: boolean,
+	gistsLoaded: boolean
+}
+
+const initialState: PageState = {
+	projects: [],
+	reposLoaded: false,
+	gistsLoaded: false
+}
+
+const reducer = (state: PageState, action: MapAction) => {
+	switch (action.type) {
+		case 'map-repos':
+			if (state.reposLoaded) {
+				return state;
+			}
+			return {
+				...state,
+				projects: [
+					...action.payload,
+					...state.projects,
+				],
+				reposLoaded: true,
+			}
+		case 'map-gists':
+			if (state.gistsLoaded) {
+				return state;
+			}
+			return {
+				...state,
+				projects: [
+					...state.projects,
+					...action.payload,
+				],
+				gistsLoaded: true,
+			}
+		default:
+			return initialState;
+	}
+}
+
 const Projects: React.FC = () => {
 
 	const user = useApplicationState(state => state.user);
 	const gists = useApplicationState(state => state.gists);
+	const [pageState, dispatchPageState] = useReducer(reducer, initialState);
 	const dispatch = useAppDispatch();
 	const classes = useStyles(useTheme());
 
@@ -58,8 +131,14 @@ const Projects: React.FC = () => {
 		if (!user.loaded) {
 			dispatch(fetchUserData());
 		}
+		else {
+			dispatchPageState({ type: 'map-repos', payload: mapProjects(user.user.projects) });
+		}
 		if (!gists.loaded) {
 			dispatch(fetchGists());
+		}
+		else {
+			dispatchPageState({ type: 'map-gists', payload: mapProjects((gists.gists)) });
 		}
 	}, [user, gists, dispatch]);
 
@@ -68,65 +147,16 @@ const Projects: React.FC = () => {
 			{user.loaded && gists.loaded &&
 				<Layout>
 					<PageTitle text='Projects & Samples' />
-					{user.user.projects.map((project: any, index: number) => (
-						<Box key={index} >
-							<Typography variant="caption" display={'inline'}>
-								repos/
-					</Typography>
-							<Typography variant="h5" className={classes.itemName} gutterBottom>
-								<Link href={project.githubUrl}>
-									{project.name}
-								</Link>
-							</Typography>
-							<FancyChild>
-								<Typography variant="body1" >
-									{project.summary}
-								</Typography>
-							</FancyChild>
-							<Box className={classes.chipsContainerLeft} >
-								{[...project.languages, ...project.libraries].map(
-									(item: any, index: number) => (
-										<Chip
-											key={index}
-											className={classes.chip}
-											label={item}
-											variant="outlined"
-										/>
-									))}
-							</Box>
-							<DividerWithSpacing />
-						</Box>
-					))}
-					{gists.gists.map((gist: any, index: number) => (
-						<Box key={index} >
-							<Typography variant="caption" display={'inline'}>
-								gists/
-					</Typography>
-							<Typography variant="h5" className={classes.itemName}>
-								<Link href={gist.html_url}>
-									{(Object.keys(gist.files))[0]}
-								</Link>
-							</Typography>
-							<FancyChild>
-								<Typography variant="body1" >
-									<Linkify>
-										{gist.description}
-									</Linkify>
-								</Typography>
-							</FancyChild>
-							<Box className={classes.chipsContainerLeft} >
-								<Chip
-									className={classes.chip}
-									label={getLanguage(
-										gist.files[Object.keys(gist.files)[0]].language
-									)}
-									variant="outlined"
-								/>
-							</Box>
-							<DividerWithSpacing />
-						</Box>
-					))}
-
+					<GridList
+						className={classes.gridList}
+						cols={3}
+					spacing={4}
+					cellHeight='auto'
+					>
+						{pageState.projects.map((project: ProjectType, index: number) => (
+							<Project key={index} project={project} />
+						))}
+					</GridList>
 				</Layout>
 			}
 		</React.Fragment>

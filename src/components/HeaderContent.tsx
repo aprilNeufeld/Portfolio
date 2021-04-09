@@ -1,5 +1,4 @@
 import * as React from 'react';
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import {
 	Typography,
 	Box,

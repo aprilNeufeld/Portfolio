@@ -1,4 +1,4 @@
-﻿import * as React from 'react';
+import * as React from 'react';
 import clsx from 'clsx';
 import { ButtonBase, createStyles, IconButton, makeStyles, useTheme, Theme } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
