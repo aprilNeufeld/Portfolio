@@ -49,16 +49,20 @@ const useStyles = makeStyles((theme: Theme) => {
 			top: 0,
 			width: '100%',
 			height: '100%',
+			zIndex: 10,
 			background: 'linear-gradient(0deg, rgba(255,255,255,1) 1%, rgba(255,255,255,0.7) 15%, rgba(255,255,255,0.5747330960854092) 20%, rgba(255,255,255,0) 80%)',
-			transition: theme.transitions.create('background')
+			transition: theme.transitions.create('background, zIndex')
 		},
 		collapseOpen: {
 			background: 'none',
-			transition: theme.transitions.create('background'),
+			zIndex: 0,
+			transition: theme.transitions.create('background, zIndex'),
 		},
 		postBodyText: {
+			position: 'relative',
 			fontWeight: 300,
 			lineHeight: 1.4,
+			zIndex: 5,
 			'& p': {
 				marginBottom: theme.spacing(5)
 			},

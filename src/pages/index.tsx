@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
 		interests: {
 			fontSize: theme.typography.h6.fontSize,
-			fontWeight: 200,
 		},
 		summary: {
 			whiteSpace: "pre-wrap",
