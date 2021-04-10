@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Image from 'next/image';
 import {
 	Typography,
 	Box,
@@ -38,29 +39,30 @@ const useStyles = makeStyles((theme: Theme) => {
 		},
 		profilePictureContainer: {
 			[theme.breakpoints.down('sm')]: {
-				height: "150px",
+				height: 150,
+				width: 150,
 			},
 			[theme.breakpoints.up('md')]: {
-				height: "200px",
+				height: 200,
+				width: 200,
 			},
-			width: "auto",
 			border: 5,
 			borderColor: colors.common.white,
 			borderStyle: "solid",
-			borderRadius: "300px",
+			borderRadius: 300,
 			backgroundColor: "#ffffff4D",
 			marginBottom: theme.spacing(2),
 		},
 		profilePicture: {
 			[theme.breakpoints.down('sm')]: {
-				width: "150px",
-				height: "150px",
+				width: 150,
+				height: 150,
 			},
 			[theme.breakpoints.up('md')]: {
-				width: "200px",
-				height: "200px",
+				width: 200,
+				height: 200,
 			},
-			borderRadius: "300px",
+			borderRadius: 300,
 		},
 		chipsContainer: {
 			paddingTop: theme.spacing(2),
@@ -88,10 +90,13 @@ const HeaderContent: React.FC = () => {
 			className={classes.root}
 		>
 			<Box className={classes.profilePictureContainer} >
-				<img
-					src={user.basics.picture}
+				<Image
+					src='/images/avatar.png'
 					className={classes.profilePicture}
-					alt=''
+					width={'100%'}
+					height={'100%'}
+					layout='responsive'
+					alt='Profile avatar'
 				/>
 			</Box>
 			<Box className={classes.nameAndPronouns}>
