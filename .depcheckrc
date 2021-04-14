@@ -1,0 +1,1 @@
+﻿ignores: ["eslint*", "@babel/*", "webpack","nan","typescript"]

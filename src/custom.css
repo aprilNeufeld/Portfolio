@@ -1,4 +1,3 @@
-/* Provide sufficient contrast against white background */
 
 html {
 	overflow-x: hidden;
@@ -27,23 +26,10 @@ li {
 	list-style: none;
 }
 
-.navbar-expand-sm .navbar-nav .nav-link {
-	padding-right: 1rem;
-	padding-left: 1rem;
-}
-
 .btn:focus {
 	outline: none !important;
 }
 
 button:focus {
 	outline: none !important;
-}
-
-.MuiTabs-flexContainerVertical {
-	align-items: center;
-}
-
-.MuiToolbar-root {
-	justify-content: center;
 }

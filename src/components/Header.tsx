@@ -33,6 +33,14 @@ const useStyles = makeStyles((theme: Theme) => {
 				visibility: "hidden",
 			},
 		},
+		tabsLayoutVertical: {
+			'& .MuiTabs-flexContainerVertical': {
+				alignItems: 'center',
+			},
+		},
+		toolbar: {
+			justifyContent: 'center',
+		},
 		menuButton: {
 			marginRight: theme.spacing(2),
 			[theme.breakpoints.up('md')]: {
@@ -151,7 +159,7 @@ const Header: React.FC<Props> = (props) => {
 					[classes.appBarElevated]: scrolled
 				})}
 			>
-				<Toolbar>
+				<Toolbar className={classes.toolbar}>
 					<Tabs
 						value={tabValue.current}
 						onChange={handleMenuSelection}
@@ -181,6 +189,7 @@ const Header: React.FC<Props> = (props) => {
 							value={tabValue.current}
 							onChange={handleMenuSelection}
 							orientation="vertical"
+							className={classes.tabsLayoutVertical}
 						>
 							{pages.map((page: Page) =>
 								<Tab
