@@ -112,6 +112,7 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    npm run dev
    ```
+ 4. Go to [localhost:3000](http://localhost:3000/) to see it in action!
 
 
 
@@ -137,7 +138,7 @@ Project Link: [https://github.com/tricksterCodess/Portfolio](https://github.com/
 * [Best README Template](https://github.com/othneildrew/Best-README-Template/blob/master/README.md)
 * [Octokit](https://github.com/octokit/request.js#readme)
 * [Block Content to React](https://github.com/sanity-io/block-content-to-react#readme)
-* [React Share](https://www.npmjs.com/package/react-share)
+* [React Linkify](http://tasti.github.io/react-linkify/)
 
 
 
