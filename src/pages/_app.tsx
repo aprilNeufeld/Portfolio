@@ -13,7 +13,7 @@ const PortfolioApp: React.FC<AppProps> = ({ Component, pageProps }) => {
 
 	const store = useStore(pageProps.initialReduxState);
 	const router = useRouter();
-
+	/*
 	React.useEffect(() => {
 		const handleRouteChange = (url: string) => {
 			gtag.pageview(url)
@@ -24,7 +24,7 @@ const PortfolioApp: React.FC<AppProps> = ({ Component, pageProps }) => {
 			router.events.off('routeChangeComplete', handleRouteChange)
 		}
 	}, [router.events])
-
+	*/
 	return (
 		<Provider store={store}>
 			<ConnectedRouter>

@@ -1,12 +1,12 @@
 import * as React from 'react';
-import PageTitle from '../components/PageTitle';
-import BlogPost from '../components/BlogPost';
-import Layout from '../components/Layout';
-import { useApplicationState, useAppDispatch } from '../store';
-import { fetchUserData } from '../store/userSlice';
-import { fetchBlogPosts } from '../store/blogSlice';
+import PageTitle from '../../components/PageTitle';
+import BlogPost from '../../components/BlogPost';
+import Layout from '../../components/Layout';
+import { useApplicationState, useAppDispatch } from '../../store';
+import { fetchUserData } from '../../store/userSlice';
+import { fetchBlogPosts } from '../../store/blogSlice';
 
-const Blog: React.FC = () => {
+const Post: React.FC = () => {
 
 	const user = useApplicationState(state => state.user);
 	const blog = useApplicationState(state => state.blog);
@@ -24,7 +24,7 @@ const Blog: React.FC = () => {
 	return (
 		<React.Fragment>
 			{user.loaded && blog.loaded &&
-				<Layout pageTitle='Blog'>
+				<Layout pageTitle=''>
 					{blog.posts &&
 						blog.posts.map((post: any, index: number) => (
 							<BlogPost
@@ -38,4 +38,4 @@ const Blog: React.FC = () => {
 	)
 };
 
-export default Blog;
+export default Post;

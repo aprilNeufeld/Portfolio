@@ -145,8 +145,7 @@ const Projects: React.FC = () => {
 	return (
 		<React.Fragment>
 			{user.loaded && gists.loaded &&
-				<Layout>
-					<PageTitle text='Projects & Samples' />
+				<Layout pageTitle='My Work' contentTitle='Projects & Samples'>
 					<GridList
 						className={classes.gridList}
 						cols={3}

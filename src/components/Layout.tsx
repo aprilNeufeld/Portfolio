@@ -1,6 +1,8 @@
 import * as React from 'react';
+import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import PageTitle from '../components/PageTitle';
 import {
 	Container,
 	Paper,
@@ -45,22 +47,30 @@ const useStyles = makeStyles((theme: Theme) => {
 
 interface Props {
 	children?: React.ReactNode;
+	pageTitle: string;
+	contentTitle?: string;
 }
 
 const Layout: React.FC<Props> = (props) => {
 
-	const { children } = props;
+	const { children, pageTitle, contentTitle } = props;
 	const classes = useStyles(useTheme());
-
+	//<HeaderContent />
+	
 	return (
 		<React.Fragment>
+			<Head>
+				<title>{pageTitle}</title>
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+			</Head>
 			<Header>
-				<HeaderContent />
 			</Header>
 			<Container maxWidth="lg" className={classes.root}>
 				<Paper elevation={2} className={classes.paper} >
 					<Container maxWidth="md" className={classes.content}>
 						<div>
+							<PageTitle text={contentTitle ?? pageTitle} />
 							{children}
 						</div>
 					</Container>

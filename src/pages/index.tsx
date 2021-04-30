@@ -45,9 +45,8 @@ const Home: React.FC = () => {
 	return (
 		<React.Fragment>
 			{user.loaded &&
-				<Layout>
+				<Layout pageTitle='About Me' contentTitle="Hi, I'm April.">
 					<Box>
-						<PageTitle text="Hi, I'm April." />
 						<Typography variant="h6" className={classes.summary} gutterBottom>
 							{user.user.basics.summary}
 						</Typography>
