@@ -6,7 +6,6 @@ import {
 	createStyles,
 	useTheme
 } from '@material-ui/core';
-import PageTitle from '../components/PageTitle';
 import Layout from '../components/Layout';
 import { useApplicationState, useAppDispatch } from '../store';
 import { fetchUserData } from '../store/userSlice';
@@ -88,6 +87,11 @@ const initialState: PageState = {
 	gistsLoaded: false
 }
 
+/**
+ * Reducer that maps both our repos and gists into a single array
+ * of projects. Necessary since repos and gists are fetched from different
+ * data sources and we don't want to repeat our layout.
+ */
 const reducer = (state: PageState, action: MapAction) => {
 	switch (action.type) {
 		case 'map-repos':
@@ -128,23 +132,20 @@ const Projects: React.FC = () => {
 	const classes = useStyles(useTheme());
 
 	React.useEffect(() => {
-		if (!user.loaded) {
-			dispatch(fetchUserData());
-		}
-		else {
+		if (user.loaded) {
 			dispatchPageState({ type: 'map-repos', payload: mapProjects(user.user.projects) });
 		}
-		if (!gists.loaded) {
-			dispatch(fetchGists());
-		}
-		else {
+		if (gists.loaded) {
 			dispatchPageState({ type: 'map-gists', payload: mapProjects((gists.gists)) });
+		}
+		else if (!gists.pending) {
+			dispatch(fetchGists());
 		}
 	}, [user, gists, dispatch]);
 
 	return (
 		<React.Fragment>
-			{user.loaded && gists.loaded &&
+			{gists.loaded &&
 				<Layout pageTitle='My Work' contentTitle='Projects & Samples'>
 					<GridList
 						className={classes.gridList}

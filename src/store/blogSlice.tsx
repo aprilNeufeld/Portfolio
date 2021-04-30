@@ -3,11 +3,13 @@ import sanityClient from '../sanityClient';
 
 interface BlogState {
 	posts: any;
+	pending: boolean;
 	loaded: boolean;
 }
 
 const initialState: BlogState = {
 	posts: "",
+	pending: false,
 	loaded: false
 };
 
@@ -40,10 +42,12 @@ const blogSlice = createSlice({
 	reducers: {	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchBlogPosts.pending, (state, action) => {
+			state.pending = true;
 			state.loaded = false;
 		});
 		builder.addCase(fetchBlogPosts.fulfilled, (state, action) => {
 			state.posts = action.payload.posts;
+			state.pending = false;
 			state.loaded = true;
 		})
 	}

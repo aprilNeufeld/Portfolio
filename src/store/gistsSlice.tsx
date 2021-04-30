@@ -3,11 +3,13 @@ import { request } from '@octokit/request';
 
 interface GistsState {
 	gists: any;
+	pending: boolean;
 	loaded: boolean;
 }
 
 const initialState: GistsState = {
 	gists: "",
+	pending: false,
 	loaded: false
 };
 
@@ -30,10 +32,12 @@ const gistsSlice = createSlice({
 	reducers: {	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchGists.pending, (state, action) => {
+			state.pending = true;
 			state.loaded = false;
 		});
 		builder.addCase(fetchGists.fulfilled, (state, action) => {
 			state.gists = action.payload.gists;
+			state.pending = false;
 			state.loaded = true;
 		})
 	}

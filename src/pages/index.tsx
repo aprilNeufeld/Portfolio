@@ -10,11 +10,11 @@ import {
 	List,
 	ListItem,
 } from '@material-ui/core';
-import PageTitle from '../components/PageTitle';
 import Layout from '../components/Layout';
 import { useApplicationState, useAppDispatch } from '../store';
 import { fetchUserData } from '../store/userSlice';
 import FancyChild from '../components/FancyChild';
+
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
 		interests: {
@@ -32,23 +32,15 @@ const useStyles = makeStyles((theme: Theme) => {
 
 const Home: React.FC = () => {
 
-	const user = useApplicationState(state => state.user);
-	const dispatch = useAppDispatch();
+	const user = useApplicationState(state => state.user.user);
 	const classes = useStyles(useTheme());
-
-	React.useEffect(() => {
-		if (!user.loaded) {
-			dispatch(fetchUserData());
-		}
-	}, [user, dispatch]);
 
 	return (
 		<React.Fragment>
-			{user.loaded &&
 				<Layout pageTitle='About Me' contentTitle="Hi, I'm April.">
 					<Box>
 						<Typography variant="h6" className={classes.summary} gutterBottom>
-							{user.user.basics.summary}
+							{user.basics.summary}
 						</Typography>
 						<Typography variant='h6' className={classes.plug}>
 							Check out <Link href='/projects'>
@@ -60,7 +52,7 @@ const Home: React.FC = () => {
 						</Typography>
 						<FancyChild>
 							<List>
-								{user.user.interests.map((item: any, index: number) => (
+								{user.interests.map((item: any, index: number) => (
 									<ListItem key={index}>
 										<Typography variant="body1" className={classes.interests}>
 											{item.name}  {item.keywords.map((keyword: any, i: number,) => (
@@ -81,7 +73,6 @@ const Home: React.FC = () => {
 
 					</Box>
 				</Layout>
-			}
 		</React.Fragment>
 	)
 };

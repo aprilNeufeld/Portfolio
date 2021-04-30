@@ -12,6 +12,9 @@ import {
 	useTheme
 } from '@material-ui/core';
 import HeaderContent from '../components/HeaderContent';
+import { useApplicationState, useAppDispatch } from '../store';
+import { fetchUserData } from '../store/userSlice';
+import { fetchBlogPosts } from '../store/blogSlice';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -55,8 +58,16 @@ const Layout: React.FC<Props> = (props) => {
 
 	const { children, pageTitle, contentTitle } = props;
 	const classes = useStyles(useTheme());
-	//<HeaderContent />
-	
+
+	const user = useApplicationState(state => state.user);
+	const dispatch = useAppDispatch();
+
+	React.useEffect(() => {
+		if (!user.loaded && !user.pending) {
+			dispatch(fetchUserData());
+		}
+	}, [user, dispatch]);
+
 	return (
 		<React.Fragment>
 			<Head>
@@ -64,18 +75,23 @@ const Layout: React.FC<Props> = (props) => {
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 			</Head>
-			<Header>
-			</Header>
-			<Container maxWidth="lg" className={classes.root}>
-				<Paper elevation={2} className={classes.paper} >
-					<Container maxWidth="md" className={classes.content}>
-						<div>
-							<PageTitle text={contentTitle ?? pageTitle} />
-							{children}
-						</div>
+			{user.loaded &&
+				<React.Fragment>
+					<Header>
+						<HeaderContent />
+					</Header>
+					<Container maxWidth="lg" className={classes.root}>
+						<Paper elevation={2} className={classes.paper} >
+							<Container maxWidth="md" className={classes.content}>
+								<div>
+									<PageTitle text={contentTitle ?? pageTitle} />
+									{children}
+								</div>
+							</Container>
+						</Paper>
 					</Container>
-				</Paper>
-			</Container>
+				</React.Fragment>
+			}
 			<Footer />
 		</React.Fragment>
 	)
