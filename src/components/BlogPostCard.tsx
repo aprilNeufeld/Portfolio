@@ -1,7 +1,5 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import { push } from 'connected-next-router';
-import { useAppDispatch } from '../store';
 import {
 	Box,
 	Card,
@@ -87,7 +85,6 @@ interface Props {
 const BlogPostCard: React.FC<Props> = (props) => {
 
 	const { post } = props;
-	const dispatch = useAppDispatch();
 	const classes = useStyles(useTheme());
 	const [expanded, setExpanded] = React.useState(false);
 

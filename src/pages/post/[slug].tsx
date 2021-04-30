@@ -1,8 +1,40 @@
 import * as React from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Layout from '../../components/Layout';
-import BlogPostCard from '../../components/BlogPostCard';
 import sanityClient from '../../sanityClient';
+import BlockRenderer from '../../components/BlockRenderer';
+import {
+	Typography,
+	makeStyles,
+	Theme,
+	createStyles,
+	useTheme
+} from '@material-ui/core';
+
+const useStyles = makeStyles((theme: Theme) => {
+	return createStyles({
+		media: {
+			height: 0,
+			//paddingTop: '56.25%', // 16:9
+			paddingTop: '62%'
+		},
+		blockQuote: {
+			marginBottom: '1rem',
+		},
+		postBodyText: {
+			position: 'relative',
+			fontWeight: 300,
+			lineHeight: 1.4,
+			zIndex: 5,
+			'& p': {
+				marginBottom: theme.spacing(5)
+			},
+		},
+		shareIcon: {
+			color: theme.palette.action.disabled
+		},
+	});
+});
 
 interface Props {
 	post: any;
@@ -11,14 +43,34 @@ interface Props {
 const Post: React.FC<Props> = (props) => {
 
 	const { post } = props;
+	const classes = useStyles(useTheme());
+
+	const formatDate = (datetime: string): string => {
+		const date: Date = new Date(datetime);
+		return date.toLocaleDateString('en-US', {
+			year: 'numeric', month: 'long', day: 'numeric'
+		});
+	}
 
 	return (
 		<React.Fragment>
 			<Layout pageTitle={post.slug} contentTitle={post.title}>
-				<BlogPostCard post={post} />
-			</Layout>
-
-		</React.Fragment>
+				<Typography>
+					{'by ' + post.author +
+						(post.publishedAt ? ' on ' +
+							formatDate(post.publishedAt) : '')}
+				</Typography>
+				<Typography
+					variant='body1'
+					className={classes.postBodyText}
+					component='div'
+				>
+					<BlockRenderer
+						content={post.body}
+					/>
+				</Typography>
+			</Layout >
+		</React.Fragment >
 	)
 };
 
