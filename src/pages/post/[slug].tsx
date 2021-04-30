@@ -54,7 +54,7 @@ const Post: React.FC<Props> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Layout pageTitle={post.slug} contentTitle={post.title}>
+			<Layout pageTitle={post.title}>
 				<Typography>
 					{'by ' + post.author +
 						(post.publishedAt ? ' on ' +

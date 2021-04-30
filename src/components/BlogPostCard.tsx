@@ -40,7 +40,8 @@ const useStyles = makeStyles((theme: Theme) => {
 			marginBottom: '1rem',
 		},
 		cardActions: {
-			padding: 0,
+			justifyContent: 'flex-end',
+			padding: theme.spacing(2),
 		},
 		collapseContainer: {
 			position: 'relative',
@@ -137,7 +138,6 @@ const BlogPostCard: React.FC<Props> = (props) => {
 					</CardContent>
 				</Collapse>
 				<CardActions
-					disableSpacing
 					className={classes.cardActions}
 				>
 					<Link
@@ -145,12 +145,6 @@ const BlogPostCard: React.FC<Props> = (props) => {
 					>
 						Read more
 					</Link>
-					<HorizontalExpandButton
-						onClick={handleExpandClick}
-						expanded={expanded}
-						aria-expanded={expanded}
-						aria-label="show more"
-					/>
 				</CardActions>
 			</Card>
 		</React.Fragment>
