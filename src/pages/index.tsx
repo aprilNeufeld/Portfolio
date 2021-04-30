@@ -32,15 +32,16 @@ const useStyles = makeStyles((theme: Theme) => {
 
 const Home: React.FC = () => {
 
-	const user = useApplicationState(state => state.user.user);
+	const user = useApplicationState(state => state.user);
 	const classes = useStyles(useTheme());
 
 	return (
 		<React.Fragment>
-				<Layout pageTitle='About Me' contentTitle="Hi, I'm April.">
+			<Layout pageTitle='About Me' contentTitle="Hi, I'm April.">
+				{user.loaded &&
 					<Box>
 						<Typography variant="h6" className={classes.summary} gutterBottom>
-							{user.basics.summary}
+							{user.user.basics.summary}
 						</Typography>
 						<Typography variant='h6' className={classes.plug}>
 							Check out <Link href='/projects'>
@@ -52,7 +53,7 @@ const Home: React.FC = () => {
 						</Typography>
 						<FancyChild>
 							<List>
-								{user.interests.map((item: any, index: number) => (
+								{user.user.interests.map((item: any, index: number) => (
 									<ListItem key={index}>
 										<Typography variant="body1" className={classes.interests}>
 											{item.name}  {item.keywords.map((keyword: any, i: number,) => (
@@ -72,7 +73,8 @@ const Home: React.FC = () => {
 						</FancyChild>
 
 					</Box>
-				</Layout>
+				}
+			</Layout>
 		</React.Fragment>
 	)
 };

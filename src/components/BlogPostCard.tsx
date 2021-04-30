@@ -102,10 +102,6 @@ const BlogPostCard: React.FC<Props> = (props) => {
 		});
 	}
 
-	const handleReadMore = () => {
-		//dispatch(push('/posts/'+ post.slug));
-	};
-
 	return (
 		<React.Fragment>
 			<Card elevation={4} >
@@ -149,7 +145,6 @@ const BlogPostCard: React.FC<Props> = (props) => {
 				>
 					<Link
 						href={`/post/${encodeURIComponent(post.slug.current)}`}
-						onClick={handleReadMore}
 					>
 						Read more
 					</Link>

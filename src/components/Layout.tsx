@@ -14,7 +14,6 @@ import {
 import HeaderContent from '../components/HeaderContent';
 import { useApplicationState, useAppDispatch } from '../store';
 import { fetchUserData } from '../store/userSlice';
-import { fetchBlogPosts } from '../store/blogSlice';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({

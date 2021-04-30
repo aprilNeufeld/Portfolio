@@ -1,37 +1,75 @@
 import * as React from 'react';
-import { useRouter } from 'next/router'
-import BlogPostCard from '../../components/BlogPostCard';
+import { GetStaticProps, GetStaticPaths } from 'next';
 import Layout from '../../components/Layout';
-import { useApplicationState, useAppDispatch } from '../../store';
-import { fetchUserData } from '../../store/userSlice';
-import { fetchBlogPosts } from '../../store/blogSlice';
+import BlogPostCard from '../../components/BlogPostCard';
+import sanityClient from '../../sanityClient';
 
-const Post: React.FC = () => {
+interface Props {
+	post: any;
+}
 
-	const router = useRouter();
-	const { slug } = router.query;
-	const user = useApplicationState(state => state.user);
-	const blog = useApplicationState(state => state.blog);
-	const dispatch = useAppDispatch();
+const Post: React.FC<Props> = (props) => {
 
-	React.useEffect(() => {
-		if (!user.loaded) {
-			dispatch(fetchUserData());
-		}
-		if (!blog.loaded) {
-			dispatch(fetchBlogPosts());
-		}
-	}, [user, blog, dispatch]);
+	const { post } = props;
 
 	return (
 		<React.Fragment>
-			{user.loaded && blog.loaded &&
-				<Layout pageTitle="slug">
-					
-				</Layout>
-			}
+			<Layout pageTitle={post.slug} contentTitle={post.title}>
+				<BlogPostCard post={post} />
+			</Layout>
+
 		</React.Fragment>
 	)
 };
+
+// This function gets called at build time
+export const getStaticPaths: GetStaticPaths = async () => {
+	// Call an external API endpoint to get posts
+	const posts = await sanityClient.fetch(
+		`*[_type == "post"]{
+				title,
+				slug,
+				"author": author->name,
+				mainImage {
+						asset->{
+						_id,
+						url
+					}
+				},
+				publishedAt,	
+				body
+				}`
+	);
+
+	// Get the paths we want to pre-render based on posts
+	const paths = posts.map((post: any) => {
+		return {
+			params: { slug: post.slug.current },
+		}
+	});
+
+	// We'll pre-render only these paths at build time.
+	// { fallback: false } means other routes should 404.
+	return { paths, fallback: false }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+	const post = await sanityClient.fetch(
+		`*[_type == "post" && slug.current == "${params!.slug}"][0]{
+				title,
+				"slug": slug.current,
+				"author": author->name,
+				mainImage {
+						asset->{
+						_id,
+						url
+					}
+				},
+				publishedAt,	
+				body
+				}`
+	);
+	return { props: { post } };
+}
 
 export default Post;
