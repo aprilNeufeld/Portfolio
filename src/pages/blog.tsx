@@ -17,7 +17,7 @@ const Blog: React.FC = () => {
 
 	return (
 		<React.Fragment>
-			<Layout pageTitle='Blog'>
+			<Layout pageTitle='Blog' contentTitle='Blog'>
 				{blog.loaded && blog.posts &&
 					blog.posts.map((post: any, index: number) => (
 						<BlogPostCard

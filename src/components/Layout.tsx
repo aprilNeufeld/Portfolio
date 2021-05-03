@@ -82,7 +82,9 @@ const Layout: React.FC<Props> = (props) => {
 					<Paper elevation={2} className={classes.paper} >
 						<Container maxWidth="md" className={classes.content}>
 							<div>
-								<PageTitle text={contentTitle ?? pageTitle} />
+								{contentTitle &&
+									<PageTitle text={contentTitle} />
+								}
 								{children}
 							</div>
 						</Container>

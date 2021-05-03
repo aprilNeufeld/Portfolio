@@ -10,8 +10,9 @@ import {
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
 		title: {
-			marginBottom: theme.spacing(6),
-			color: theme.palette.primary.main
+			marginBottom: theme.spacing(4),
+			color: theme.palette.primary.main,
+			lineHeight: 1.5,
 		},
 	});
 });

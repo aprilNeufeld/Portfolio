@@ -40,7 +40,9 @@ const useStyles = makeStyles((theme: Theme) => {
 			padding: theme.spacing(2),
 		},
 		textContainer: {
-			height: '100%',
+			height: '90%',
+			paddingBottom: '0!important',
+			overflow: 'hidden',
 		},
 		textFadeContainer: {
 			position: 'relative',
@@ -52,9 +54,9 @@ const useStyles = makeStyles((theme: Theme) => {
 			position: 'absolute',
 			top: 0,
 			width: '100%',
-			height: '100%',
+			height: '110%',
 			zIndex: 10,
-			background: 'linear-gradient(0deg, rgba(255,255,255,1) 1%, rgba(255,255,255,0.7) 15%, rgba(255,255,255,0.5747330960854092) 20%, rgba(255,255,255,0) 80%)',
+			background: 'linear-gradient(0deg, rgba(255,255,255,1) 10%, rgba(255,255,255,0.7) 30%, rgba(255,255,255,0.57) 50%, rgba(255,255,255,0) 80%)',
 		},
 		postBodyText: {
 			position: 'relative',
@@ -66,6 +68,9 @@ const useStyles = makeStyles((theme: Theme) => {
 			},
 		},
 		readMore: {
+			'& a': {
+				textDecoration: 'none',
+			},
 		},
 		shareIcon: {
 			color: theme.palette.action.disabled
@@ -128,7 +133,7 @@ const BlogPostCard: React.FC<Props> = (props) => {
 				<CardActions
 					className={classes.cardActions}
 				>
-					<Typography variant='caption' className={classes.readMore}>
+					<Typography className={classes.readMore}>
 						<Link
 							href={`/post/${encodeURIComponent(post.slug.current)}`}
 						>

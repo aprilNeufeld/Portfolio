@@ -1,25 +1,36 @@
 import * as React from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
+import Link from 'next/link';
 import Layout from '../../components/Layout';
 import sanityClient from '../../sanityClient';
 import BlockRenderer from '../../components/BlockRenderer';
 import {
+	Breadcrumbs,
+	CardMedia,
 	Typography,
 	makeStyles,
 	Theme,
 	createStyles,
 	useTheme
 } from '@material-ui/core';
+import PageTitle from '../../components/PageTitle';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
+		blockQuote: {
+			marginBottom: '1rem',
+		},
+		breadcrumbs: {
+			marginBottom: theme.spacing(4),
+			'& a': {
+				textDecoration: 'none',
+			},
+		},
 		media: {
 			height: 0,
 			//paddingTop: '56.25%', // 16:9
-			paddingTop: '62%'
-		},
-		blockQuote: {
-			marginBottom: '1rem',
+			paddingTop: '62%',
+			marginBottom: theme.spacing(4),
 		},
 		postBodyText: {
 			position: 'relative',
@@ -28,6 +39,9 @@ const useStyles = makeStyles((theme: Theme) => {
 			'& p': {
 				marginBottom: theme.spacing(5)
 			},
+		},
+		postDetails: {
+			color: theme.palette.text.secondary,
 		},
 		shareIcon: {
 			color: theme.palette.action.disabled
@@ -54,7 +68,24 @@ const Post: React.FC<Props> = (props) => {
 	return (
 		<React.Fragment>
 			<Layout pageTitle={post.title}>
-				<Typography>
+				<Breadcrumbs aria-label="breadcrumb" className={classes.breadcrumbs}>
+					<Link href="/">
+						Home
+					</Link>
+					<Link href="/blog">
+						Blog
+					</Link>
+					<Typography color="textPrimary"></Typography>
+				</Breadcrumbs>
+				<PageTitle text={post.title} />
+				<CardMedia
+					image={post.mainImage.asset.url}
+					className={classes.media}
+				/>
+				<Typography
+					variant='body1'
+					className={classes.postDetails}
+				>
 					{'by ' + post.author +
 						(post.publishedAt ? ' on ' +
 							formatDate(post.publishedAt) : '')}
