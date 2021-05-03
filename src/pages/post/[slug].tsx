@@ -5,8 +5,20 @@ import Layout from '../../components/Layout';
 import sanityClient from '../../sanityClient';
 import BlockRenderer from '../../components/BlockRenderer';
 import {
+	FacebookShareButton,
+	TwitterShareButton,
+	RedditShareButton,
+	LinkedinShareButton,
+} from 'react-share';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import RedditIcon from '@material-ui/icons/Reddit';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import {
+	Box,
 	Breadcrumbs,
 	CardMedia,
+	Divider,
 	Typography,
 	makeStyles,
 	Theme,
@@ -43,6 +55,14 @@ const useStyles = makeStyles((theme: Theme) => {
 		postDetails: {
 			color: theme.palette.text.secondary,
 		},
+		shareButtonsContainer: {
+			display: 'flex',
+			flexDirection: 'row',
+			paddingTop: theme.spacing(2),
+		},
+		shareButton: {
+			marginLeft: theme.spacing(1),
+		},
 		shareIcon: {
 			color: theme.palette.action.disabled
 		},
@@ -51,11 +71,12 @@ const useStyles = makeStyles((theme: Theme) => {
 
 interface Props {
 	post: any;
+	shareUrl: string;
 }
 
 const Post: React.FC<Props> = (props) => {
 
-	const { post } = props;
+	const { post, shareUrl } = props;
 	const classes = useStyles(useTheme());
 
 	const formatDate = (datetime: string): string => {
@@ -99,6 +120,39 @@ const Post: React.FC<Props> = (props) => {
 						content={post.body}
 					/>
 				</Typography>
+				<Divider />
+				<Box className={classes.shareButtonsContainer}>
+					<FacebookShareButton
+						url={shareUrl}
+						quote={post.title}
+						className={classes.shareButton}
+					>
+						<FacebookIcon className={classes.shareIcon} />
+					</FacebookShareButton>
+					<TwitterShareButton
+						url={shareUrl}
+						title={post.title}
+						className={classes.shareButton}
+					>
+						<TwitterIcon className={classes.shareIcon} />
+					</TwitterShareButton>
+					<RedditShareButton
+						url={shareUrl}
+						title={post.title}
+						windowWidth={660}
+						windowHeight={460}
+						className={classes.shareButton}
+					>
+						<RedditIcon className={classes.shareIcon} />
+					</RedditShareButton>
+					<LinkedinShareButton
+						url={shareUrl}
+						title={post.title}
+						className={classes.shareButton}
+					>
+						<LinkedInIcon className={classes.shareIcon} />
+					</LinkedinShareButton>
+				</Box>
 			</Layout >
 		</React.Fragment >
 	)
@@ -148,7 +202,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 				body
 				}`
 	);
-	return { props: { post } };
+	const shareUrl = `https://www.tricksterCodess.com/post/${post.slug}`;
+	return { props: { post, shareUrl } };
 }
 
 export default Post;
