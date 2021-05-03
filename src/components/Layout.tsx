@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) => {
 			marginBottom: -10,
 			flexGrow: 1,
 			display: 'flex',
+			flexDirection: 'column',
 			zIndex: 1,
 			minHeight: 500,
 			'& a': {

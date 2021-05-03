@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {
 	Box,
 	Chip,
+	Divider,
 	GridListTile,
 	Typography,
 	makeStyles,
@@ -65,6 +66,7 @@ const Project: React.FC<Props> = (props) => {
 		>
 			<Card
 				className={classes.card}
+				elevation={0}
 			>
 				<CardContent>
 					<Typography variant="caption" display={'inline'}>
@@ -92,6 +94,7 @@ const Project: React.FC<Props> = (props) => {
 						))}
 					</Box>
 				</CardContent>
+				<Divider/>
 			</Card>
 		</GridListTile>
 	)

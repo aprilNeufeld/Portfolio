@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme: Theme) => {
 			justifyContent: 'center',
 		},
 		menuButton: {
-			marginRight: theme.spacing(2),
 			[theme.breakpoints.up('md')]: {
 				display: "none",
 			},

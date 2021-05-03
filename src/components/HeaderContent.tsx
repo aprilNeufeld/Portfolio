@@ -43,6 +43,9 @@ const useStyles = makeStyles((theme: Theme) => {
 			alignItems: 'center',
 			marginBottom: theme.spacing(1),
 		},
+		title: {
+			textAlign: 'center',
+		},
 		profilePictureContainer: {
 			[theme.breakpoints.down('sm')]: {
 				height: 150,
@@ -117,7 +120,7 @@ const HeaderContent: React.FC = () => {
 							(She/Her)
 						</Typography>
 					</Box>
-					<Typography variant="h6" gutterBottom>
+					<Typography variant="h6" className={classes.title} gutterBottom>
 						{user.basics.label}
 					</Typography>
 					<Typography variant="body1" align="center" gutterBottom>
