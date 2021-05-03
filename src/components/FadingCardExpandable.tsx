@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => {
 		cardActions: {
 			padding: 0,
 		},
-		fadeContainer: {
+		collapseContainer: {
 			position: 'relative',
 		},
 		collapse: {

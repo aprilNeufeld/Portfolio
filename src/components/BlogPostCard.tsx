@@ -72,9 +72,6 @@ const useStyles = makeStyles((theme: Theme) => {
 				textDecoration: 'none',
 			},
 		},
-		shareIcon: {
-			color: theme.palette.action.disabled
-		},
 	});
 });
 
