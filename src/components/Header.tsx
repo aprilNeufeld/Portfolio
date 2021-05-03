@@ -161,7 +161,7 @@ const Header: React.FC<Props> = (props) => {
 			>
 				<Toolbar className={classes.toolbar}>
 					<Tabs
-						value={(tabValue.current > 0 ? tabValue.current : 2)}
+						value={(tabValue.current >= 0 ? tabValue.current : 2)}
 						onChange={handleMenuSelection}
 						className={classes.tabsLayout}
 					>
@@ -186,7 +186,7 @@ const Header: React.FC<Props> = (props) => {
 						onClose={handleDrawerToggle}
 					>
 						<Tabs
-							value={(tabValue.current > 0 ? tabValue.current : 2)}
+							value={(tabValue.current >= 0 ? tabValue.current : 2)}
 							onChange={handleMenuSelection}
 							orientation="vertical"
 							className={classes.tabsLayoutVertical}

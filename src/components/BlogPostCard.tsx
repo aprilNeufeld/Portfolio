@@ -70,6 +70,9 @@ const useStyles = makeStyles((theme: Theme) => {
 		readMore: {
 			'& a': {
 				textDecoration: 'none',
+				'&:not(:hover)': {
+					color: theme.palette.primary.main,
+				},				
 			},
 		},
 	});
@@ -135,7 +138,7 @@ const BlogPostCard: React.FC<Props> = (props) => {
 							href={`/post/${encodeURIComponent(post.slug.current)}`}
 						>
 							Read more
-					</Link>
+						</Link>
 					</Typography>
 				</CardActions>
 			</Card>
