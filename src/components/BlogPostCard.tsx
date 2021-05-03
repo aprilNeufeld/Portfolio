@@ -1,5 +1,5 @@
 import * as React from 'react';
-import clsx from 'clsx';
+import Link from 'next/link';
 import {
 	Box,
 	Card,
@@ -7,16 +7,13 @@ import {
 	CardContent,
 	CardHeader,
 	CardMedia,
-	Collapse,
 	Divider,
-	Link,
 	Typography,
 	makeStyles,
 	Theme,
 	createStyles,
 	useTheme
 } from '@material-ui/core';
-import HorizontalExpandButton from './HorizontalExpandButton';
 import BlockRenderer from './BlockRenderer';
 
 const useStyles = makeStyles((theme: Theme) => {
