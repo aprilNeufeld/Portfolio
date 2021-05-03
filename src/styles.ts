@@ -7,7 +7,8 @@ import {
 export const theme = responsiveFontSizes(createMuiTheme({
 	palette: {
 		primary: {
-			main: "#755b96"
+			main: "#755b96",
+			dark: "#6500C1"
 		},
 		secondary: {
 			main: "#6bd6dd"

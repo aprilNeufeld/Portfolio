@@ -23,16 +23,6 @@ const useStyles = makeStyles((theme: Theme) => {
 			//paddingTop: '56.25%', // 16:9
 			paddingTop: '62%'
 		},
-		expand: {
-			transform: 'rotate(0deg)',
-			marginLeft: 'auto',
-			transition: theme.transitions.create('transform', {
-				duration: theme.transitions.duration.shortest,
-			}),
-		},
-		expandOpen: {
-			transform: 'rotate(180deg)',
-		},
 		blockQuote: {
 			marginBottom: '1rem',
 		},
@@ -65,14 +55,6 @@ const useStyles = makeStyles((theme: Theme) => {
 			zIndex: 5,
 			'& p': {
 				marginBottom: theme.spacing(5)
-			},
-		},
-		readMore: {
-			'& a': {
-				textDecoration: 'none',
-				'&:not(:hover)': {
-					color: theme.palette.primary.main,
-				},				
 			},
 		},
 	});
@@ -133,7 +115,7 @@ const BlogPostCard: React.FC<Props> = (props) => {
 				<CardActions
 					className={classes.cardActions}
 				>
-					<Typography className={classes.readMore}>
+					<Typography>
 						<Link
 							href={`/post/${encodeURIComponent(post.slug.current)}`}
 						>

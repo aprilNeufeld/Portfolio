@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import {
 	Typography,
 	Box,
-	Link,
 	Chip,
 	makeStyles,
 	Theme,
@@ -25,8 +25,14 @@ const useStyles = makeStyles((theme: Theme) => {
 			},
 			position: 'relative',
 			color: 'white',
-			'& a:not(:hover)': {
-				color: 'white',
+			'& a': {
+				textDecoration: 'underline',
+				'&:hover': {
+					color: theme.palette.primary.light,
+				},
+				'&:not(:hover)': {
+					color: theme.palette.common.white,
+				},
 			},
 		},
 		name: {
@@ -117,10 +123,8 @@ const HeaderContent: React.FC = () => {
 					<Typography variant="body1" align="center" gutterBottom>
 						@tricksterCodess: <Link
 							href={`https://github.com/${user.basics.username}`}
-							underline='always'
 						> gitHub</Link>  |  <Link
 							href={`https://gitconnected.com/${user.basics.username}`}
-							underline='always'
 						>gitConnected	</Link>
 					</Typography>
 					<Box className={classes.chipsContainer}>

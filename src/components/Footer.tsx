@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Link from 'next/link';
 import {
 	Typography,
 	Container,
@@ -6,8 +7,7 @@ import {
 	makeStyles,
 	Theme,
 	createStyles,
-	useTheme,
-    Link
+	useTheme,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -22,8 +22,14 @@ const useStyles = makeStyles((theme: Theme) => {
 		content: {
 			padding: theme.spacing(3, 2),
 			color: 'white',
-			'& a:not(:hover)': {
-				color: 'white',
+			'& a': {
+				textDecoration: 'underline',
+				'&:hover': {
+					color: theme.palette.primary.light,
+				},
+				'&:not(:hover)': {
+					color: theme.palette.common.white,
+				},
 			},
 		},
 	});
@@ -42,10 +48,8 @@ const Footer: React.FC = () => {
 				<Typography variant="body2">
 					© 2021 TricksterCodess: <Link
 						href='https://github.com/tricksterCodess'
-						underline='always'
 					> gitHub</Link>  |  <Link
 						href='https://gitconnected.com/tricksterCodess'
-						underline='always'
 					>gitConnected	</Link>
 				</Typography>
 			</Container>

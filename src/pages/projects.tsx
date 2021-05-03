@@ -150,8 +150,8 @@ const Projects: React.FC = () => {
 					<GridList
 						className={classes.gridList}
 						cols={3}
-					spacing={4}
-					cellHeight='auto'
+						spacing={4}
+						cellHeight='auto'
 					>
 						{pageState.projects.map((project: ProjectType, index: number) => (
 							<Project key={index} project={project} />
