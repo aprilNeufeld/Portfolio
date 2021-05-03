@@ -17,7 +17,6 @@ import {
 } from '@material-ui/core';
 import HorizontalExpandButton from './HorizontalExpandButton';
 import BlockRenderer from './BlockRenderer';
-import Link from 'connected-next-router';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({

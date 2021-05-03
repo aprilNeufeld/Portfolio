@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import Layout from '../components/Layout';
 import { useApplicationState, useAppDispatch } from '../store';
-import { fetchUserData } from '../store/userSlice';
 import { fetchGists } from '../store/gistsSlice';
 import { ProjectType } from '../shared/types';
 import { useReducer } from 'react';

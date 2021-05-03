@@ -11,8 +11,7 @@ import {
 	ListItem,
 } from '@material-ui/core';
 import Layout from '../components/Layout';
-import { useApplicationState, useAppDispatch } from '../store';
-import { fetchUserData } from '../store/userSlice';
+import { useApplicationState } from '../store';
 import FancyChild from '../components/FancyChild';
 
 const useStyles = makeStyles((theme: Theme) => {
