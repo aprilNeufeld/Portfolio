@@ -79,6 +79,7 @@ const useStyles = makeStyles((theme: Theme) => {
 const HeaderContent: React.FC = () => {
 
 	const user = useApplicationState(state => state.user.user);
+	const loaded = useApplicationState(state => state.user.loaded);
 	const classes = useStyles(useTheme());
 
 	return (
@@ -100,35 +101,39 @@ const HeaderContent: React.FC = () => {
 					alt='Profile avatar'
 				/>
 			</Box>
-			<Box className={classes.nameAndPronouns}>
-				<Typography variant="h4" className={classes.name}>
-					{user.basics.name}
-				</Typography>
-				<Typography variant="h5">
-					(She/Her)
-			</Typography>
-			</Box>
-			<Typography variant="h6" gutterBottom>
-				{user.basics.label}
-			</Typography>
-			<Typography variant="body1" align="center" gutterBottom>
-				@tricksterCodess: <Link
-					href={`https://github.com/${user.basics.username}`}
-					underline='always'
-				> gitHub</Link>  |  <Link
-					href={`https://gitconnected.com/${user.basics.username}`}
-					underline='always'
-				>gitConnected	</Link>
-			</Typography>
-			<Box className={classes.chipsContainer}>
-				{user.skills.map((skill: any, index: number) => (
-					<Chip
-						key={index}
-						label={skill.name}
-						color="primary"
-					/>
-				))}
-			</Box>
+			{loaded &&
+				<React.Fragment>
+					<Box className={classes.nameAndPronouns}>
+						<Typography variant="h4" className={classes.name}>
+							{user.basics.name}
+						</Typography>
+						<Typography variant="h5">
+							(She/Her)
+						</Typography>
+					</Box>
+					<Typography variant="h6" gutterBottom>
+						{user.basics.label}
+					</Typography>
+					<Typography variant="body1" align="center" gutterBottom>
+						@tricksterCodess: <Link
+							href={`https://github.com/${user.basics.username}`}
+							underline='always'
+						> gitHub</Link>  |  <Link
+							href={`https://gitconnected.com/${user.basics.username}`}
+							underline='always'
+						>gitConnected	</Link>
+					</Typography>
+					<Box className={classes.chipsContainer}>
+						{user.skills.map((skill: any, index: number) => (
+							<Chip
+								key={index}
+								label={skill.name}
+								color="primary"
+							/>
+						))}
+					</Box>
+				</React.Fragment>
+			}
 		</Box>
 	)
 

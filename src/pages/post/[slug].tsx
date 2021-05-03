@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme: Theme) => {
 			position: 'relative',
 			fontWeight: 300,
 			lineHeight: 1.4,
-			zIndex: 5,
 			'& p': {
 				marginBottom: theme.spacing(5)
 			},
@@ -74,22 +73,15 @@ const Post: React.FC<Props> = (props) => {
 	)
 };
 
-// This function gets called at build time
+/*
+ * Called at build time, this function gets the paths of all our
+ * individual blog posts.
+ */
 export const getStaticPaths: GetStaticPaths = async () => {
 	// Call an external API endpoint to get posts
 	const posts = await sanityClient.fetch(
 		`*[_type == "post"]{
-				title,
-				slug,
-				"author": author->name,
-				mainImage {
-						asset->{
-						_id,
-						url
-					}
-				},
-				publishedAt,	
-				body
+				slug
 				}`
 	);
 
@@ -105,6 +97,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	return { paths, fallback: false }
 }
 
+/*
+ * Using the paths returned by getStaticPaths, here we get the information
+ * for a single post that will be displayed on this page.
+ */
 export const getStaticProps: GetStaticProps = async ({ params }) => {
 	const post = await sanityClient.fetch(
 		`*[_type == "post" && slug.current == "${params!.slug}"][0]{

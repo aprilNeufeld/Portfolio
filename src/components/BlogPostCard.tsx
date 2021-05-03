@@ -40,25 +40,24 @@ const useStyles = makeStyles((theme: Theme) => {
 			marginBottom: '1rem',
 		},
 		cardActions: {
-			justifyContent: 'flex-end',
 			padding: theme.spacing(2),
 		},
-		collapseContainer: {
-			position: 'relative',
+		textContainer: {
+			height: '100%',
 		},
-		collapse: {
+		textFadeContainer: {
+			position: 'relative',
+			zIndex: 10,
+			height: '200px',
+			overflow: 'hidden',
+		},
+		textFade: {
 			position: 'absolute',
 			top: 0,
 			width: '100%',
 			height: '100%',
 			zIndex: 10,
 			background: 'linear-gradient(0deg, rgba(255,255,255,1) 1%, rgba(255,255,255,0.7) 15%, rgba(255,255,255,0.5747330960854092) 20%, rgba(255,255,255,0) 80%)',
-			transition: theme.transitions.create('background, zIndex')
-		},
-		collapseOpen: {
-			background: 'none',
-			zIndex: 0,
-			transition: theme.transitions.create('background, zIndex'),
 		},
 		postBodyText: {
 			position: 'relative',
@@ -68,6 +67,8 @@ const useStyles = makeStyles((theme: Theme) => {
 			'& p': {
 				marginBottom: theme.spacing(5)
 			},
+		},
+		readMore: {
 		},
 		shareIcon: {
 			color: theme.palette.action.disabled
@@ -87,11 +88,6 @@ const BlogPostCard: React.FC<Props> = (props) => {
 
 	const { post } = props;
 	const classes = useStyles(useTheme());
-	const [expanded, setExpanded] = React.useState(false);
-
-	const handleExpandClick = () => {
-		setExpanded(!expanded);
-	};
 
 	const formatDate = (datetime: string): string => {
 		const date: Date = new Date(datetime);
@@ -114,37 +110,34 @@ const BlogPostCard: React.FC<Props> = (props) => {
 					className={classes.media}
 				/>
 				<Divider />
-				<Collapse
-					in={expanded}
-					timeout="auto"
-					collapsedHeight="200px"
-					className={classes.collapseContainer}
+				<Box
+					className={classes.textFadeContainer}
 				>
 					<Box
-						className={clsx(classes.collapse, {
-							[classes.collapseOpen]: expanded,
-						})}
+						className={classes.textFade}
 					/>
-					<CardContent>
+					<CardContent className={classes.textContainer}>
 						<Typography
 							variant='body1'
 							className={classes.postBodyText}
 							component='div'
 						>
 							<BlockRenderer
-								content={post.body}
+								content={post.body[0]}
 							/>
 						</Typography>
 					</CardContent>
-				</Collapse>
+				</Box>
 				<CardActions
 					className={classes.cardActions}
 				>
-					<Link
-						href={`/post/${encodeURIComponent(post.slug.current)}`}
-					>
-						Read more
+					<Typography variant='caption' className={classes.readMore}>
+						<Link
+							href={`/post/${encodeURIComponent(post.slug.current)}`}
+						>
+							Read more
 					</Link>
+					</Typography>
 				</CardActions>
 			</Card>
 		</React.Fragment>

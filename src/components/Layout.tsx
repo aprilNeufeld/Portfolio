@@ -74,23 +74,21 @@ const Layout: React.FC<Props> = (props) => {
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 			</Head>
-			{user.loaded &&
-				<React.Fragment>
-					<Header>
-						<HeaderContent />
-					</Header>
-					<Container maxWidth="lg" className={classes.root}>
-						<Paper elevation={2} className={classes.paper} >
-							<Container maxWidth="md" className={classes.content}>
-								<div>
-									<PageTitle text={contentTitle ?? pageTitle} />
-									{children}
-								</div>
-							</Container>
-						</Paper>
-					</Container>
-				</React.Fragment>
-			}
+			<React.Fragment>
+				<Header>
+					<HeaderContent />
+				</Header>
+				<Container maxWidth="lg" className={classes.root}>
+					<Paper elevation={2} className={classes.paper} >
+						<Container maxWidth="md" className={classes.content}>
+							<div>
+								<PageTitle text={contentTitle ?? pageTitle} />
+								{children}
+							</div>
+						</Container>
+					</Paper>
+				</Container>
+			</React.Fragment>
 			<Footer />
 		</React.Fragment>
 	)
