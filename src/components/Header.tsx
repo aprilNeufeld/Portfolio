@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) => {
 		toolbar: {
 			justifyContent: 'center',
 		},
-		menuButton: {
+		drawerButton: {
 			[theme.breakpoints.up('md')]: {
 				display: "none",
 			},
@@ -174,8 +174,7 @@ const Header: React.FC<Props> = (props) => {
 						)};
 								</Tabs>
 					<IconButton
-						edge="end"
-						className={classes.menuButton}
+						className={classes.drawerButton}
 						color="default"
 						onClick={handleDrawerToggle}
 					>

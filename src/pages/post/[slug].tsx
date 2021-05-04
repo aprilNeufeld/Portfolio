@@ -26,6 +26,7 @@ import {
 	useTheme
 } from '@material-ui/core';
 import PageTitle from '../../components/PageTitle';
+import { fetchUserState } from '../../lib/staticFetching';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -197,7 +198,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 				}`
 	);
 	const shareUrl = `https://www.tricksterCodess.com/post/${post.slug}`;
-	return { props: { post, shareUrl } };
+
+	const userState = await fetchUserState();
+
+	return {
+		props: {
+			post,
+			shareUrl,
+			initialReduxState: {
+				user: userState
+			}
+		}
+	};
 }
 
 export default Post;

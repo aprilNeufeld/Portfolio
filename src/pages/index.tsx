@@ -33,48 +33,45 @@ const useStyles = makeStyles((theme: Theme) => {
 
 const Home: React.FC = () => {
 
-	const user = useApplicationState(state => state.user);
+	const user = useApplicationState(state => state.user.user);
 	const classes = useStyles(useTheme());
 
 	return (
 		<React.Fragment>
 			<Layout pageTitle='About Me' contentTitle="Hi, I'm April.">
-				{user.loaded &&
-					<Box>
-						<Typography variant="h6" className={classes.summary} gutterBottom>
-							{user.user.basics.summary}
-						</Typography>
-						<Typography variant='h6' className={classes.plug}>
-							Check out <Link href='/projects'>
-								my repos and gists
+				<Box>
+					<Typography variant="h6" className={classes.summary} gutterBottom>
+						{user.basics.summary}
+					</Typography>
+					<Typography variant='h6' className={classes.plug}>
+						Check out <Link href='/projects'>
+							my repos and gists
 							</Link> for examples of my work!
 						</Typography>
-						<Typography variant="h6" gutterBottom>
-							Things I love:
+					<Typography variant="h6" gutterBottom>
+						Things I love:
 						</Typography>
-						<FancyChild>
-							<List>
-								{user.user.interests.map((item: any, index: number) => (
-									<ListItem key={index}>
-										<Typography variant="body1" className={classes.interests}>
-											{item.name}  {item.keywords.map((keyword: any, i: number,) => (
-												<span key={keyword} >
-													{(i % 2 === 0) &&
-														<span role='img' aria-label={item.keywords[i + 1]}>
-															{keyword}
-														</span>
-													}
-												</span>
-											))}
-										</Typography>
-										<p>  </p>
-									</ListItem>
-								))}
-							</List>
-						</FancyChild>
-
-					</Box>
-				}
+					<FancyChild>
+						<List>
+							{user.interests.map((item: any, index: number) => (
+								<ListItem key={index}>
+									<Typography variant="body1" className={classes.interests}>
+										{item.name}  {item.keywords.map((keyword: any, i: number,) => (
+											<span key={keyword} >
+												{(i % 2 === 0) &&
+													<span role='img' aria-label={item.keywords[i + 1]}>
+														{keyword}
+													</span>
+												}
+											</span>
+										))}
+									</Typography>
+									<p>  </p>
+								</ListItem>
+							))}
+						</List>
+					</FancyChild>
+				</Box>
 			</Layout>
 		</React.Fragment>
 	)
