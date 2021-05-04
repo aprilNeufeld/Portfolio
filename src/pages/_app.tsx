@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 
 const PortfolioApp: React.FC<AppProps> = ({ Component, pageProps }) => {
 
+	// pageProps comes from any pages that use getStaticProps at build time
 	const store = useStore(pageProps.initialReduxState);
 
 	/**

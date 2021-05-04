@@ -117,6 +117,9 @@ const Header: React.FC<Props> = (props) => {
 	const [drawerOpen, setDrawerOpen] = React.useState(false);
 	const classes = useStyles(useTheme());
 
+	// Find out which tab should be shown as selected based on the current
+	// router path. If the path does not exist as part of our array, it's 
+	// one of our blog posts, so show the Blog tab as selected.
 	const tabValue = React.useRef(
 		pages.findIndex(page => router.pathname === page.path) >= 0 ?
 			pages.findIndex(page => router.pathname === page.path) :

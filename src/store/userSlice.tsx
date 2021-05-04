@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-interface UserState {
+export interface UserState {
 	user: any;
 	pending: boolean;
 	loaded: boolean;
@@ -14,6 +14,7 @@ const initialState: UserState = {
 
 export const fetchUserData = createAsyncThunk(
 	'user/fetch', async (arg, thunkApi) => {
+		console.log("Fetching user data from async thunk");
 		const response = await fetch(
 			'https://gitconnected.com/v1/portfolio/tricksterCodess'
 		);

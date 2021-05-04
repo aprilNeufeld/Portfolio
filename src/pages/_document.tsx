@@ -43,7 +43,7 @@ class MyDocument extends Document {
  * static site generation. 
  * Taken from https://github.com/mui-org/material-ui/blob/master/examples/nextjs/pages/_document.js
  * so that we can statically generate our individual post pages without
- * the styling messing up.
+ * the styling conflicting with client-side styling.
  */
 MyDocument.getInitialProps = async (ctx) => {
 

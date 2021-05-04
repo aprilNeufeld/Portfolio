@@ -1,8 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import Router from 'next/router';
 import { reducers } from './';
 import { useMemo } from 'react';
-
 
 const rootReducer = combineReducers({
 	...reducers
@@ -30,10 +28,11 @@ export const initializeStore = (initialState?: Partial<RootState>) => {
 	// After navigating to a page with an initial Redux state, merge that state
 	// with the current state in the store, and create a new store
 	if (initialState && store) {
-		_store = initializeStore({
+		_store = createStore({
 			...store.getState(),
 			...initialState,
 		})
+		console.log("Combining state with initial.");
 		// Reset the current store
 		store = undefined
 	}
@@ -51,5 +50,6 @@ export const initializeStore = (initialState?: Partial<RootState>) => {
 
 export function useStore(initialState?: RootState) {
 	const store = useMemo(() => initializeStore(initialState), [initialState])
-	return store
+	console.log("Returning store: " + JSON.stringify(store, null, 2));
+	return store;
 }

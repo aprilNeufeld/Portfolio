@@ -13,6 +13,8 @@ import {
 import Layout from '../components/Layout';
 import { useApplicationState } from '../store';
 import FancyChild from '../components/FancyChild';
+import { GetStaticProps } from 'next';
+import { fetchUserState } from '../lib/staticFetching';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -77,5 +79,19 @@ const Home: React.FC = () => {
 		</React.Fragment>
 	)
 };
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+	const userState = await fetchUserState();
+
+	// Return part of our actual state object, which will be integrated
+	// with our redux store when we navigate to this page
+	return {
+		props: {
+			initialReduxState: {
+				user: userState
+			}
+		}
+	};
+}
 
 export default Home;

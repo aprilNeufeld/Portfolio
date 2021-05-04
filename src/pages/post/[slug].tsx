@@ -163,19 +163,13 @@ const Post: React.FC<Props> = (props) => {
  * individual blog posts.
  */
 export const getStaticPaths: GetStaticPaths = async () => {
-	// Call an external API endpoint to get posts
-	const posts = await sanityClient.fetch(
-		`*[_type == "post"]{
-				slug
-				}`
+	// Call an external API endpoint to get post slugs
+	const slugs = await sanityClient.fetch(
+		`*[_type == "post" && defined(slug.current)][].slug.current`
 	);
 
-	// Get the paths we want to pre-render based on posts
-	const paths = posts.map((post: any) => {
-		return {
-			params: { slug: post.slug.current },
-		}
-	});
+	// Get the paths we want to pre-render based on post slugs
+	const paths = slugs.map((slug: any) => ({ params: { slug } }));
 
 	// We'll pre-render only these paths at build time.
 	// { fallback: false } means other routes should 404.
