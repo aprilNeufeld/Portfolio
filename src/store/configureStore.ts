@@ -32,7 +32,6 @@ export const initializeStore = (initialState?: Partial<RootState>) => {
 			...store.getState(),
 			...initialState,
 		})
-		console.log("Combining state with initial.");
 		// Reset the current store
 		store = undefined
 	}
@@ -50,6 +49,5 @@ export const initializeStore = (initialState?: Partial<RootState>) => {
 
 export function useStore(initialState?: RootState) {
 	const store = useMemo(() => initializeStore(initialState), [initialState])
-	console.log("Returning store: " + JSON.stringify(store, null, 2));
 	return store;
 }
