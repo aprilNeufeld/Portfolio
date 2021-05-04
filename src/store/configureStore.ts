@@ -1,28 +1,18 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import {
-	createRouterMiddleware,
-	initialRouterState,
-	routerReducer,
-} from 'connected-next-router';
 import Router from 'next/router';
 import { reducers } from './';
 import { useMemo } from 'react';
 
 
 const rootReducer = combineReducers({
-	...reducers,
-	router: routerReducer
+	...reducers
 });
 
 export type RootState = ReturnType<typeof rootReducer>
 
-const routerMiddleware = createRouterMiddleware();
-
 export const createStore = (initialState?: Partial<RootState>) =>
 	configureStore({
 		reducer: rootReducer,
-		middleware: getDefaultMiddleware =>
-			getDefaultMiddleware().prepend(routerMiddleware),
 		preloadedState: initialState,
 		devTools: true,
 	});
@@ -35,15 +25,7 @@ let store: StoreType | undefined;
 
 export const initializeStore = (initialState?: Partial<RootState>) => {
 
-	let _store = store ?? createStore(initialState)
-	const { asPath } = Router.router || {}
-
-	if (asPath) {
-		initialState = {
-			...initialState,
-			router: initialRouterState(asPath)
-		}
-	}
+	let _store = store ?? createStore(initialState);
 
 	// After navigating to a page with an initial Redux state, merge that state
 	// with the current state in the store, and create a new store

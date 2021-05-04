@@ -1,7 +1,6 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router'
-import { push } from 'connected-next-router'
 import MenuIcon from '@material-ui/icons/Menu';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import {
@@ -17,7 +16,6 @@ import {
 	createStyles,
 	useTheme,
 } from '@material-ui/core';
-import { useAppDispatch } from '../store';
 import { Page } from '../shared/types';
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -125,10 +123,6 @@ const Header: React.FC<Props> = (props) => {
 			2
 	);
 
-	React.useEffect(() => {
-		console.log("Changing tab value: " + tabValue.current);
-	}, [tabValue.current])
-
 	/**
 	 * Handles a selection of a menu item by
 	 * pushing the new path to browser history.
@@ -137,7 +131,6 @@ const Header: React.FC<Props> = (props) => {
 	 */
 	const handleMenuSelection =
 		(event: React.ChangeEvent<{}>, newValue: number) => {
-			console.log("Changing route: ");
 			router.push(pages[newValue].path);
 		};
 

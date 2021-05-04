@@ -14,7 +14,3 @@ export const reducers = {
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 
 export const useApplicationState: TypedUseSelectorHook<RootState> = useSelector
-
-export function withPayloadType<T>() {
-    return (t: T) => ({ payload: t })
-}
