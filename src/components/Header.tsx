@@ -115,13 +115,19 @@ interface Props {
 const Header: React.FC<Props> = (props) => {
 
 	const { children } = props;
-	const dispatch = useAppDispatch();
 	const router = useRouter();
 	const [drawerOpen, setDrawerOpen] = React.useState(false);
-	const tabValue = React.useRef(
-		pages.findIndex(page => router.pathname === page.path)
-	);
 	const classes = useStyles(useTheme());
+
+	const tabValue = React.useRef(
+		pages.findIndex(page => router.pathname === page.path) >= 0 ?
+			pages.findIndex(page => router.pathname === page.path) :
+			2
+	);
+
+	React.useEffect(() => {
+		console.log("Changing tab value: " + tabValue.current);
+	}, [tabValue.current])
 
 	/**
 	 * Handles a selection of a menu item by
@@ -131,8 +137,8 @@ const Header: React.FC<Props> = (props) => {
 	 */
 	const handleMenuSelection =
 		(event: React.ChangeEvent<{}>, newValue: number) => {
-			tabValue.current = newValue;
-			dispatch(push(pages[newValue].path));
+			console.log("Changing route: ");
+			router.push(pages[newValue].path);
 		};
 
 	/**
@@ -160,7 +166,7 @@ const Header: React.FC<Props> = (props) => {
 			>
 				<Toolbar className={classes.toolbar}>
 					<Tabs
-						value={(tabValue.current >= 0 ? tabValue.current : 2)}
+						value={tabValue.current}
 						onChange={handleMenuSelection}
 						className={classes.tabsLayout}
 					>
@@ -185,7 +191,7 @@ const Header: React.FC<Props> = (props) => {
 						onClose={handleDrawerToggle}
 					>
 						<Tabs
-							value={(tabValue.current >= 0 ? tabValue.current : 2)}
+							value={tabValue.current}
 							onChange={handleMenuSelection}
 							orientation="vertical"
 							className={classes.tabsLayoutVertical}
