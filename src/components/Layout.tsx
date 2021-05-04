@@ -12,8 +12,6 @@ import {
 	useTheme
 } from '@material-ui/core';
 import HeaderContent from '../components/HeaderContent';
-import { useApplicationState, useAppDispatch } from '../store';
-import { fetchUserData } from '../store/userSlice';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -67,17 +65,7 @@ const Layout: React.FC<Props> = (props) => {
 
 	const { children, pageTitle, contentTitle } = props;
 	const classes = useStyles(useTheme());
-	/*
-	const user = useApplicationState(state => state.user);
-	const dispatch = useAppDispatch();
-
-	React.useEffect(() => {
-		if (!user.loaded && !user.pending) {
-			console.log("Fetching user data from Layout component");
-			dispatch(fetchUserData());
-		}
-	}, [user, dispatch]);
-	*/
+	
 	return (
 		<React.Fragment>
 			<Head>

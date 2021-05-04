@@ -10,6 +10,6 @@ export const fetchUserState = async (): Promise<UserState> => {
 	return {
 		user: user,
 		loaded: true,
-		pending: true
+		pending: false
 	} as UserState;
 }
