@@ -1,7 +1,6 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router'
-import { push } from 'connected-next-router'
 import MenuIcon from '@material-ui/icons/Menu';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import {
@@ -17,7 +16,6 @@ import {
 	createStyles,
 	useTheme,
 } from '@material-ui/core';
-import { useAppDispatch } from '../store';
 import { Page } from '../shared/types';
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -41,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) => {
 		toolbar: {
 			justifyContent: 'center',
 		},
-		menuButton: {
+		drawerButton: {
 			[theme.breakpoints.up('md')]: {
 				display: "none",
 			},
@@ -115,13 +113,18 @@ interface Props {
 const Header: React.FC<Props> = (props) => {
 
 	const { children } = props;
-	const dispatch = useAppDispatch();
 	const router = useRouter();
 	const [drawerOpen, setDrawerOpen] = React.useState(false);
-	const tabValue = React.useRef(
-		pages.findIndex(page => router.pathname === page.path)
-	);
 	const classes = useStyles(useTheme());
+
+	// Find out which tab should be shown as selected based on the current
+	// router path. If the path does not exist as part of our array, it's 
+	// one of our blog posts, so show the Blog tab as selected.
+	const tabValue = React.useRef(
+		pages.findIndex(page => router.pathname === page.path) >= 0 ?
+			pages.findIndex(page => router.pathname === page.path) :
+			2
+	);
 
 	/**
 	 * Handles a selection of a menu item by
@@ -131,8 +134,7 @@ const Header: React.FC<Props> = (props) => {
 	 */
 	const handleMenuSelection =
 		(event: React.ChangeEvent<{}>, newValue: number) => {
-			tabValue.current = newValue;
-			dispatch(push(pages[newValue].path));
+			router.push(pages[newValue].path);
 		};
 
 	/**
@@ -160,7 +162,7 @@ const Header: React.FC<Props> = (props) => {
 			>
 				<Toolbar className={classes.toolbar}>
 					<Tabs
-						value={(tabValue.current >= 0 ? tabValue.current : 2)}
+						value={tabValue.current}
 						onChange={handleMenuSelection}
 						className={classes.tabsLayout}
 					>
@@ -172,8 +174,7 @@ const Header: React.FC<Props> = (props) => {
 						)};
 								</Tabs>
 					<IconButton
-						edge="end"
-						className={classes.menuButton}
+						className={classes.drawerButton}
 						color="default"
 						onClick={handleDrawerToggle}
 					>
@@ -185,7 +186,7 @@ const Header: React.FC<Props> = (props) => {
 						onClose={handleDrawerToggle}
 					>
 						<Tabs
-							value={(tabValue.current >= 0 ? tabValue.current : 2)}
+							value={tabValue.current}
 							onChange={handleMenuSelection}
 							orientation="vertical"
 							className={classes.tabsLayoutVertical}

@@ -1,10 +1,4 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import {
-	createRouterMiddleware,
-	initialRouterState,
-	routerReducer,
-} from 'connected-next-router';
-import Router from 'next/router';
 import { reducers } from './';
 import { useMemo } from 'react';
 
@@ -13,23 +7,16 @@ import { useMemo } from 'react';
  * Code patterns used from
  * https://github.com/vercel/next.js/blob/canary/examples/with-redux/store.js
  */
-
 const rootReducer = combineReducers({
-	...reducers,
-	router: routerReducer
+	...reducers
 });
 
 export type RootState = ReturnType<typeof rootReducer>
-
-// Middleware for connected-next-router
-const routerMiddleware = createRouterMiddleware();
 
 // Create the actual store using redux toolkit
 export const createStore = (initialState?: Partial<RootState>) =>
 	configureStore({
 		reducer: rootReducer,
-		middleware: getDefaultMiddleware =>
-			getDefaultMiddleware().prepend(routerMiddleware),
 		preloadedState: initialState,
 		devTools: true,
 	});
@@ -44,27 +31,28 @@ let store: StoreType | undefined;
 
 export const initializeStore = (initialState?: Partial<RootState>) => {
 
-	let _store = store ?? createStore(initialState)
-	const { asPath } = Router.router || {}
+	let _store = store ?? createStore(initialState);
 
-	// Preserve/initialize our navigation state for connected-next-router
-	if (asPath) {
-		initialState = {
-			...initialState,
-			router: initialRouterState(asPath)
-		}
-	}
-
+	/*
+	 * This is recommended by: https://github.com/vercel/next.js/blob/canary/examples/with-redux/store.js.
+	 * However, in my case, I don't want to create a new Redux store every time I go to
+	 * a page that has initial data because I'm using getStaticProps to initialize data
+	 * that won't change once we're on the client side.
+	 * 
+	 * It seems silly to me to create a whole new store when given an initial redux state, 
+	 * rather than just merging them, but I don't need to do that anyway.
+	 * 
 	// After navigating to a page with an initial Redux state, merge that state
 	// with the current state in the store, and create a new store
 	if (initialState && store) {
-		_store = initializeStore({
+		_store = createStore({
 			...store.getState(),
 			...initialState,
 		})
 		// Reset the current store
 		store = undefined
 	}
+	*/
 
 	// For SSG and SSR always create a new store
 	if (typeof window === 'undefined') return _store
@@ -79,5 +67,5 @@ export const initializeStore = (initialState?: Partial<RootState>) => {
 
 export function useStore(initialState?: RootState) {
 	const store = useMemo(() => initializeStore(initialState), [initialState])
-	return store
+	return store;
 }

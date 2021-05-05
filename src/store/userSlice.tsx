@@ -1,44 +1,41 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
+import { ProjectType } from '../shared/types';
 
-interface UserState {
-	user: any;
-	pending: boolean;
-	loaded: boolean;
+// Define the user object so that we don't push any
+// information we don't need to the redux store
+export interface UserState {
+	basics: {
+		name: string;
+		label: string;
+		summary: string;
+		username: string;
+	};
+	skills: {
+		name: string;
+	}[];
+	projects: ProjectType[];
+	interests: {
+		name: string;
+		keywords: string[];
+	}[];
 }
 
-const initialState: UserState = {
-	user: "",
-	pending: false,
-	loaded: false
+export const initialState: UserState = {
+	basics: {
+		label: "",
+		name: "",
+		summary: "",
+		username: ""
+	},
+	interests: [],
+	projects: [],
+	skills: []
 };
-
-export const fetchUserData = createAsyncThunk(
-	'user/fetch', async (arg, thunkApi) => {
-		const response = await fetch(
-			'https://gitconnected.com/v1/portfolio/tricksterCodess'
-		);
-		const data = await response.json();
-		return {
-			user: data
-		} as UserState
-	}
-)
 
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
-	reducers: {	},
-	extraReducers: (builder) => {
-		builder.addCase(fetchUserData.pending, (state, action) => {
-			state.pending = true;
-			state.loaded = false;
-		});
-		builder.addCase(fetchUserData.fulfilled, (state, action) => {
-			state.user = action.payload.user;
-			state.pending = false;
-			state.loaded = true;
-		})
-	}
+	reducers: {},
 })
 
 export default userSlice.reducer
