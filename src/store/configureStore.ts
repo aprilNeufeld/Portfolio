@@ -2,12 +2,19 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { reducers } from './';
 import { useMemo } from 'react';
 
+/*
+ * Configure our redux store using redux toolkit. 
+ * Code patterns used from
+ * https://github.com/vercel/next.js/blob/canary/examples/with-redux/store.js
+ */
+
 const rootReducer = combineReducers({
 	...reducers
 });
 
 export type RootState = ReturnType<typeof rootReducer>
 
+// Create the actual store using redux toolkit
 export const createStore = (initialState?: Partial<RootState>) =>
 	configureStore({
 		reducer: rootReducer,
@@ -15,8 +22,10 @@ export const createStore = (initialState?: Partial<RootState>) =>
 		devTools: true,
 	});
 
+// Get the type of our store
 type StoreType = ReturnType<typeof createStore>;
 
+// Get the type of our store's dispatch property
 export type AppDispatch = StoreType["dispatch"];
 
 let store: StoreType | undefined;
