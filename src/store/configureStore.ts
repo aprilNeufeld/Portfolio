@@ -3,7 +3,7 @@ import { reducers } from './';
 import { useMemo } from 'react';
 
 /*
- * Configure our redux store using redux toolkit and connected-next-router. 
+ * Configure our redux store using redux toolkit. 
  * Code patterns used from
  * https://github.com/vercel/next.js/blob/canary/examples/with-redux/store.js
  */
