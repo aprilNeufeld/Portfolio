@@ -14,3 +14,4 @@ export const reducers = {
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export const useApplicationState: TypedUseSelectorHook<RootState> = useSelector;
+

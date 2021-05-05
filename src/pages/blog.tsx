@@ -1,6 +1,8 @@
+import { GetStaticProps } from 'next';
 import * as React from 'react';
 import BlogPostCard from '../components/BlogPostCard';
 import Layout from '../components/Layout';
+import { fetchUserState } from '../lib/staticFetching';
 import { useApplicationState, useAppDispatch } from '../store';
 import { fetchBlogPosts } from '../store/blogSlice';
 
@@ -29,5 +31,19 @@ const Blog: React.FC = () => {
 		</React.Fragment>
 	)
 };
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+	const userState = await fetchUserState();
+
+	// Return part of our actual state object, which will be integrated
+	// with our redux store when we navigate to this page
+	return {
+		props: {
+			initialReduxState: {
+				user: userState
+			}
+		}
+	};
+}
 
 export default Blog;
