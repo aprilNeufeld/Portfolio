@@ -32,33 +32,20 @@ const getLanguage = (lang: string): string => {
 	return (lang === "TSX" ? "TypeScript" : lang)
 }
 
-const mapProjects = (projects: any[]): ProjectType[] => {
+const mapGists = (projects: any[]): ProjectType[] => {
 	let array: ProjectType[] = projects.map(
 		(project: any) => {
-			let p: ProjectType;
-			if ('githubUrl' in project) {
-				p = {
-					description: project.summary,
-					languages: [...project.languages, ...project.libraries],
-					name: project.name,
-					type: 'repo',
-					url: project.githubUrl
-				}
+			return {
+				description: project.description,
+				languages: [
+					getLanguage(
+						project.files[Object.keys(project.files)[0]].language
+					)
+				],
+				name: (Object.keys(project.files))[0],
+				type: 'gist',
+				url: project.html_url
 			}
-			else {
-				p = {
-					description: project.description,
-					languages: [
-						getLanguage(
-							project.files[Object.keys(project.files)[0]].language
-						)
-					],
-					name: (Object.keys(project.files))[0],
-					type: 'gist',
-					url: project.html_url
-				}
-			}
-			return p;
 		});
 
 	return array;
@@ -133,11 +120,11 @@ const Projects: React.FC = () => {
 	const classes = useStyles(useTheme());
 
 	React.useEffect(() => {
-		if (user.loaded) {
-			dispatchPageState({ type: 'map-repos', payload: mapProjects(user.user.projects) });
+		if (user) {
+			dispatchPageState({ type: 'map-repos', payload: user.projects });
 		}
 		if (gists.loaded) {
-			dispatchPageState({ type: 'map-gists', payload: mapProjects((gists.gists)) });
+			dispatchPageState({ type: 'map-gists', payload: mapGists((gists.gists)) });
 		}
 		else if (!gists.pending) {
 			dispatch(fetchGists());
@@ -146,8 +133,9 @@ const Projects: React.FC = () => {
 
 	return (
 		<React.Fragment>
-			{gists.loaded &&
-				<Layout pageTitle='My Work' contentTitle='Projects & Samples'>
+
+			<Layout pageTitle='My Work' contentTitle='Projects & Samples'>
+				{gists.loaded &&
 					<GridList
 						className={classes.gridList}
 						cols={3}
@@ -158,8 +146,8 @@ const Projects: React.FC = () => {
 							<Project key={index} project={project} />
 						))}
 					</GridList>
-				</Layout>
-			}
+				}
+			</Layout>
 		</React.Fragment>
 	)
 };

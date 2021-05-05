@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) => {
 
 const Home: React.FC = () => {
 
-	const user = useApplicationState(state => state.user.user);
+	const user = useApplicationState(state => state.user);
 	const classes = useStyles(useTheme());
 
 	return (
