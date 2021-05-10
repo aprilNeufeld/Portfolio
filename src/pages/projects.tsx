@@ -4,7 +4,7 @@ import {
 	makeStyles,
 	Theme,
 	createStyles,
-	useTheme
+	useTheme,
 } from '@material-ui/core';
 import Layout from '../components/Layout';
 import { useApplicationState, useAppDispatch } from '../store';
@@ -12,6 +12,7 @@ import { fetchProjects, ProjectType } from '../store/projectsSlice';
 import Project from '../components/Project';
 import { GetStaticProps } from 'next';
 import { fetchUserState } from '../lib/staticFetching';
+import ProjectSkeleton from '../components/ProjectSkeleton';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -23,6 +24,23 @@ const useStyles = makeStyles((theme: Theme) => {
 			overflow: 'hidden',
 			backgroundColor: theme.palette.background.paper,
 		},
+		projectSkeleton: {
+			display: 'flex',
+			flexDirection: 'column',
+			height: '100%',
+			width: '100%',
+			flexGrow: 1,
+			flexShrink: 1,
+		},
+		chipsContainerLeft: {
+			paddingTop: theme.spacing(2),
+			display: 'flex',
+			justifyContent: 'left',
+			flexWrap: 'wrap',
+			'& > *': {
+				margin: theme.spacing(0.5),
+			},
+		},
 	});
 });
 
@@ -32,30 +50,36 @@ const Projects: React.FC = () => {
 	const projectsState = useApplicationState(state => state.projects);
 	const dispatch = useAppDispatch();
 	const classes = useStyles(useTheme());
+	const placeholders: number[] = [1, 2, 3];
 
 	React.useEffect(() => {
 		if (!projectsState.loaded && !projectsState.pending) {
 			dispatch(fetchProjects());
 		}
-
 	}, [projectsState, dispatch]);
 
 	return (
 		<React.Fragment>
 
 			<Layout pageTitle='My Work' contentTitle='Projects & Samples'>
-				{projectsState.loaded &&
-					<GridList
-						className={classes.gridList}
-						cols={3}
-						spacing={4}
-						cellHeight='auto'
-					>
-						{projectsState.projects.map((project: ProjectType, index: number) => (
+
+				<GridList
+					className={classes.gridList}
+					cols={1}
+					spacing={4}
+					cellHeight='auto'
+				>
+					{projectsState.loaded ? (
+						projectsState.projects.map((project: ProjectType, index: number) => (
 							<Project key={index} project={project} />
-						))}
-					</GridList>
-				}
+						))
+					) : (
+							placeholders.map((index: number) => (
+								<ProjectSkeleton key={index} />
+							))
+						)
+					}
+				</GridList>
 			</Layout>
 		</React.Fragment>
 	)

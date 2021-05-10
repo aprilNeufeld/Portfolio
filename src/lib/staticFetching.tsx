@@ -16,7 +16,7 @@ export const fetchUserState = async (): Promise<UserState> => {
 	const userResponse = await fetch(
 		'https://gitconnected.com/v1/portfolio/tricksterCodess'
 	);
-	if (userResponse.status == 200) {
+	if (userResponse.status === 200) {
 		const json = await userResponse.json();
 
 		// There is another way to do this with Object.entries, filtering, and reducing,

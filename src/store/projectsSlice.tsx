@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { request } from '@octokit/request';
 
 interface ProjectsState {
@@ -33,7 +33,6 @@ const initialState: ProjectsState = {
 const mapRepos = (repos: any[]): ProjectType[] => {
 	let array: ProjectType[] = repos.map(
 		(repo: any) => {
-			console.log(repo);
 			let keywords: string[] = [repo.language];
 
 			if (repo["topics"]) {
@@ -100,10 +99,7 @@ export const fetchProjects = createAsyncThunk(
 			}
 		});
 		
-		console.log(reposResponse);
 		const repos: ProjectType[] = mapRepos(reposResponse.data);
-
-		console.log("Repos: " + JSON.stringify(repos, null, 2));
 
 		// Get our gists
 		const gistsResponse = await request({

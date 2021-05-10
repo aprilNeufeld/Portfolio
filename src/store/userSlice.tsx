@@ -1,4 +1,4 @@
-﻿import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 // Define the user object so that we don't push any
 // information we don't need to the redux store

@@ -41,8 +41,6 @@ const useStyles = makeStyles((theme: Theme) => {
 			color: '#1ab9c5',
 			borderColor: '#19b9c3',
 		},
-		description: {
-		},
 		itemName: {
 			display: 'inline-block',
 			marginBottom: theme.spacing(2),
@@ -78,7 +76,7 @@ const Project: React.FC<Props> = (props) => {
 					</Typography>
 					<FancyChild>
 						<Linkify>
-							<Typography variant="body1" className={classes.description}>
+							<Typography variant="body1">
 								{project.description}
 							</Typography>
 						</Linkify>
