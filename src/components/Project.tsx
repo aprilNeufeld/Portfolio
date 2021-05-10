@@ -13,7 +13,7 @@ import {
 	CardContent,
 	Card,
 } from '@material-ui/core';
-import { ProjectType } from '../shared/types';
+import { ProjectType } from '../store/projectsSlice';
 import Linkify from 'react-linkify';
 import FancyChild from '../components/FancyChild';
 
@@ -84,11 +84,11 @@ const Project: React.FC<Props> = (props) => {
 						</Linkify>
 					</FancyChild>
 					<Box className={classes.chipsContainerLeft}>
-						{project.languages.map((language: string, index: number) => (
+						{project.keywords.map((keyword: string, index: number) => (
 							<Chip
 								key={index}
 								className={classes.chip}
-								label={language}
+								label={keyword}
 								variant="outlined"
 							/>
 						))}

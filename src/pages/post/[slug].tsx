@@ -47,7 +47,6 @@ const useStyles = makeStyles((theme: Theme) => {
 		},
 		postBodyText: {
 			position: 'relative',
-			fontWeight: 300,
 			lineHeight: 1.4,
 			'& p': {
 				marginBottom: theme.spacing(5)

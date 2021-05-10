@@ -1,12 +1,12 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import * as User from './userSlice';
-import * as Gists from './gistsSlice';
+import * as Projects from './projectsSlice';
 import * as Blog from './blogSlice';
 import { AppDispatch, RootState } from './configureStore';
 
 export const reducers = {
     user: User.default,
-    gists: Gists.default,
+    projects: Projects.default,
     blog: Blog.default,
 };
 

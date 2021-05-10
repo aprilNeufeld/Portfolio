@@ -23,9 +23,6 @@ const useStyles = makeStyles((theme: Theme) => {
 			//paddingTop: '56.25%', // 16:9
 			paddingTop: '62%'
 		},
-		blockQuote: {
-			marginBottom: '1rem',
-		},
 		cardActions: {
 			padding: theme.spacing(2),
 		},
@@ -50,7 +47,6 @@ const useStyles = makeStyles((theme: Theme) => {
 		},
 		postBodyText: {
 			position: 'relative',
-			fontWeight: 300,
 			lineHeight: 1.4,
 			zIndex: 5,
 			'& p': {
