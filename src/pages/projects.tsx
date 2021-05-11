@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-	GridList,
+	List,
 	makeStyles,
 	Theme,
 	createStyles,
@@ -16,13 +16,8 @@ import ProjectSkeleton from '../components/ProjectSkeleton';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
-		gridList: {
-			width: '100%',
-			display: 'flex',
-			flexWrap: 'wrap',
-			justifyContent: 'space-around',
-			overflow: 'hidden',
-			backgroundColor: theme.palette.background.paper,
+		list: {
+			padding: 0,
 		},
 		projectSkeleton: {
 			display: 'flex',
@@ -60,14 +55,9 @@ const Projects: React.FC = () => {
 
 	return (
 		<React.Fragment>
-
 			<Layout pageTitle='My Work' contentTitle='Projects & Samples'>
-
-				<GridList
-					className={classes.gridList}
-					cols={1}
-					spacing={4}
-					cellHeight='auto'
+				<List
+					className={classes.list}
 				>
 					{projectsState.loaded ? (
 						projectsState.projects.map((project: ProjectType, index: number) => (
@@ -79,7 +69,7 @@ const Projects: React.FC = () => {
 							))
 						)
 					}
-				</GridList>
+				</List>
 			</Layout>
 		</React.Fragment>
 	)

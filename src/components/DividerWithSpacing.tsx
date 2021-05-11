@@ -2,33 +2,33 @@ import * as React from 'react';
 import {
 	Box,
 	Divider,
-	makeStyles,
-	Theme,
-	createStyles,
 	useTheme
 } from '@material-ui/core';
-
-const useStyles = makeStyles((theme: Theme) => {
-	return createStyles({
-		dividerSpacingBox: {
-			paddingTop: theme.spacing(4),
-			paddingBottom:theme.spacing(4),
-		},
-	});
-});
 
 interface Props {
 	spacing?: number;
 }
 
+/**
+ * A horizontal divider that has padding above and below. 
+ * 
+ * @param props { spacing } The amount by which we will multiply
+ *		theme.spacing to give us the padding to add above and 
+ *		below the divider. 
+ */
 const DividerWithSpacing: React.FC<Props> = (props) => {
 
 	const { spacing } = props;
-	const classes = useStyles(useTheme());
-
+	const theme = useTheme();
+	
 	return (
 		<React.Fragment>
-			<Box className={classes.dividerSpacingBox}>
+			<Box
+				style={{
+					paddingTop: spacing ? theme.spacing(spacing) : theme.spacing(4),
+					paddingBottom: spacing ? theme.spacing(spacing) : theme.spacing(4)
+				}}
+			>
 				<Divider />
 			</Box>
 		</React.Fragment>

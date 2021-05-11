@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import {
 	Box,
-	GridListTile,
+	ListItem,
 	Typography,
 	makeStyles,
 	Theme,
@@ -13,10 +13,9 @@ import DividerWithSpacing from './DividerWithSpacing';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
-		root: {
-			height: '100%',
-			flexGrow: 1,
-			flexShrink: 1,
+		listItem: {
+			paddingLeft: 0,
+			display: 'block',
 		},
 		chip: {
 			borderRadius: "16px",
@@ -57,8 +56,7 @@ const getChips = (): ChipType[] => {
  */
 const ProjectSkeleton: React.FC = () => {
 
-	const theme = useTheme();
-	const classes = useStyles(theme);
+	const classes = useStyles(useTheme());
 	const [chips, setChips] = React.useState<ChipType[]>();
 
 	React.useEffect(() => {
@@ -66,9 +64,8 @@ const ProjectSkeleton: React.FC = () => {
 	}, [])
 
 	return (
-		<GridListTile
-			className={classes.root}
-			cols={1}
+		<ListItem
+			className={classes.listItem}
 		>
 			<Typography variant="h6" component="div" gutterBottom>
 				<Skeleton />
@@ -85,8 +82,8 @@ const ProjectSkeleton: React.FC = () => {
 					/>
 				))}
 			</Box>
-			<DividerWithSpacing spacing={theme.spacing(2)} />
-		</GridListTile>
+			<DividerWithSpacing spacing={2} />
+		</ListItem>
 	)
 };
 

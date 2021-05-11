@@ -4,7 +4,7 @@ import {
 	Box,
 	Chip,
 	Divider,
-	GridListTile,
+	ListItem,
 	Typography,
 	makeStyles,
 	Theme,
@@ -19,14 +19,14 @@ import FancyChild from '../components/FancyChild';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
-		root: {
-			height: '100%',
-			flexGrow: 1,
-			flexShrink: 1,
+		listItem: {
+			padding: 0,
+			display: 'block',
 		},
 		card: {
 			display: 'flex',
 			flexDirection: 'column',
+			flexWrap: 'wrap',
 		},
 		chipsContainerLeft: {
 			paddingTop: theme.spacing(2),
@@ -58,9 +58,8 @@ const Project: React.FC<Props> = (props) => {
 	const classes = useStyles(useTheme());
 
 	return (
-		<GridListTile
-			className={classes.root}
-			cols={1}
+		<ListItem
+			className={classes.listItem}
 		>
 			<Card
 				className={classes.card}
@@ -94,7 +93,7 @@ const Project: React.FC<Props> = (props) => {
 				</CardContent>
 				<Divider/>
 			</Card>
-		</GridListTile>
+		</ListItem>
 	)
 };
 
