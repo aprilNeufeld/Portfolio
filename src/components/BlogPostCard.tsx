@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) => {
 		textFadeContainer: {
 			position: 'relative',
 			zIndex: 10,
-			height: '200px',
+			height: '150px',
 			overflow: 'hidden',
 		},
 		textFade: {
@@ -47,7 +47,6 @@ const useStyles = makeStyles((theme: Theme) => {
 		},
 		postBodyText: {
 			position: 'relative',
-			lineHeight: 1.4,
 			zIndex: 5,
 			'& p': {
 				marginBottom: theme.spacing(5)

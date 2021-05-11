@@ -12,7 +12,7 @@ import { fetchProjects, ProjectType } from '../store/projectsSlice';
 import Project from '../components/Project';
 import { GetStaticProps } from 'next';
 import { fetchUserState } from '../lib/staticFetching';
-import ProjectSkeleton from '../components/ProjectSkeleton';
+import ListItemSkeleton from '../components/ListItemSkeleton';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -45,7 +45,6 @@ const Projects: React.FC = () => {
 	const projectsState = useApplicationState(state => state.projects);
 	const dispatch = useAppDispatch();
 	const classes = useStyles(useTheme());
-	const placeholders: number[] = [1, 2, 3];
 
 	React.useEffect(() => {
 		if (!projectsState.loaded && !projectsState.pending) {
@@ -64,9 +63,7 @@ const Projects: React.FC = () => {
 							<Project key={index} project={project} />
 						))
 					) : (
-							placeholders.map((index: number) => (
-								<ProjectSkeleton key={index} />
-							))
+							<ListItemSkeleton />
 						)
 					}
 				</List>
