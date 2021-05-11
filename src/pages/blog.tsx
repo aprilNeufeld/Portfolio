@@ -1,6 +1,7 @@
 import { GetStaticProps } from 'next';
 import * as React from 'react';
 import BlogPostCard from '../components/BlogPostCard';
+import ListItemSkeleton from '../components/ListItemSkeleton';
 import Layout from '../components/Layout';
 import { fetchUserState } from '../lib/staticFetching';
 import { useApplicationState, useAppDispatch } from '../store';
@@ -20,13 +21,16 @@ const Blog: React.FC = () => {
 	return (
 		<React.Fragment>
 			<Layout pageTitle='Blog' contentTitle='Blog'>
-				{blog.loaded && blog.posts &&
+				{blog.loaded ? (
 					blog.posts.map((post: any, index: number) => (
 						<BlogPostCard
 							key={index}
 							post={post}
 						/>
-					))}
+					))
+				) : (
+						<ListItemSkeleton />
+					)}
 			</Layout>
 		</React.Fragment>
 	)
