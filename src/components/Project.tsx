@@ -20,13 +20,22 @@ import FancyChild from '../components/FancyChild';
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
 		listItem: {
-			padding: 0,
 			display: 'block',
+			[theme.breakpoints.down('sm')]: {
+				paddingRight: 0,
+				paddingLeft: 0,
+			},
 		},
 		card: {
 			display: 'flex',
 			flexDirection: 'column',
 			flexWrap: 'wrap',
+			backgroundColor: 'transparent',
+			whiteSpace: 'break-spaces',
+		},
+		cardContent: {
+			paddingLeft: 0,
+			paddingRight: 0
 		},
 		chipsContainerLeft: {
 			paddingTop: theme.spacing(2),
@@ -65,7 +74,7 @@ const Project: React.FC<Props> = (props) => {
 				className={classes.card}
 				elevation={0}
 			>
-				<CardContent>
+				<CardContent className={classes.cardContent}>
 					<Typography variant="caption" display={'inline'}>
 						{project.type}s/
 					</Typography> <Typography variant="h6" className={classes.itemName} gutterBottom>
