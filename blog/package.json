@@ -5,7 +5,7 @@
   "description": "",
   "main": "package.json",
   "author": "April <tricksterCodess.com>",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "start": "sanity start",
     "build": "sanity build"
@@ -15,11 +15,13 @@
   ],
   "dependencies": {
     "@sanity/base": "^2.7.2",
+    "@sanity/code-input": "^2.9.0",
     "@sanity/components": "^2.2.6",
     "@sanity/core": "^2.7.2",
     "@sanity/default-layout": "^2.7.2",
     "@sanity/default-login": "^2.7.0",
     "@sanity/desk-tool": "^2.7.2",
+    "@sanity/production-preview": "^2.2.6",
     "@sanity/vision": "^2.7.3",
     "prop-types": "^15.7",
     "react": "^17.0",
