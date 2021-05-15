@@ -2,7 +2,7 @@ import * as React from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
-import sanityClient from '../../sanityClient';
+import { getClient } from '../../sanityClient';
 import BlockRenderer from '../../components/BlockRenderer';
 import {
 	FacebookShareButton,
@@ -27,6 +27,9 @@ import {
 } from '@material-ui/core';
 import PageTitle from '../../components/PageTitle';
 import { fetchUserState } from '../../lib/staticFetching';
+import { usePreviewSubscription } from '../../lib/sanity';
+import { SanityClient } from '@sanity/client';
+import { groq } from 'next-sanity';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -69,15 +72,36 @@ const useStyles = makeStyles((theme: Theme) => {
 	});
 });
 
+export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{
+				title,
+				"slug": slug.current,
+				"author": author->name,
+				mainImage {
+						asset->{
+						_id,
+						url
+					}
+				},
+				publishedAt,	
+				body
+				}`;
+
 interface Props {
 	post: any;
+	preview: boolean;
 	shareUrl: string;
 }
 
 const Post: React.FC<Props> = (props) => {
 
-	const { post, shareUrl } = props;
+	let { post, preview, shareUrl } = props;
 	const classes = useStyles(useTheme());
+
+	const { data: any } = usePreviewSubscription(postQuery, {
+		params: { slug: props.post.slug },
+		initialData: { post, shareUrl },
+		enabled: preview,
+	})
 
 	const formatDate = (datetime: string): string => {
 		const date: Date = new Date(datetime);
@@ -163,6 +187,8 @@ const Post: React.FC<Props> = (props) => {
  * individual blog posts.
  */
 export const getStaticPaths: GetStaticPaths = async () => {
+	const sanityClient: SanityClient = getClient();
+
 	// Call an external API endpoint to get post slugs
 	const slugs = await sanityClient.fetch(
 		`*[_type == "post" && defined(slug.current)][].slug.current`
@@ -173,29 +199,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 	// We'll pre-render only these paths at build time.
 	// { fallback: false } means other routes should 404.
-	return { paths, fallback: false }
+	return { paths, fallback: false, }
 }
 
 /*
  * Using the paths returned by getStaticPaths, here we get the information
  * for a single post that will be displayed on this page.
  */
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-	const post = await sanityClient.fetch(
-		`*[_type == "post" && slug.current == "${params!.slug}"][0]{
-				title,
-				"slug": slug.current,
-				"author": author->name,
-				mainImage {
-						asset->{
-						_id,
-						url
-					}
-				},
-				publishedAt,	
-				body
-				}`
-	);
+export const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
+	const sanityClient: SanityClient = getClient(preview);
+
+	const post = await sanityClient.fetch(postQuery, { slug: params!.slug });
 	const shareUrl = `https://www.tricksterCodess.com/post/${post.slug}`;
 
 	const userState = await fetchUserState();
@@ -203,6 +217,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 	return {
 		props: {
 			post,
+			preview,
 			shareUrl,
 			initialReduxState: {
 				user: userState

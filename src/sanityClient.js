@@ -1,16 +1,12 @@
-﻿import sanityClient from "@sanity/client";
+﻿import { createClient } from 'next-sanity';
+import { sanityConfig } from './lib/sanityConfig';
 
-export default sanityClient({
-	projectId: process.env.SANITY_PROJECT_ID, 
-	dataset: "production", 
-	apiVersion: '2021-03-31',
-	useCdn: true,
-});
+export const sanityClient = createClient(sanityConfig);
 
-export const sanityPreviewClient = ({
-	projectId: "vachv01z",
-	dataset: "production",
-	apiVersion: '2021-03-31',
-	token: process.env.SANITY_POST_PREVIEW_TOKEN,
+export const previewClient = createClient({
+	...sanityConfig,
 	useCdn: false,
+	token: process.env.SANITY_POST_PREVIEW_TOKEN,
 })
+
+export const getClient = (usePreview) => (usePreview ? previewClient : sanityClient);

@@ -1,4 +1,6 @@
-﻿
+﻿import { secret } from './secret';
+const projectUrl = 'http://localhost:3000';
+
 export default function resolveProductionUrl(document) {
-	return `https://tricksterCodess.com/post/${document.slug.current}`
+	return `${projectUrl}/api/preview?secret=${secret}&slug=${document.slug.current}`
 }

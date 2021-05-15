@@ -102,7 +102,7 @@ const BlogPostCard: React.FC<Props> = (props) => {
 							component='div'
 						>
 							<BlockRenderer
-								content={post.body[0]}
+								content={post.body}
 							/>
 						</Typography>
 					</CardContent>

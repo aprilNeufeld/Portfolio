@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import sanityClient from '../sanityClient';
+import { getClient } from '../sanityClient';
 
 interface BlogState {
 	posts: any;
@@ -15,6 +15,7 @@ const initialState: BlogState = {
 
 export const fetchBlogPosts = createAsyncThunk(
 	'blog/fetch', async (arg, thunkApi) => {
+		const sanityClient = getClient();
 		const response = await sanityClient.fetch(
 			`*[_type == "post"]{
 				title,
@@ -27,7 +28,7 @@ export const fetchBlogPosts = createAsyncThunk(
 					}
 				},
 				publishedAt,	
-				body
+				body[0]
 				}`
 		);
 		return {
@@ -39,7 +40,7 @@ export const fetchBlogPosts = createAsyncThunk(
 const blogSlice = createSlice({
 	name: 'blog',
 	initialState,
-	reducers: {	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(fetchBlogPosts.pending, (state, action) => {
 			state.pending = true;
