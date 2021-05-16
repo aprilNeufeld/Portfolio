@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Error from 'next/error';
+import ErrorPage from 'next/error';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
@@ -88,27 +88,58 @@ export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{
 				body
 				}`;
 
-interface Props {
-	post: any;
-	preview: boolean;
-	shareUrl: string;
+type PostType = {
+	title: string,
+	slug: string,
+	author: string,
+	mainImage: {
+		asset: {
+			id: string,
+			url: string,
+		}
+	},
+	publishedAt: string,
+	body: any
 }
 
-const Post: React.FC<Props> = ({ post, preview, shareUrl }) => {
+const loadingData: { post: PostType, shareUrl: string } = {
+	post: {
+		author: 'Author',
+		body: [],
+		mainImage: {
+			asset: {
+				id: 'imageId',
+				url: 'http://static.libsyn.com/p/assets/5/b/f/0/5bf0dd70c2b87bb6/AoG.png'
+			}
+		},
+		publishedAt: '2021-05-15T23:10:49Z',
+		slug: 'Slug',
+		title: 'Title'
+	},
+	shareUrl: 'https://www.tricksterCodess.com/post/Slug'
+}
+
+interface Props {
+	pageData: {
+		post: PostType;
+		shareUrl: string;
+	};
+	preview: boolean;
+	slug: string;
+}
+
+const Post: React.FC<Props> = ({ pageData, preview, slug }) => {
 
 	const router = useRouter()
-	if (!router.isFallback && !post) {
-		return <Error statusCode={404} />
-	}
-	else if (router.isFallback) {
-		return <div>Loading...</div>
+	if (!router.isFallback && (!pageData || !pageData.post)) {
+		return <ErrorPage statusCode={404} />
 	}
 
 	const classes = useStyles(useTheme());
 
-	const { data: postData } = usePreviewSubscription(postQuery, {
-		params: { slug: post.slug },
-		initialData: { post, shareUrl },
+	const { data: { post, shareUrl } = loadingData } = usePreviewSubscription(postQuery, {
+		params: { slug },
+		initialData: pageData,
 		enabled: preview,
 	})
 
@@ -121,7 +152,7 @@ const Post: React.FC<Props> = ({ post, preview, shareUrl }) => {
 
 	return (
 		<React.Fragment>
-			<Layout pageTitle={postData.post.title}>
+			<Layout pageTitle={post.title}>
 				<Breadcrumbs aria-label="breadcrumb" className={classes.breadcrumbs}>
 					<Link href="/">
 						Home
@@ -131,18 +162,18 @@ const Post: React.FC<Props> = ({ post, preview, shareUrl }) => {
 					</Link>
 					<Typography color="textPrimary"></Typography>
 				</Breadcrumbs>
-				<PageTitle text={postData.post.title} />
+				<PageTitle text={post.title} />
 				<CardMedia
-					image={postData.post.mainImage.asset.url}
+					image={post.mainImage.asset.url}
 					className={classes.media}
 				/>
 				<Typography
 					variant='body1'
 					className={classes.postDetails}
 				>
-					{'by ' + postData.post.author +
-						(postData.post.publishedAt ? ' on ' +
-						formatDate(postData.post.publishedAt) : '')}
+					{'by ' + post.author +
+						(post.publishedAt ? ' on ' +
+						formatDate(post.publishedAt) : '')}
 				</Typography>
 				<Typography
 					variant='body1'
@@ -150,28 +181,28 @@ const Post: React.FC<Props> = ({ post, preview, shareUrl }) => {
 					component='div'
 				>
 					<BlockRenderer
-						content={postData.post.body}
+						content={post.body}
 					/>
 				</Typography>
 				<Divider />
 				<Box className={classes.shareButtonsContainer}>
 					<FacebookShareButton
-						url={postData.shareUrl}
-						quote={postData.post.title}
+						url={shareUrl}
+						quote={post.title}
 						className={classes.shareButton}
 					>
 						<FacebookIcon className={classes.shareIcon} />
 					</FacebookShareButton>
 					<TwitterShareButton
-						url={postData.shareUrl}
-						title={postData.post.title}
+						url={shareUrl}
+						title={post.title}
 						className={classes.shareButton}
 					>
 						<TwitterIcon className={classes.shareIcon} />
 					</TwitterShareButton>
 					<RedditShareButton
-						url={postData.shareUrl}
-						title={postData.post.title}
+						url={shareUrl}
+						title={post.title}
 						windowWidth={660}
 						windowHeight={460}
 						className={classes.shareButton}
@@ -179,8 +210,8 @@ const Post: React.FC<Props> = ({ post, preview, shareUrl }) => {
 						<RedditIcon className={classes.shareIcon} />
 					</RedditShareButton>
 					<LinkedinShareButton
-						url={postData.shareUrl}
-						title={postData.post.title}
+						url={shareUrl}
+						title={post.title}
 						className={classes.shareButton}
 					>
 						<LinkedInIcon className={classes.shareIcon} />
@@ -198,16 +229,20 @@ const Post: React.FC<Props> = ({ post, preview, shareUrl }) => {
 export const getStaticProps: GetStaticProps = async ({ params = {}, preview = false }) => {
 	const sanityClient: SanityClient = getClient(preview);
 
-	const post = await sanityClient.fetch(postQuery, { slug: params.slug });
-	const shareUrl = `https://www.tricksterCodess.com/post/${post.slug}`;
+	const { slug } = params;
+	const post = await sanityClient.fetch(postQuery, { slug });
+	const shareUrl = `https://www.tricksterCodess.com/post/${slug}`;
 
 	const userState = await fetchUserState();
 
 	return {
 		props: {
-			post,
+			pageData: {
+				post,
+				shareUrl,
+			},
 			preview,
-			shareUrl,
+			slug,
 			initialReduxState: {
 				user: userState
 			}
@@ -230,8 +265,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	// Get the paths we want to pre-render based on post slugs
 	const paths = slugs.map((slug: any) => ({ params: { slug } }));
 
-	// We'll pre-render only these paths at build time.
-	// { fallback: false } means other routes should 404.
 	return { paths, fallback: true, }
 }
 
