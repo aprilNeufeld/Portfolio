@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Error from 'next/error';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
@@ -31,7 +32,6 @@ import { fetchUserState } from '../../lib/staticFetching';
 import { usePreviewSubscription } from '../../lib/sanity';
 import { SanityClient } from '@sanity/client';
 import { groq } from 'next-sanity';
-import { Custom404 } from '../404';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -98,7 +98,7 @@ const Post: React.FC<Props> = ({ post, preview, shareUrl }) => {
 
 	const router = useRouter()
 	if (!router.isFallback && !post) {
-		return <Custom404 />
+		return <Error statusCode={404} />
 	}
 
 	const classes = useStyles(useTheme());
