@@ -88,6 +88,7 @@ export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{
 				body
 				}`;
 
+// The structure of a single post's data
 type PostType = {
 	title: string,
 	slug: string,
@@ -102,6 +103,7 @@ type PostType = {
 	body: any
 }
 
+// Placeholder data if the usePreviewSubscription hook doesn't return any data
 const loadingData: { post: PostType, shareUrl: string } = {
 	post: {
 		author: 'Author',
@@ -130,16 +132,22 @@ interface Props {
 
 const Post: React.FC<Props> = ({ pageData, preview, slug }) => {
 
+	const classes = useStyles(useTheme());
+
+	// This is used for live preview with Sanity - the first time we load a 
+	// nonexistent post, router.isFallback will be true, and we show the page with
+	// placeholder data until we can get data from the usePreviewSubscription hook. 
+	// After usePreviewSubscription rerenders the page, if there is still no page data
+	// (i.e. there is no preview post to render), we default to a 404.
 	const router = useRouter()
 	if (!router.isFallback && (!pageData || !pageData.post)) {
 		return <ErrorPage statusCode={404} />
 	}
 
-	const classes = useStyles(useTheme());
-
+	// Load the live preview data, defaulting to placeholder data if there is none 
 	const { data: { post, shareUrl } = loadingData } = usePreviewSubscription(postQuery, {
 		params: { slug },
-		initialData: pageData,
+		initialData: pageData, // we preserve the initial page data if it's a prerendered page
 		enabled: preview,
 	})
 
