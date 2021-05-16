@@ -100,6 +100,9 @@ const Post: React.FC<Props> = ({ post, preview, shareUrl }) => {
 	if (!router.isFallback && !post) {
 		return <Error statusCode={404} />
 	}
+	else if (router.isFallback) {
+		return <div>Loading...</div>
+	}
 
 	const classes = useStyles(useTheme());
 
@@ -195,7 +198,7 @@ const Post: React.FC<Props> = ({ post, preview, shareUrl }) => {
 export const getStaticProps: GetStaticProps = async ({ params = {}, preview = false }) => {
 	const sanityClient: SanityClient = getClient(preview);
 
-	const post = await sanityClient.fetch(postQuery, { slug: params!.slug });
+	const post = await sanityClient.fetch(postQuery, { slug: params.slug });
 	const shareUrl = `https://www.tricksterCodess.com/post/${post.slug}`;
 
 	const userState = await fetchUserState();
