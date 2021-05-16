@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
+import { useRouter } from 'next/router'
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { getClient } from '../../sanityClient';
@@ -30,6 +31,7 @@ import { fetchUserState } from '../../lib/staticFetching';
 import { usePreviewSubscription } from '../../lib/sanity';
 import { SanityClient } from '@sanity/client';
 import { groq } from 'next-sanity';
+import { Custom404 } from '../404';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -92,13 +94,17 @@ interface Props {
 	shareUrl: string;
 }
 
-const Post: React.FC<Props> = (props) => {
+const Post: React.FC<Props> = ({ post, preview, shareUrl }) => {
 
-	let { post, preview, shareUrl } = props;
+	const router = useRouter()
+	if (!router.isFallback && !post) {
+		return <Custom404 />
+	}
+
 	const classes = useStyles(useTheme());
 
-	const { data: any } = usePreviewSubscription(postQuery, {
-		params: { slug: props.post.slug },
+	const { data: postData } = usePreviewSubscription(postQuery, {
+		params: { slug: post.slug },
 		initialData: { post, shareUrl },
 		enabled: preview,
 	})
@@ -112,7 +118,7 @@ const Post: React.FC<Props> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Layout pageTitle={post.title}>
+			<Layout pageTitle={postData.post.title}>
 				<Breadcrumbs aria-label="breadcrumb" className={classes.breadcrumbs}>
 					<Link href="/">
 						Home
@@ -122,18 +128,18 @@ const Post: React.FC<Props> = (props) => {
 					</Link>
 					<Typography color="textPrimary"></Typography>
 				</Breadcrumbs>
-				<PageTitle text={post.title} />
+				<PageTitle text={postData.post.title} />
 				<CardMedia
-					image={post.mainImage.asset.url}
+					image={postData.post.mainImage.asset.url}
 					className={classes.media}
 				/>
 				<Typography
 					variant='body1'
 					className={classes.postDetails}
 				>
-					{'by ' + post.author +
-						(post.publishedAt ? ' on ' +
-							formatDate(post.publishedAt) : '')}
+					{'by ' + postData.post.author +
+						(postData.post.publishedAt ? ' on ' +
+						formatDate(postData.post.publishedAt) : '')}
 				</Typography>
 				<Typography
 					variant='body1'
@@ -141,28 +147,28 @@ const Post: React.FC<Props> = (props) => {
 					component='div'
 				>
 					<BlockRenderer
-						content={post.body}
+						content={postData.post.body}
 					/>
 				</Typography>
 				<Divider />
 				<Box className={classes.shareButtonsContainer}>
 					<FacebookShareButton
-						url={shareUrl}
-						quote={post.title}
+						url={postData.shareUrl}
+						quote={postData.post.title}
 						className={classes.shareButton}
 					>
 						<FacebookIcon className={classes.shareIcon} />
 					</FacebookShareButton>
 					<TwitterShareButton
-						url={shareUrl}
-						title={post.title}
+						url={postData.shareUrl}
+						title={postData.post.title}
 						className={classes.shareButton}
 					>
 						<TwitterIcon className={classes.shareIcon} />
 					</TwitterShareButton>
 					<RedditShareButton
-						url={shareUrl}
-						title={post.title}
+						url={postData.shareUrl}
+						title={postData.post.title}
 						windowWidth={660}
 						windowHeight={460}
 						className={classes.shareButton}
@@ -170,8 +176,8 @@ const Post: React.FC<Props> = (props) => {
 						<RedditIcon className={classes.shareIcon} />
 					</RedditShareButton>
 					<LinkedinShareButton
-						url={shareUrl}
-						title={post.title}
+						url={postData.shareUrl}
+						title={postData.post.title}
 						className={classes.shareButton}
 					>
 						<LinkedInIcon className={classes.shareIcon} />
@@ -181,6 +187,30 @@ const Post: React.FC<Props> = (props) => {
 		</React.Fragment >
 	)
 };
+
+/*
+ * Using the paths returned by getStaticPaths, here we get the information
+ * for a single post that will be displayed on this page.
+ */
+export const getStaticProps: GetStaticProps = async ({ params = {}, preview = false }) => {
+	const sanityClient: SanityClient = getClient(preview);
+
+	const post = await sanityClient.fetch(postQuery, { slug: params!.slug });
+	const shareUrl = `https://www.tricksterCodess.com/post/${post.slug}`;
+
+	const userState = await fetchUserState();
+
+	return {
+		props: {
+			post,
+			preview,
+			shareUrl,
+			initialReduxState: {
+				user: userState
+			}
+		}
+	};
+}
 
 /*
  * Called at build time, this function gets the paths of all our
@@ -200,30 +230,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	// We'll pre-render only these paths at build time.
 	// { fallback: false } means other routes should 404.
 	return { paths, fallback: true, }
-}
-
-/*
- * Using the paths returned by getStaticPaths, here we get the information
- * for a single post that will be displayed on this page.
- */
-export const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
-	const sanityClient: SanityClient = getClient(preview);
-
-	const post = await sanityClient.fetch(postQuery, { slug: params!.slug });
-	const shareUrl = `https://www.tricksterCodess.com/post/${post.slug}`;
-
-	const userState = await fetchUserState();
-
-	return {
-		props: {
-			post,
-			preview,
-			shareUrl,
-			initialReduxState: {
-				user: userState
-			}
-		}
-	};
 }
 
 export default Post;
