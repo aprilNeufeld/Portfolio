@@ -103,24 +103,6 @@ type PostType = {
 	body: any
 }
 
-// Placeholder data if the usePreviewSubscription hook doesn't return any data
-const loadingData: { post: PostType, shareUrl: string } = {
-	post: {
-		author: 'Author',
-		body: [],
-		mainImage: {
-			asset: {
-				id: 'imageId',
-				url: 'http://static.libsyn.com/p/assets/5/b/f/0/5bf0dd70c2b87bb6/AoG.png'
-			}
-		},
-		publishedAt: '2021-05-15T23:10:49Z',
-		slug: 'Slug',
-		title: 'Title'
-	},
-	shareUrl: 'https://www.tricksterCodess.com/post/Slug'
-}
-
 interface Props {
 	pageData: {
 		post: PostType;
@@ -145,7 +127,7 @@ const Post: React.FC<Props> = ({ pageData, preview, slug }) => {
 	}
 
 	// Load the live preview data, defaulting to placeholder data if there is none 
-	const { data: { post, shareUrl } = loadingData } = usePreviewSubscription(postQuery, {
+	const { data: { post, shareUrl } = pageData } = usePreviewSubscription(postQuery, {
 		params: { slug },
 		initialData: pageData, // we preserve the initial page data if it's a prerendered page
 		enabled: preview,

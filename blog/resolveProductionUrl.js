@@ -1,7 +1,11 @@
 ﻿import { secret } from './secret';
-const url = "https://www.tricksterCodess.com"
-//const url = "portfolio-49s17r7pr-trickstercodess.vercel.app"
+
 
 export default function resolveProductionUrl(document) {
-	return `${url}/api/preview?secret=${secret}&slug=${document.slug.current}`
-}
+
+	const url = process.env.NODE_ENV === "production"
+		? `../../api`
+		: `http://localhost:3000/`;
+
+	return `${url}/preview?secret=${secret}&slug=${document.slug.current}`
+} 
