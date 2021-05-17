@@ -4,7 +4,7 @@ import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
 import Layout from '../../components/Layout';
-import { getClient } from '../../sanityClient';
+import { getClient } from '../../lib/sanity';
 import BlockRenderer from '../../components/BlockRenderer';
 import {
 	FacebookShareButton,
@@ -111,7 +111,7 @@ const loadingData: { post: PostType, shareUrl: string } = {
 		mainImage: {
 			asset: {
 				id: 'imageId',
-				url: 'http://static.libsyn.com/p/assets/5/b/f/0/5bf0dd70c2b87bb6/AoG.png'
+				url: '/images/avatar.png'
 			}
 		},
 		publishedAt: '2021-05-15T23:10:49Z',
@@ -132,24 +132,27 @@ interface Props {
 
 const Post: React.FC<Props> = ({ pageData, preview, slug }) => {
 
-	const classes = useStyles(useTheme());
-
 	// This is used for live preview with Sanity - the first time we load a 
 	// nonexistent post, router.isFallback will be true, and we show the page with
 	// placeholder data until we can get data from the usePreviewSubscription hook. 
 	// After usePreviewSubscription rerenders the page, if there is still no page data
 	// (i.e. there is no preview post to render), we default to a 404.
 	const router = useRouter()
-	if (!router.isFallback && (!pageData || !pageData.post)) {
+
+	if (!router.isFallback && (!slug)) {
+		console.log("ERRORPAGE");
 		return <ErrorPage statusCode={404} />
 	}
 
 	// Load the live preview data, defaulting to placeholder data if there is none 
-	const { data: { post, shareUrl } = loadingData } = usePreviewSubscription(postQuery, {
-		params: { slug },
-		initialData: pageData, // we preserve the initial page data if it's a prerendered page
-		enabled: preview,
-	})
+	const { data: { post = loadingData.post, shareUrl = loadingData.shareUrl } = loadingData } =
+		usePreviewSubscription(postQuery, {
+			params: { slug },
+			initialData: pageData, // we preserve the initial page data if it's a prerendered page
+			enabled: preview || router.query.preview !== null,
+		});
+
+	const classes = useStyles(useTheme());
 
 	const formatDate = (datetime: string): string => {
 		const date: Date = new Date(datetime);
@@ -160,7 +163,7 @@ const Post: React.FC<Props> = ({ pageData, preview, slug }) => {
 
 	return (
 		<React.Fragment>
-			<Layout pageTitle={post.title}>
+			<Layout pageTitle={post.title ?? ""}>
 				<Breadcrumbs aria-label="breadcrumb" className={classes.breadcrumbs}>
 					<Link href="/">
 						Home
@@ -170,7 +173,7 @@ const Post: React.FC<Props> = ({ pageData, preview, slug }) => {
 					</Link>
 					<Typography color="textPrimary"></Typography>
 				</Breadcrumbs>
-				<PageTitle text={post.title} />
+				<PageTitle text={post.title ?? ""} />
 				<CardMedia
 					image={post.mainImage.asset.url}
 					className={classes.media}
@@ -181,7 +184,7 @@ const Post: React.FC<Props> = ({ pageData, preview, slug }) => {
 				>
 					{'by ' + post.author +
 						(post.publishedAt ? ' on ' +
-						formatDate(post.publishedAt) : '')}
+							formatDate(post.publishedAt) : '')}
 				</Typography>
 				<Typography
 					variant='body1'
@@ -236,7 +239,6 @@ const Post: React.FC<Props> = ({ pageData, preview, slug }) => {
  */
 export const getStaticProps: GetStaticProps = async ({ params = {}, preview = false }) => {
 	const sanityClient: SanityClient = getClient(preview);
-
 	const { slug } = params;
 	const post = await sanityClient.fetch(postQuery, { slug });
 	const shareUrl = `https://www.tricksterCodess.com/post/${slug}`;
