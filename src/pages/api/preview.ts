@@ -5,7 +5,8 @@ import { getClient } from '../../lib/sanity';
 import { groq } from 'next-sanity';
 
 const postQuery = groq`*[_type == "post" && slug.current == $slug]{
-				title,
+				_id,
+                title,
 				"slug": slug.current,
 				"author": author->name,
 				mainImage {

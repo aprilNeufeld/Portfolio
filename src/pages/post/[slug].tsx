@@ -75,6 +75,7 @@ const useStyles = makeStyles((theme: Theme) => {
 });
 
 export const postQuery = groq`*[_type == "post" && slug.current == $slug] | order(_updatedAt desc)[0]{
+				_id,
 				title,
 				"slug": slug.current,
 				"author": author->name,
@@ -129,7 +130,17 @@ interface Props {
 	pageData: PageDataType;
 	preview: boolean;
 }
-
+/*
+ * LINKS:
+ * https://github.com/sanity-io/sanity-template-nextjs-blog-comments
+ * https://github.com/sanity-io/sanity-template-nextjs-ecommerce
+ * https://github.com/sanity-io/next-sanity
+ * https://dev.to/mornir/how-to-handle-content-previews-from-sanity-in-nuxt-3127
+ * https://www.sanity.io/docs/preview-content-on-site
+ * https://www.sanity.io/docs/http-mutations
+ * https://stackoverflow.com/questions/63221030/access-preview-api-from-a-cms-in-next-js
+ * 
+ */
 const Post: React.FC<Props> = (props) => {
 
 	const { pageData = defaultData, preview } = props;
