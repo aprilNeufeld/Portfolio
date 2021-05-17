@@ -44,6 +44,7 @@
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "babel-eslint": "^10.1.0",
+    "concurrently": "^6.1.0",
     "cross-env": "7.0.3",
     "eslint": "^7.24.0",
     "eslint-config-react-app": "^6.0.0",
@@ -60,12 +61,12 @@
   "name": "portfolio",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "concurrently \"next\" \"cd blog && sanity start\"",
+    "build": "echo 'Building Sanity to localhost:3333...' && cd blog && sanity build && cd .. && next build",
+    "start": "vercel dev",
     "test": "cross-env CI=true next test --env=jsdom",
     "lint": "eslint ./src/**/*.ts ./src/**/*.tsx --fix"
   },
-  "version": "0.1.0",
-  "homepage": "https://trickstercodess.com"
+  "version": "1.0.0",
+  "homepage": "https://www.trickstercodess.com"
 }

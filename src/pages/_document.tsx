@@ -1,6 +1,5 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { GA_TRACKING_ID } from '../lib/gtag';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 
 class MyDocument extends Document {
@@ -10,7 +9,7 @@ class MyDocument extends Document {
 				<Head>
 					{/* Global Site Tag (gtag.js) - Google Analytics */}
 					<script async src={`
-							https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}
+							https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_GOOGLE_ANALYTICS_ID}
 					`} />
 					<script
 						dangerouslySetInnerHTML={{
@@ -23,7 +22,7 @@ class MyDocument extends Document {
 								
 								gtag('js', new Date());
 
-								gtag('config', '${GA_TRACKING_ID}');
+								gtag('config', '${process.env.NEXT_GOOGLE_ANALYTICS_ID}');
            
 								`,
 						}}
