@@ -61,9 +61,9 @@
   "name": "portfolio",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"next\" \"cd blog && sanity start\"",
+    "dev": "concurrently \"next dev\" \"cd blog && sanity start\"",
     "build": "echo 'Building Sanity to localhost:3333...' && cd blog && sanity build && cd .. && next build",
-    "start": "vercel dev",
+    "start": "next start",
     "test": "cross-env CI=true next test --env=jsdom",
     "lint": "eslint ./src/**/*.ts ./src/**/*.tsx --fix"
   },

@@ -4,7 +4,7 @@ import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
 import Layout from '../../components/Layout';
-import { getClient } from '../../sanityClient';
+import { getClient } from '../../lib/sanity';
 import BlockRenderer from '../../components/BlockRenderer';
 import {
 	FacebookShareButton,
@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme: Theme) => {
 	});
 });
 
-export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{
+export const postQuery = groq`*[_type == "post" && slug.current == $slug] | order(_updatedAt desc)[0]{
 				title,
 				"slug": slug.current,
 				"author": author->name,
@@ -103,18 +103,36 @@ type PostType = {
 	body: any
 }
 
-interface Props {
-	pageData: {
-		post: PostType;
-		shareUrl: string;
-	};
-	preview: boolean;
-	slug: string;
+type PageDataType = {
+	post: PostType,
+	shareUrl: string
 }
 
-const Post: React.FC<Props> = ({ pageData, preview, slug }) => {
+const defaultData: PageDataType = {
+	post: {
+		title: "Title",
+		slug: '',
+		author: "Author",
+		mainImage: {
+			asset: {
+				id: "Image ID",
+				url: '/images/placeholder.png',
+			}
+		},
+		publishedAt: "2021-05-17",
+		body: []
+	},
+	shareUrl: ''
+}
 
-	const classes = useStyles(useTheme());
+interface Props {
+	pageData: PageDataType;
+	preview: boolean;
+}
+
+const Post: React.FC<Props> = (props) => {
+
+	const { pageData = defaultData, preview } = props;
 
 	// This is used for live preview with Sanity - the first time we load a 
 	// nonexistent post, router.isFallback will be true, and we show the page with
@@ -122,16 +140,32 @@ const Post: React.FC<Props> = ({ pageData, preview, slug }) => {
 	// After usePreviewSubscription rerenders the page, if there is still no page data
 	// (i.e. there is no preview post to render), we default to a 404.
 	const router = useRouter()
-	if (!router.isFallback && (!pageData || !pageData.post)) {
+
+	if ((!router.isFallback || !preview) && (!pageData?.post?.slug)) {
+		console.log("ERRORPAGE:_____________ ");
+		console.log("pageData=" + JSON.stringify(pageData, null, 1));
 		return <ErrorPage statusCode={404} />
 	}
 
+	const getOptions = () => {
+		console.log('Params slug=' + pageData?.post?.slug);
+		return {
+			params: { slug: pageData?.post?.slug },
+			initialData: pageData, // we preserve the initial page data if it's a prerendered page
+			enabled: preview,
+		}
+	}
+
 	// Load the live preview data, defaulting to placeholder data if there is none 
-	const { data: { post, shareUrl } = pageData } = usePreviewSubscription(postQuery, {
-		params: { slug },
-		initialData: pageData, // we preserve the initial page data if it's a prerendered page
-		enabled: preview,
-	})
+	const {
+		data: { post, shareUrl } = pageData
+	} = usePreviewSubscription(postQuery, getOptions())
+
+	React.useEffect(() => {
+		console.log("Updated post=" + JSON.stringify(post, null, 1))
+	}, [post])
+
+	const classes = useStyles(useTheme());
 
 	const formatDate = (datetime: string): string => {
 		const date: Date = new Date(datetime);
@@ -142,71 +176,75 @@ const Post: React.FC<Props> = ({ pageData, preview, slug }) => {
 
 	return (
 		<React.Fragment>
-			<Layout pageTitle={post.title}>
-				<Breadcrumbs aria-label="breadcrumb" className={classes.breadcrumbs}>
-					<Link href="/">
-						Home
+			<Layout pageTitle={post?.title ?? ""}>
+				{post &&
+					<React.Fragment>
+						<Breadcrumbs aria-label="breadcrumb" className={classes.breadcrumbs}>
+							<Link href="/">
+								Home
 					</Link>
-					<Link href="/blog">
-						Blog
+							<Link href="/blog">
+								Blog
 					</Link>
-					<Typography color="textPrimary"></Typography>
-				</Breadcrumbs>
-				<PageTitle text={post.title} />
-				<CardMedia
-					image={post.mainImage.asset.url}
-					className={classes.media}
-				/>
-				<Typography
-					variant='body1'
-					className={classes.postDetails}
-				>
-					{'by ' + post.author +
-						(post.publishedAt ? ' on ' +
-						formatDate(post.publishedAt) : '')}
-				</Typography>
-				<Typography
-					variant='body1'
-					className={classes.postBodyText}
-					component='div'
-				>
-					<BlockRenderer
-						content={post.body}
-					/>
-				</Typography>
-				<Divider />
-				<Box className={classes.shareButtonsContainer}>
-					<FacebookShareButton
-						url={shareUrl}
-						quote={post.title}
-						className={classes.shareButton}
-					>
-						<FacebookIcon className={classes.shareIcon} />
-					</FacebookShareButton>
-					<TwitterShareButton
-						url={shareUrl}
-						title={post.title}
-						className={classes.shareButton}
-					>
-						<TwitterIcon className={classes.shareIcon} />
-					</TwitterShareButton>
-					<RedditShareButton
-						url={shareUrl}
-						title={post.title}
-						windowWidth={660}
-						windowHeight={460}
-						className={classes.shareButton}
-					>
-						<RedditIcon className={classes.shareIcon} />
-					</RedditShareButton>
-					<LinkedinShareButton
-						url={shareUrl}
-						title={post.title}
-						className={classes.shareButton}
-					>
-						<LinkedInIcon className={classes.shareIcon} />
-					</LinkedinShareButton>
-				</Box>
+							<Typography color="textPrimary"></Typography>
+						</Breadcrumbs>
+						<PageTitle text={post?.title ?? ""} />
+						<CardMedia
+							image={post?.mainImage.asset.url ?? '/images/placeholder.png'}
+							className={classes.media}
+						/>
+						<Typography
+							variant='body1'
+							className={classes.postDetails}
+						>
+							{'by ' + post?.author +
+								(post?.publishedAt ? ' on ' +
+									formatDate(post?.publishedAt) : '')}
+						</Typography>
+						<Typography
+							variant='body1'
+							className={classes.postBodyText}
+							component='div'
+						>
+							<BlockRenderer
+								content={post?.body}
+							/>
+						</Typography>
+						<Divider />
+						<Box className={classes.shareButtonsContainer}>
+							<FacebookShareButton
+								url={shareUrl ?? ''}
+								quote={post?.title}
+								className={classes.shareButton}
+							>
+								<FacebookIcon className={classes.shareIcon} />
+							</FacebookShareButton>
+							<TwitterShareButton
+								url={shareUrl ?? ''}
+								title={post?.title}
+								className={classes.shareButton}
+							>
+								<TwitterIcon className={classes.shareIcon} />
+							</TwitterShareButton>
+							<RedditShareButton
+								url={shareUrl ?? ''}
+								title={post?.title}
+								windowWidth={660}
+								windowHeight={460}
+								className={classes.shareButton}
+							>
+								<RedditIcon className={classes.shareIcon} />
+							</RedditShareButton>
+							<LinkedinShareButton
+								url={shareUrl ?? ''}
+								title={post?.title}
+								className={classes.shareButton}
+							>
+								<LinkedInIcon className={classes.shareIcon} />
+							</LinkedinShareButton>
+						</Box>
+					</React.Fragment>
+				}
 			</Layout >
 		</React.Fragment >
 	)
@@ -217,6 +255,7 @@ const Post: React.FC<Props> = ({ pageData, preview, slug }) => {
  * for a single post that will be displayed on this page.
  */
 export const getStaticProps: GetStaticProps = async ({ params = {}, preview = false }) => {
+	console.log("In getStaticProps");
 	const sanityClient: SanityClient = getClient(preview);
 
 	const { slug } = params;
@@ -232,7 +271,6 @@ export const getStaticProps: GetStaticProps = async ({ params = {}, preview = fa
 				shareUrl,
 			},
 			preview,
-			slug,
 			initialReduxState: {
 				user: userState
 			}
@@ -245,7 +283,8 @@ export const getStaticProps: GetStaticProps = async ({ params = {}, preview = fa
  * individual blog posts.
  */
 export const getStaticPaths: GetStaticPaths = async () => {
-	const sanityClient: SanityClient = getClient();
+	console.log("In getStaticPaths");
+	const sanityClient: SanityClient = getClient(false);
 
 	// Call an external API endpoint to get post slugs
 	const slugs = await sanityClient.fetch(

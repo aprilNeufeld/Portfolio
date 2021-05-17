@@ -1,4 +1,5 @@
-﻿import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+﻿import { SanityClient } from '@sanity/client';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import {
 	createClient,
 	createImageUrlBuilder,
@@ -32,18 +33,22 @@ export const urlFor = (source: SanityImageSource) => createImageUrlBuilder(confi
 export const usePreviewSubscription = createPreviewSubscriptionHook(config)
 
 // Create the normal client
-export const sanityClient = createClient({
+export const sanityClient: SanityClient = createClient({
 	...config,
 	apiVersion: '2021-03-31',
 	useCdn: true,
 });
 
 // Create the preview client
-export const previewClient = createClient({
+export const previewClient: SanityClient = createClient({
 	...config,
 	apiVersion: '2021-03-31',
 	useCdn: false,
-	token: process.env.SANITY_API_KEY,
+	token: process.env.SANITY_API_TOKEN,
+	//withCredentials: true,
 })
 
-export const getClient = (usePreview: boolean | undefined) => (usePreview ? previewClient : sanityClient);
+export const getClient = (usePreview: boolean) => {
+	console.log("getClient() returned " + (usePreview ? "PREVIEW" : "NORMAL") + " client.");
+	return usePreview ? previewClient : sanityClient;
+};
