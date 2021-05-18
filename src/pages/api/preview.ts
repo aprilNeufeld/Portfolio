@@ -1,23 +1,8 @@
 ﻿import type { NextApiRequest, NextApiResponse } from 'next'
-//import { postQuery } from '../post/[slug]';
+import { postQuery } from '../post/[slug]';
 import { SanityClient } from '@sanity/client';
 import { getClient } from '../../lib/sanity';
 import { groq } from 'next-sanity';
-
-const postQuery = groq`*[_type == "post" && slug.current == $slug]{
-				_id,
-                title,
-				"slug": slug.current,
-				"author": author->name,
-				mainImage {
-						asset->{
-						_id,
-						url
-					}
-				},
-				publishedAt,	
-				body
-				}`;
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
     // Check the secret and next parameters
@@ -30,12 +15,10 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
    
     // Fetch the headless CMS to check if the provided `slug` exists
     // getPostBySlug would implement the required fetching logic to the headless CMS
-    const posts = await sanityClient.fetch(postQuery, { slug: request.query.slug });
-
-    console.log(JSON.stringify(posts, null, 1));
+    const post = await sanityClient.fetch(postQuery, { slug: request.query.slug });
 
     // If the slug doesn't exist prevent preview mode from being enabled
-    if (!posts[0]) {
+    if (!post) {
         return response.status(401).json({ message: 'No post data for this slug' })
     }
 
@@ -44,5 +27,5 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
 
     // Redirect to the path from the fetched post
     // We don't redirect to request.query.slug as that might lead to open redirect vulnerabilities
-    response.redirect('/post/' + posts[0].slug)
+    response.redirect('/post/' + post.slug)
 }

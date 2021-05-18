@@ -79,12 +79,7 @@ export const postQuery = groq`*[_type == "post" && slug.current == $slug] | orde
 				title,
 				"slug": slug.current,
 				"author": author->name,
-				mainImage {
-						asset->{
-						_id,
-						url
-					}
-				},
+				mainImage,
 				publishedAt,	
 				body
 				}`;
@@ -144,6 +139,7 @@ interface Props {
 const Post: React.FC<Props> = (props) => {
 
 	const { pageData = defaultData, preview } = props;
+	const post = React.useRef(pageData.post);
 
 	// This is used for live preview with Sanity - the first time we load a 
 	// nonexistent post, router.isFallback will be true, and we show the page with
@@ -151,7 +147,6 @@ const Post: React.FC<Props> = (props) => {
 	// After usePreviewSubscription rerenders the page, if there is still no page data
 	// (i.e. there is no preview post to render), we default to a 404.
 	const router = useRouter()
-
 	if ((!router.isFallback || !preview) && (!pageData?.post?.slug)) {
 		console.log("ERRORPAGE:_____________ ");
 		console.log("pageData=" + JSON.stringify(pageData, null, 1));
@@ -159,22 +154,29 @@ const Post: React.FC<Props> = (props) => {
 	}
 
 	const getOptions = () => {
-		console.log('Params slug=' + pageData?.post?.slug);
 		return {
-			params: { slug: pageData?.post?.slug },
+			params: { slug: pageData.post.slug },
 			initialData: pageData, // we preserve the initial page data if it's a prerendered page
 			enabled: preview,
 		}
-	}
+	};
 
 	// Load the live preview data, defaulting to placeholder data if there is none 
 	const {
-		data: { post, shareUrl } = pageData
+		data: { post: postData, shareUrl } = pageData
 	} = usePreviewSubscription(postQuery, getOptions())
 
+	
 	React.useEffect(() => {
-		console.log("Updated post=" + JSON.stringify(post, null, 1))
-	}, [post])
+		console.log("Updated post " + (postData ? "has data." : "is UNDEFINED."));
+
+		post.current = postData;
+
+	}, [postData]);
+
+	React.useEffect(() => {
+		console.log("RENDERING");
+	})
 
 	const classes = useStyles(useTheme());
 
@@ -187,8 +189,8 @@ const Post: React.FC<Props> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Layout pageTitle={post?.title ?? ""}>
-				{post &&
+			<Layout pageTitle={post.current?.title ?? ''}>
+				{post.current &&
 					<React.Fragment>
 						<Breadcrumbs aria-label="breadcrumb" className={classes.breadcrumbs}>
 							<Link href="/">
@@ -199,18 +201,18 @@ const Post: React.FC<Props> = (props) => {
 					</Link>
 							<Typography color="textPrimary"></Typography>
 						</Breadcrumbs>
-						<PageTitle text={post?.title ?? ""} />
+					<PageTitle text={post.current.title} />
 						<CardMedia
-							image={post?.mainImage.asset.url ?? '/images/placeholder.png'}
+						image={post.current.mainImage.asset.url ?? '/images/placeholder.png'}
 							className={classes.media}
 						/>
 						<Typography
 							variant='body1'
 							className={classes.postDetails}
 						>
-							{'by ' + post?.author +
-								(post?.publishedAt ? ' on ' +
-									formatDate(post?.publishedAt) : '')}
+						{'by ' + post.current.author +
+							(post.current.publishedAt ? ' on ' +
+							formatDate(post.current.publishedAt) : '')}
 						</Typography>
 						<Typography
 							variant='body1'
@@ -218,28 +220,28 @@ const Post: React.FC<Props> = (props) => {
 							component='div'
 						>
 							<BlockRenderer
-								content={post?.body}
+							content={post.current.body}
 							/>
 						</Typography>
 						<Divider />
 						<Box className={classes.shareButtonsContainer}>
 							<FacebookShareButton
 								url={shareUrl ?? ''}
-								quote={post?.title}
+							quote={post.current.title}
 								className={classes.shareButton}
 							>
 								<FacebookIcon className={classes.shareIcon} />
 							</FacebookShareButton>
 							<TwitterShareButton
 								url={shareUrl ?? ''}
-								title={post?.title}
+							title={post.current.title}
 								className={classes.shareButton}
 							>
 								<TwitterIcon className={classes.shareIcon} />
 							</TwitterShareButton>
 							<RedditShareButton
 								url={shareUrl ?? ''}
-								title={post?.title}
+							title={post.current.title}
 								windowWidth={660}
 								windowHeight={460}
 								className={classes.shareButton}
@@ -248,7 +250,7 @@ const Post: React.FC<Props> = (props) => {
 							</RedditShareButton>
 							<LinkedinShareButton
 								url={shareUrl ?? ''}
-								title={post?.title}
+							title={post.current.title}
 								className={classes.shareButton}
 							>
 								<LinkedInIcon className={classes.shareIcon} />
@@ -266,7 +268,6 @@ const Post: React.FC<Props> = (props) => {
  * for a single post that will be displayed on this page.
  */
 export const getStaticProps: GetStaticProps = async ({ params = {}, preview = false }) => {
-	console.log("In getStaticProps");
 	const sanityClient: SanityClient = getClient(preview);
 
 	const { slug } = params;
@@ -285,7 +286,8 @@ export const getStaticProps: GetStaticProps = async ({ params = {}, preview = fa
 			initialReduxState: {
 				user: userState
 			}
-		}
+		},
+		revalidate: 1,
 	};
 }
 
@@ -299,7 +301,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 	// Call an external API endpoint to get post slugs
 	const slugs = await sanityClient.fetch(
-		`*[_type == "post" && defined(slug.current)][].slug.current`
+		groq`*[_type == "post" && defined(slug.current)][].slug.current`
 	);
 
 	// Get the paths we want to pre-render based on post slugs
