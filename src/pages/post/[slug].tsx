@@ -112,6 +112,7 @@ interface Props {
  * https://www.sanity.io/docs/preview-content-on-site
  * https://www.sanity.io/docs/http-mutations
  * https://stackoverflow.com/questions/63221030/access-preview-api-from-a-cms-in-next-js
+ * https://github.com/sanity-io/next-sanity/issues/16
  * 
  */
 const Post: React.FC<Props> = (props) => {
