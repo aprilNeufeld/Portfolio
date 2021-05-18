@@ -8,6 +8,7 @@
 
 # production
 /out
+public/studio
 
 # misc
 .DS_Store
@@ -17,9 +18,10 @@
 .env.production.local
 .next
 .env
+.vercel
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-.vercel
+

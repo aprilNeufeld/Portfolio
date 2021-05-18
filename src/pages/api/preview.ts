@@ -2,7 +2,6 @@
 import { postQuery } from '../post/[slug]';
 import { SanityClient } from '@sanity/client';
 import { getClient } from '../../lib/sanity';
-import { groq } from 'next-sanity';
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
     // Check the secret and next parameters

@@ -15,6 +15,7 @@ import {
 	useTheme
 } from '@material-ui/core';
 import BlockRenderer from './BlockRenderer';
+import { urlFor } from '../lib/sanity';
 
 const useStyles = makeStyles((theme: Theme) => {
 	return createStyles({
@@ -85,7 +86,7 @@ const BlogPostCard: React.FC<Props> = (props) => {
 				/>
 				<Divider />
 				<CardMedia
-					image={post.mainImage.asset.url}
+					image={urlFor(post.mainImage).url() ?? '/images/placeholder.png'}
 					className={classes.media}
 				/>
 				<Divider />

@@ -29,7 +29,7 @@ import {
 } from '@material-ui/core';
 import PageTitle from '../../components/PageTitle';
 import { fetchUserState } from '../../lib/staticFetching';
-import { usePreviewSubscription } from '../../lib/sanity';
+import { usePreviewSubscription, urlFor } from '../../lib/sanity';
 import { SanityClient } from '@sanity/client';
 import { groq } from 'next-sanity';
 
@@ -89,12 +89,7 @@ type PostType = {
 	title: string,
 	slug: string,
 	author: string,
-	mainImage: {
-		asset: {
-			id: string,
-			url: string,
-		}
-	},
+	mainImage: any,
 	publishedAt: string,
 	body: any
 }
@@ -102,23 +97,6 @@ type PostType = {
 type PageDataType = {
 	post: PostType,
 	shareUrl: string
-}
-
-const defaultData: PageDataType = {
-	post: {
-		title: "Title",
-		slug: '',
-		author: "Author",
-		mainImage: {
-			asset: {
-				id: "Image ID",
-				url: '/images/placeholder.png',
-			}
-		},
-		publishedAt: "2021-05-17",
-		body: []
-	},
-	shareUrl: ''
 }
 
 interface Props {
@@ -138,7 +116,7 @@ interface Props {
  */
 const Post: React.FC<Props> = (props) => {
 
-	const { pageData = defaultData, preview } = props;
+	const { pageData, preview } = props;
 	const post = React.useRef(pageData.post);
 
 	// This is used for live preview with Sanity - the first time we load a 
@@ -148,8 +126,6 @@ const Post: React.FC<Props> = (props) => {
 	// (i.e. there is no preview post to render), we default to a 404.
 	const router = useRouter()
 	if ((!router.isFallback || !preview) && (!pageData?.post?.slug)) {
-		console.log("ERRORPAGE:_____________ ");
-		console.log("pageData=" + JSON.stringify(pageData, null, 1));
 		return <ErrorPage statusCode={404} />
 	}
 
@@ -173,10 +149,6 @@ const Post: React.FC<Props> = (props) => {
 		post.current = postData;
 
 	}, [postData]);
-
-	React.useEffect(() => {
-		console.log("RENDERING");
-	})
 
 	const classes = useStyles(useTheme());
 
@@ -203,7 +175,7 @@ const Post: React.FC<Props> = (props) => {
 						</Breadcrumbs>
 					<PageTitle text={post.current.title} />
 						<CardMedia
-						image={post.current.mainImage.asset.url ?? '/images/placeholder.png'}
+							image={urlFor(post.current.mainImage).url() ?? '/images/placeholder.png'}
 							className={classes.media}
 						/>
 						<Typography
@@ -287,7 +259,7 @@ export const getStaticProps: GetStaticProps = async ({ params = {}, preview = fa
 				user: userState
 			}
 		},
-		revalidate: 1,
+		revalidate: 1
 	};
 }
 
@@ -296,7 +268,6 @@ export const getStaticProps: GetStaticProps = async ({ params = {}, preview = fa
  * individual blog posts.
  */
 export const getStaticPaths: GetStaticPaths = async () => {
-	console.log("In getStaticPaths");
 	const sanityClient: SanityClient = getClient(false);
 
 	// Call an external API endpoint to get post slugs

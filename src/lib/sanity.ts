@@ -48,7 +48,4 @@ export const previewClient: SanityClient = createClient({
 	//withCredentials: true,
 })
 
-export const getClient = (usePreview: boolean) => {
-	console.log("getClient() returned " + (usePreview ? "PREVIEW" : "NORMAL") + " client.");
-	return usePreview ? previewClient : sanityClient;
-};
+export const getClient = (usePreview: boolean) => (usePreview ? previewClient : sanityClient);

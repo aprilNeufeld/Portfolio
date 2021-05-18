@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { groq } from 'next-sanity';
 import { getClient } from '../lib/sanity';
 
 interface BlogState {
@@ -17,16 +18,11 @@ export const fetchBlogPosts = createAsyncThunk(
 	'blog/fetch', async (arg, thunkApi) => {
 		const sanityClient = getClient(false);
 		const response = await sanityClient.fetch(
-			`*[_type == "post"]{
+			groq`*[_type == "post"]{
 				title,
 				slug,
 				"author": author->name,
-				mainImage {
-						asset->{
-						_id,
-						url
-					}
-				},
+				mainImage,
 				publishedAt,	
 				body[0]
 				}`
