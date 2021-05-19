@@ -30,8 +30,8 @@
 			"path": "./schemas/schema"
 		},
 		{
-			"implements": "part:@sanity/production-preview/resolve-production-url",
-			"path": "./resolveProductionUrl.js"
+			"implements": "part:@sanity/desk-tool/structure",
+			"path": "./src/deskStructure"
 		}
 	]
 }
