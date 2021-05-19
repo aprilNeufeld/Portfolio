@@ -94,12 +94,17 @@ type PostType = {
 	body: any
 }
 
-type PageDataType = {
-	post: PostType
+const defaults: PostType = {
+	title: 'Title',
+	slug: 'slug',
+	author: 'Author',
+	mainImage: '/images/placeholder.png',
+	publishedAt: '2000-01-01',
+	body: []
 }
 
 interface Props {
-	pageData: PageDataType;
+	pageData: { post: PostType };
 	shareUrl: string;
 	preview: boolean;
 }
@@ -115,45 +120,38 @@ interface Props {
  * https://github.com/sanity-io/next-sanity/issues/16
  * 
  */
-const Post: React.FC<Props> = (props) => {
+const Post: React.FC<Props> = ({ pageData, shareUrl, preview }) => {
 
-	const { pageData, shareUrl, preview } = props;
-	
 	// This is used for live preview with Sanity - the first time we load a 
 	// nonexistent post, router.isFallback will be true, and we show the page with
 	// placeholder data until we can get data from the usePreviewSubscription hook. 
 	// After usePreviewSubscription rerenders the page, if there is still no page data
 	// (i.e. there is no preview post to render), we default to a 404.
-	const router = useRouter()
-	if ((!router.isFallback || !preview) && (!pageData?.post?.slug)) {
+	const router = useRouter();
+	if ((!router.isFallback || !preview) && (!pageData.post?.slug)) {
 		return <ErrorPage statusCode={404} />
 	}
 
-	const getOptions = () => {
-		return {
-			params: { slug: pageData.post.slug },
-			initialData: pageData.post, // we preserve the initial page data if it's a prerendered page
-			enabled: preview,
-		}
-	};
-
-	// Load the live preview data, defaulting to placeholder data if there is none 
-	const { data: post } = usePreviewSubscription(postQuery, getOptions())
-
-
-	React.useEffect(() => {
-		console.log("Updated post " + (post ? "has data." : "is UNDEFINED."));
-
-		console.log("data=" + JSON.stringify(post, null, 1));
-
-	}, [post]);
-
-	React.useEffect(() => {
-		console.log("RENDERING");
-	})
-
+	// Get our styles
 	const classes = useStyles(useTheme());
 
+	// Load the live preview data 
+	const { data: post = defaults } = usePreviewSubscription(postQuery, {
+		params: { slug: pageData.post.slug },
+		initialData: pageData.post, // we preserve the initial page data if it's a prerendered page
+		enabled: preview,
+	})
+
+	// Set defaults to avoid errors
+	const {
+		author = defaults.author,
+		body = defaults.body,
+		mainImage = defaults.mainImage,
+		publishedAt = defaults.publishedAt,
+		title = defaults.title,
+	} = post;
+
+	// Function that formats our post's date
 	const formatDate = (datetime: string): string => {
 		const date: Date = new Date(datetime);
 		return date.toLocaleDateString('en-US', {
@@ -163,75 +161,71 @@ const Post: React.FC<Props> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Layout pageTitle={post.title ?? ''}>
-				{post &&
-					<React.Fragment>
-						<Breadcrumbs aria-label="breadcrumb" className={classes.breadcrumbs}>
-							<Link href="/">
-								Home
-					</Link>
-							<Link href="/blog">
-								Blog
-					</Link>
-							<Typography color="textPrimary"></Typography>
-						</Breadcrumbs>
-						<PageTitle text={post.title} />
-						<CardMedia
-							image={urlFor(post.mainImage).url() ?? '/images/placeholder.png'}
-							className={classes.media}
+			<Layout pageTitle={title}>
+				<React.Fragment>
+					<Breadcrumbs aria-label="breadcrumb" className={classes.breadcrumbs}>
+						<Link href="/">
+							Home
+							</Link>
+						<Link href="/blog">
+							Blog
+							</Link>
+						<Typography color="textPrimary"></Typography>
+					</Breadcrumbs>
+					<PageTitle text={title} />
+					<CardMedia
+						image={urlFor(mainImage).url() ?? mainImage}
+						className={classes.media}
+					/>
+					<Typography
+						variant='body1'
+						className={classes.postDetails}
+					>
+						{'by ' + author + ' on ' + formatDate(publishedAt)}
+					</Typography>
+					<Typography
+						variant='body1'
+						className={classes.postBodyText}
+						component='div'
+					>
+						<BlockRenderer
+							content={body}
 						/>
-						<Typography
-							variant='body1'
-							className={classes.postDetails}
+					</Typography>
+					<Divider />
+					<Box className={classes.shareButtonsContainer}>
+						<FacebookShareButton
+							url={shareUrl}
+							quote={title}
+							className={classes.shareButton}
 						>
-							{'by ' + post.author +
-								(post.publishedAt ? ' on ' +
-									formatDate(post.publishedAt) : '')}
-						</Typography>
-						<Typography
-							variant='body1'
-							className={classes.postBodyText}
-							component='div'
+							<FacebookIcon className={classes.shareIcon} />
+						</FacebookShareButton>
+						<TwitterShareButton
+							url={shareUrl}
+							title={title}
+							className={classes.shareButton}
 						>
-							<BlockRenderer
-								content={post.body}
-							/>
-						</Typography>
-						<Divider />
-						<Box className={classes.shareButtonsContainer}>
-							<FacebookShareButton
-								url={shareUrl ?? ''}
-								quote={post.title}
-								className={classes.shareButton}
-							>
-								<FacebookIcon className={classes.shareIcon} />
-							</FacebookShareButton>
-							<TwitterShareButton
-								url={shareUrl ?? ''}
-								title={post.title}
-								className={classes.shareButton}
-							>
-								<TwitterIcon className={classes.shareIcon} />
-							</TwitterShareButton>
-							<RedditShareButton
-								url={shareUrl ?? ''}
-								title={post.title}
-								windowWidth={660}
-								windowHeight={460}
-								className={classes.shareButton}
-							>
-								<RedditIcon className={classes.shareIcon} />
-							</RedditShareButton>
-							<LinkedinShareButton
-								url={shareUrl ?? ''}
-								title={post.title}
-								className={classes.shareButton}
-							>
-								<LinkedInIcon className={classes.shareIcon} />
-							</LinkedinShareButton>
-						</Box>
-					</React.Fragment>
-				}
+							<TwitterIcon className={classes.shareIcon} />
+						</TwitterShareButton>
+						<RedditShareButton
+							url={shareUrl}
+							title={title}
+							windowWidth={660}
+							windowHeight={460}
+							className={classes.shareButton}
+						>
+							<RedditIcon className={classes.shareIcon} />
+						</RedditShareButton>
+						<LinkedinShareButton
+							url={shareUrl}
+							title={title}
+							className={classes.shareButton}
+						>
+							<LinkedInIcon className={classes.shareIcon} />
+						</LinkedinShareButton>
+					</Box>
+				</React.Fragment>
 			</Layout >
 		</React.Fragment >
 	)

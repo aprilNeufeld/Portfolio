@@ -7,5 +7,5 @@ export default function resolveProductionUrl(document) {
 		? `https://www.trickstercodess.com`
 		: `http://localhost:3000`;
 
-	return `${url}/api/preview?secret=${secret}&slug=${document.slug.current}`
+	return `${url}/api/preview?secret=${secret}&slug=${document.slug?.current}`
 } 
