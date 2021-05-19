@@ -59,24 +59,27 @@ interface Props {
 	children?: React.ReactNode;
 	pageTitle: string;
 	contentTitle?: string;
+	preview?: boolean;
 }
 
 const Layout: React.FC<Props> = (props) => {
 
-	const { children, pageTitle, contentTitle } = props;
+	const { children, pageTitle, contentTitle, preview } = props;
 	const classes = useStyles(useTheme());
-	
+
 	return (
 		<React.Fragment>
 			<Head>
-				<title>{pageTitle}</title>
+				<title>{preview ? pageTitle + ' Preview' : pageTitle}</title>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 			</Head>
 			<React.Fragment>
-				<Header>
-					<HeaderContent />
-				</Header>
+				{!preview &&
+					<Header>
+						<HeaderContent />
+					</Header>
+				}
 				<Container maxWidth="lg" className={classes.root}>
 					<Paper elevation={2} className={classes.paper} >
 						<Container maxWidth="md" className={classes.content}>
@@ -90,7 +93,9 @@ const Layout: React.FC<Props> = (props) => {
 					</Paper>
 				</Container>
 			</React.Fragment>
-			<Footer />
+			{!preview &&
+				<Footer />
+			}
 		</React.Fragment>
 	)
 };

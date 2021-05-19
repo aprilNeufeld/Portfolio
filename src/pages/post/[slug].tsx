@@ -128,7 +128,7 @@ const Post: React.FC<Props> = ({ pageData, shareUrl, preview }) => {
 	// After usePreviewSubscription rerenders the page, if there is still no page data
 	// (i.e. there is no preview post to render), we default to a 404.
 	const router = useRouter();
-	if ((!router.isFallback || !preview) && (!pageData.post?.slug)) {
+	if ((!router.isFallback || !preview) && (!pageData?.post?.slug)) {
 		return <ErrorPage statusCode={404} />
 	}
 
@@ -161,7 +161,7 @@ const Post: React.FC<Props> = ({ pageData, shareUrl, preview }) => {
 
 	return (
 		<React.Fragment>
-			<Layout pageTitle={title}>
+			<Layout pageTitle={title} preview={preview}>
 				<React.Fragment>
 					<Breadcrumbs aria-label="breadcrumb" className={classes.breadcrumbs}>
 						<Link href="/">
