@@ -241,9 +241,17 @@ export const getStaticProps: GetStaticProps = async ({ params = {}, preview = fa
 	const { slug } = params;
 	const post = await sanityClient.fetch(postQuery, { slug });
 	const shareUrl = `https://www.tricksterCodess.com/post/${slug}`;
+	let initialReduxState = undefined;
 
-	const userState = await fetchUserState();
-
+	// Only bother initializing the user state if it isn't a post
+	// preview page, because we've eliminated the header that uses the user
+	// information on the post preview to speed things up
+	if (!preview) {
+		initialReduxState = {
+			user: await fetchUserState()
+		}
+	}
+	
 	return {
 		props: {
 			pageData: {
@@ -251,9 +259,7 @@ export const getStaticProps: GetStaticProps = async ({ params = {}, preview = fa
 			},
 			shareUrl,
 			preview,
-			initialReduxState: {
-				user: userState
-			}
+			initialReduxState,
 		},
 		revalidate: 1
 	};

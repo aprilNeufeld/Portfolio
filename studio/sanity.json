@@ -2,7 +2,7 @@
   "root": true,
   "project": {
     "name": "blog",
-    "basepath": "/studio"
+    "basePath": "/studio"
   },
   "api": {
     "projectId": "vachv01z",

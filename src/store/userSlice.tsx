@@ -104,19 +104,6 @@ export const initialState: UserState = {
     ]
 }
 
-/*
-export const initialState: UserState = {
-	basics: {
-		label: "",
-		name: "",
-		summary: "",
-		username: ""
-	},
-	interests: [],
-	skills: []
-};
-*/
-
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
