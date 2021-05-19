@@ -95,12 +95,12 @@ type PostType = {
 }
 
 type PageDataType = {
-	post: PostType,
-	shareUrl: string
+	post: PostType
 }
 
 interface Props {
 	pageData: PageDataType;
+	shareUrl: string;
 	preview: boolean;
 }
 /*
@@ -117,9 +117,8 @@ interface Props {
  */
 const Post: React.FC<Props> = (props) => {
 
-	const { pageData, preview } = props;
-	const post = React.useRef(pageData.post);
-
+	const { pageData, shareUrl, preview } = props;
+	
 	// This is used for live preview with Sanity - the first time we load a 
 	// nonexistent post, router.isFallback will be true, and we show the page with
 	// placeholder data until we can get data from the usePreviewSubscription hook. 
@@ -133,23 +132,25 @@ const Post: React.FC<Props> = (props) => {
 	const getOptions = () => {
 		return {
 			params: { slug: pageData.post.slug },
-			initialData: pageData, // we preserve the initial page data if it's a prerendered page
+			initialData: pageData.post, // we preserve the initial page data if it's a prerendered page
 			enabled: preview,
 		}
 	};
 
 	// Load the live preview data, defaulting to placeholder data if there is none 
-	const {
-		data: { post: postData, shareUrl } = pageData
-	} = usePreviewSubscription(postQuery, getOptions())
+	const { data: post } = usePreviewSubscription(postQuery, getOptions())
 
-	
+
 	React.useEffect(() => {
-		console.log("Updated post " + (postData ? "has data." : "is UNDEFINED."));
+		console.log("Updated post " + (post ? "has data." : "is UNDEFINED."));
 
-		post.current = postData;
+		console.log("data=" + JSON.stringify(post, null, 1));
 
-	}, [postData]);
+	}, [post]);
+
+	React.useEffect(() => {
+		console.log("RENDERING");
+	})
 
 	const classes = useStyles(useTheme());
 
@@ -162,8 +163,8 @@ const Post: React.FC<Props> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Layout pageTitle={post.current?.title ?? ''}>
-				{post.current &&
+			<Layout pageTitle={post.title ?? ''}>
+				{post &&
 					<React.Fragment>
 						<Breadcrumbs aria-label="breadcrumb" className={classes.breadcrumbs}>
 							<Link href="/">
@@ -174,18 +175,18 @@ const Post: React.FC<Props> = (props) => {
 					</Link>
 							<Typography color="textPrimary"></Typography>
 						</Breadcrumbs>
-					<PageTitle text={post.current.title} />
+						<PageTitle text={post.title} />
 						<CardMedia
-							image={urlFor(post.current.mainImage).url() ?? '/images/placeholder.png'}
+							image={urlFor(post.mainImage).url() ?? '/images/placeholder.png'}
 							className={classes.media}
 						/>
 						<Typography
 							variant='body1'
 							className={classes.postDetails}
 						>
-						{'by ' + post.current.author +
-							(post.current.publishedAt ? ' on ' +
-							formatDate(post.current.publishedAt) : '')}
+							{'by ' + post.author +
+								(post.publishedAt ? ' on ' +
+									formatDate(post.publishedAt) : '')}
 						</Typography>
 						<Typography
 							variant='body1'
@@ -193,28 +194,28 @@ const Post: React.FC<Props> = (props) => {
 							component='div'
 						>
 							<BlockRenderer
-							content={post.current.body}
+								content={post.body}
 							/>
 						</Typography>
 						<Divider />
 						<Box className={classes.shareButtonsContainer}>
 							<FacebookShareButton
 								url={shareUrl ?? ''}
-							quote={post.current.title}
+								quote={post.title}
 								className={classes.shareButton}
 							>
 								<FacebookIcon className={classes.shareIcon} />
 							</FacebookShareButton>
 							<TwitterShareButton
 								url={shareUrl ?? ''}
-							title={post.current.title}
+								title={post.title}
 								className={classes.shareButton}
 							>
 								<TwitterIcon className={classes.shareIcon} />
 							</TwitterShareButton>
 							<RedditShareButton
 								url={shareUrl ?? ''}
-							title={post.current.title}
+								title={post.title}
 								windowWidth={660}
 								windowHeight={460}
 								className={classes.shareButton}
@@ -223,7 +224,7 @@ const Post: React.FC<Props> = (props) => {
 							</RedditShareButton>
 							<LinkedinShareButton
 								url={shareUrl ?? ''}
-							title={post.current.title}
+								title={post.title}
 								className={classes.shareButton}
 							>
 								<LinkedInIcon className={classes.shareIcon} />
@@ -253,8 +254,8 @@ export const getStaticProps: GetStaticProps = async ({ params = {}, preview = fa
 		props: {
 			pageData: {
 				post,
-				shareUrl,
 			},
+			shareUrl,
 			preview,
 			initialReduxState: {
 				user: userState
