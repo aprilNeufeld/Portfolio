@@ -63,7 +63,7 @@
 	"name": "portfolio",
 	"private": true,
 	"scripts": {
-		"dev": "concurrently \"next --port $PORT\" \"cd studio && sanity start\"",
+		"dev": "concurrently \"next dev --port $PORT\" \"cd studio && sanity start\"",
 		"build": "echo 'Building Sanity to public/studio' && cd studio && sanity build && cd .. && next build",
 		"start": "vercel dev",
 		"postinstall": "lerna bootstrap",
