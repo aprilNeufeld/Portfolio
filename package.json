@@ -64,7 +64,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "concurrently \"next dev --port $PORT\" \"cd studio && sanity start\"",
-		"build": "echo 'Building Sanity to public/studio' && cd studio && sanity build && cd .. && next build",
+		"build": "echo 'Building Sanity to public/studio' && cd studio && sanity build ../public/studio -y && cd .. && next build",
 		"start": "vercel dev",
 		"postinstall": "lerna bootstrap",
 		"test": "cross-env CI=true next test --env=jsdom",
