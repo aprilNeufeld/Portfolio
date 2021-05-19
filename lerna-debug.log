@@ -1,0 +1,6 @@
+36 error Error: Command failed with exit code 128: git push --follow-tags --no-verify --atomic origin fix-prod
+36 error error: cannot spawn sh: No such file or directory
+36 error error: cannot spawn sh: No such file or directory
+36 error fatal: could not read Username for 'https://github.com': No such file or directory
+36 error     at makeError (C:\Users\ANeufeld\source\repos\Portfolio\ClientApp\node_modules\execa\lib\error.js:59:11)
+36 error     at handlePromise (C:\Users\ANeufeld\source\repos\Portfolio\ClientApp\node_modules\execa\index.js:114:26)
