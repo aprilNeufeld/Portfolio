@@ -1,5 +1,5 @@
 ﻿import S from "@sanity/desk-tool/structure-builder";
-import PostPreview from "../components/previews/PostPreview";
+import PostPreview from "./previews/PostPreview";
 
 export default () =>
 	S.list()

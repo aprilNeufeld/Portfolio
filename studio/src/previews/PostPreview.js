@@ -1,13 +1,12 @@
 ﻿import React from "react";
 import styles from "./IframePreview.css";
-import { secret } from './secret';
+import { secret } from '../secret';
 
 export default function PostPreview(props) {
 	const { displayed } = props.document;
-	const { slug } = displayed?.slug?.current;
-
-	if (!slug) {
-		return <div>The product needs a slug before it can be previewed.</div>;
+	
+	if (!displayed?.slug?.current) {
+		return <div>The post needs a slug before it can be previewed.</div>;
 	}
 
 	const url = process.env.NODE_ENV === "production"
@@ -18,7 +17,7 @@ export default function PostPreview(props) {
 		<div className={styles.componentWrapper}>
 			<div className={styles.iframeContainer}>
 				<iframe
-					src={`${url}/api/preview?secret=${secret}&slug=${slug}`}
+					src={`${url}/api/preview?secret=${secret}&slug=${displayed?.slug?.current}`}
 					frameBorder={"0"}
 				/>
 			</div>
