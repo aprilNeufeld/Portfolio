@@ -1,33 +1,33 @@
 {
-	"name": "blog",
-	"private": true,
-	"version": "0.0.1",
-	"description": "",
-	"main": "package.json",
-	"author": "April <tricksterCodess.com>",
-	"license": "MIT",
-	"scripts": {
-		"start": "sanity start",
-		"test": "sanity check"
-	},
-	"keywords": [
-		"sanity"
-	],
-	"dependencies": {
-		"@sanity/base": "^2.10.2",
-		"@sanity/code-input": "^2.9.0",
-		"@sanity/components": "^2.2.6",
-		"@sanity/core": "^2.10.2",
-		"@sanity/default-layout": "^2.10.2",
-		"@sanity/default-login": "^2.8.0",
-		"@sanity/desk-tool": "^2.10.4",
-		"@sanity/vision": "^2.10.0",
-		"prop-types": "^15.7",
-		"react": "^17.0",
-		"react-dom": "^17.0"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/tricksterCodess/Portfolio"
-	}
+  "name": "blog",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "main": "package.json",
+  "author": "April <tricksterCodess.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "sanity start",
+    "test": "sanity check"
+  },
+  "keywords": [
+    "sanity"
+  ],
+  "dependencies": {
+    "@sanity/base": "^2.10.2",
+    "@sanity/code-input": "^2.9.0",
+    "@sanity/components": "^2.2.6",
+    "@sanity/core": "^2.10.2",
+    "@sanity/default-layout": "^2.10.2",
+    "@sanity/default-login": "^2.8.0",
+    "@sanity/desk-tool": "^2.10.4",
+    "@sanity/vision": "^2.10.0",
+    "prop-types": "^15.7",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tricksterCodess/Portfolio"
+  }
 }
