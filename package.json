@@ -69,6 +69,6 @@
 		"test": "cross-env CI=true next test --env=jsdom",
 		"lint": "eslint ./src/**/*.ts ./src/**/*.tsx --fix"
 	},
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"homepage": "https://www.trickstercodess.com"
 }

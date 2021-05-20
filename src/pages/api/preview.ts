@@ -1,9 +1,9 @@
-﻿import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { postQuery } from '../post/[slug]';
 import { SanityClient } from '@sanity/client';
 import { getClient } from '../../lib/sanity';
 
-export default async (request: NextApiRequest, response: NextApiResponse) => {
+const preview = async (request: NextApiRequest, response: NextApiResponse) => {
     // Check the secret and next parameters
     // This secret should only be known to this API route and the CMS
     if (request.query.secret !== process.env.SANITY_PREVIEW_SECRET || !request.query.slug) {
@@ -28,3 +28,5 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
     // We don't redirect to request.query.slug as that might lead to open redirect vulnerabilities
     response.redirect('/post/' + post.slug)
 }
+
+export default preview;

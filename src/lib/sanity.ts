@@ -1,4 +1,4 @@
-﻿import { SanityClient } from '@sanity/client';
+import { SanityClient } from '@sanity/client';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import {
 	createClient,
