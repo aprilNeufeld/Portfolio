@@ -1,6 +1,5 @@
 ﻿import React from "react";
 import styles from "./IframePreview.css";
-import { secret } from '../secret';
 
 export default function PostPreview(props) {
 	const { displayed } = props.document;
@@ -17,7 +16,7 @@ export default function PostPreview(props) {
 		<div className={styles.componentWrapper}>
 			<div className={styles.iframeContainer}>
 				<iframe
-					src={`${url}/api/preview?secret=${secret}&slug=${displayed?.slug?.current}`}
+					src={`${url}/api/preview?secret=${process.env.SANITY_PREVIEW_SECRET}&slug=${displayed?.slug?.current}`}
 					frameBorder={"0"}
 				/>
 			</div>

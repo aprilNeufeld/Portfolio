@@ -4,10 +4,10 @@
     "name": "blog",
     "basePath": "/studio"
   },
-  "api": {
-    "projectId": "vachv01z",
-    "dataset": "production"
-  },
+    "api": {
+        "projectId": "process.env.SANITY_STUDIO_API_PROJECT_ID",
+        "dataset": "process.env.SANITY_STUDIO_API_DATASET"
+    },
   "plugins": [
     "@sanity/base",
     "@sanity/components",
