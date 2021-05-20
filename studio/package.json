@@ -29,5 +29,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/tricksterCodess/Portfolio"
+  },
+  "devDependencies": {
+    "@sanity/cli": "^2.10.0"
   }
 }
