@@ -65,7 +65,7 @@
 	"scripts": {
 		"dev": "concurrently \"next dev\" \"cd studio && sanity start\"",
 		"build": "echo 'Building Sanity to public/studio�' && cd studio && sanity build ../public/studio -y && cd .. && next build",
-		"postinstall": "cd studio && lerna bootstrap",
+		"postinstall": "lerna bootstrap",
 		"test": "cross-env CI=true next test --env=jsdom",
 		"lint": "eslint ./src/**/*.ts ./src/**/*.tsx --fix"
 	},
