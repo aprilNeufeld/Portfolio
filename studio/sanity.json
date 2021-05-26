@@ -1,12 +1,12 @@
 {
   "root": true,
+  "api": {
+    "projectId": "vachv01z",
+    "dataset": "production"
+  },
   "project": {
     "name": "blog"
   },
-    "api": {
-        "projectId": "placeholder",
-        "dataset": "placeholder"
-    },
   "plugins": [
     "@sanity/base",
     "@sanity/components",

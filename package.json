@@ -63,7 +63,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "concurrently \"next dev\" \"cd studio && sanity start\"",
-		"build": "next build",
+		"build": "cd studio && sanity build ../public/studio -y && cd .. && next build",
 		"test": "cross-env CI=true next test --env=jsdom",
 		"lint": "eslint ./src/**/*.ts ./src/**/*.tsx --fix"
 	},
