@@ -19,7 +19,7 @@ module.exports = {
 			fallback: [
 				{
 					source: '/studio/:path*',
-					destination: 'https://studio-beryl.vercel.app/studio/index.html',
+					destination: 'https://studio-beryl.vercel.app/:path*',
 				},
 			],
 		}
