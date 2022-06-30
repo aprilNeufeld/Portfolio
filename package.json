@@ -61,8 +61,7 @@
 	"name": "portfolio",
 	"private": true,
 	"scripts": {
-		"postinstall": "cd studio && npm install",
-		"start": "npm run dev",
+		"setup": "concurrently \"npm install\" \"cd studio && npm install\"",
 		"dev": "concurrently \"next dev\" \"cd studio && sanity start\"",
 		"build": "next build",
 		"test": "cross-env CI=true next test --env=jsdom",
