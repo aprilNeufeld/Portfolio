@@ -65,6 +65,7 @@
 		"postinstall": "cd studio && npm install",
 		"start": "npm run dev",
 		"dev": "concurrently \"next dev\" \"cd studio && sanity start\"",
+		"build": "next build",
 		"test": "cross-env CI=true next test --env=jsdom",
 		"lint": "eslint ./src/**/*.ts ./src/**/*.tsx --fix"
 	},
