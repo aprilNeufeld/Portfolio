@@ -110,7 +110,7 @@ To get a local copy up and running follow these simple example steps.
    ```
 3. Run the development server
    ```sh
-   npm run dev
+   npm run start
    ```
  4. Go to [localhost:3000](http://localhost:3000/) to see it in action!
 
