@@ -1,4 +1,4 @@
-﻿
+﻿/*
 const STUDIO_REWRITE = {
 	source: '/studio/:path*',
 	destination:
@@ -10,4 +10,18 @@ const STUDIO_REWRITE = {
 
 module.exports = {
 	rewrites: () => [STUDIO_REWRITE],
+}
+*/
+
+module.exports = {
+	async rewrites() {
+		return {
+			fallback: [
+				{
+					source: '/studio/:path*',
+					destination: 'https://studio-beryl.vercel.app/:path*',
+				},
+			],
+		}
+	},
 }
