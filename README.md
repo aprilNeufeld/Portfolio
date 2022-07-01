@@ -104,13 +104,13 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    git clone https://github.com/tricksterCodess/Portfolio.git
    ```
-2. Install NPM packages
+2. Install NPM packages (custom script)
    ```sh
-   npm install
+   npm run setup
    ```
 3. Run the development server
    ```sh
-   npm run start
+   npm run dev
    ```
  4. Go to [localhost:3000](http://localhost:3000/) to see it in action!
 
