@@ -1,20 +1,27 @@
 ﻿module.exports = {
-	reactStrictMode: true,
+	async redirects() {
+		return process.env.NODE_ENV === 'development'
+			? [
+					{
+						source: '/studio',
+						destination: 'http://localhost:3333',
+						permanent: true,
+					},
+			  ]
+			: [];
+	},
 	async rewrites() {
-		return {
-			fallback: [
-				{
-					source: '/studio',
-					destination: '/desk',
-				},
-				{
-					source: '/desk',
-					destination:
-						process.env.NODE_ENV === 'development'
-							? 'http://localhost:3333/desk'
-							: 'https://studio-beryl.vercel.app/desk',
-				},
-			],
-		};
+		return process.env.NODE_ENV === 'development'
+			? []
+			: [
+					{
+						source: '/studio',
+						destination: '/desk',
+					},
+					{
+						source: '/desk',
+						destination: 'https://studio-beryl.vercel.app/desk',
+					},
+			  ];
 	},
 };
