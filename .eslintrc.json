@@ -1,3 +1,6 @@
 {
-	"extends": "react-app"
+	"extends": ["prettier", "react-app", "next"],
+	"rules": {
+		"react-hooks/rules-of-hooks": "off"
+	}
 }
