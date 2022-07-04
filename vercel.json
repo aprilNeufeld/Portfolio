@@ -1,11 +1,5 @@
 {
 	"github": {
 		"silent": true
-	},
-	"rewrites": [
-		{
-			"source": "/studio",
-			"destination": "https://google.com"
-		}
-	]
+	}
 }
