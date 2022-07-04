@@ -1,5 +1,10 @@
 {
 	"github": {
         "silent": true
-    }
+    },
+    "rewrites": [
+        {
+            "source": "/studio", "destination": "https://studio-beryl.vercel.app"
+        }
+    ]
 }
