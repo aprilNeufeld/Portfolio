@@ -72,6 +72,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         user: userState,
       },
     },
+    revalidate: 60,
   };
 };
 export default Projects;

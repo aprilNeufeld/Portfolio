@@ -41,6 +41,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         user: userState,
       },
     },
+    revalidate: 60,
   };
 };
 

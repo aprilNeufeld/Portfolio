@@ -66,7 +66,7 @@ const Home: React.FC = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async () => {
   const userState = await fetchUserState();
 
   // Return part of our actual state object, which will be integrated
@@ -77,6 +77,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         user: userState,
       },
     },
+    revalidate: 60,
   };
 };
 

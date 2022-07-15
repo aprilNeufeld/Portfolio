@@ -230,7 +230,7 @@ export const getStaticProps: GetStaticProps = async ({ params = {}, preview = fa
       preview,
       initialReduxState,
     },
-    revalidate: 1,
+    revalidate: 5,
   };
 };
 
