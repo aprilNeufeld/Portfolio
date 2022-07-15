@@ -56,6 +56,8 @@
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-webpack-plugin": "^2.5.3",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "nan": "^2.14.2",
     "prettier": "2.7.1",
     "typescript": "^4.2.4",
@@ -68,7 +70,12 @@
     "dev": "concurrently \"next dev\" \"cd studio && sanity start\"",
     "build": "next build",
     "test": "cross-env CI=true next test --env=jsdom",
-    "lint": "eslint ./src/**/*.ts ./src/**/*.tsx --fix"
+    "lint": "eslint ./src/**/*.ts ./src/**/*.tsx --fix",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{ts, tsx}": "eslint",
+    "**/*": "prettier --write --ignore-unknown"
   },
   "version": "0.0.1",
   "homepage": "https://www.trickstercodess.com"
