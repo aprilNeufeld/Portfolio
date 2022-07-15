@@ -1,21 +1,16 @@
-import * as React from "react";
-import ErrorPage from "next/error";
-import { GetStaticProps, GetStaticPaths } from "next";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import Layout from "../../components/Layout";
-import { getClient } from "../../lib/sanity";
-import BlockRenderer from "../../components/BlockRenderer";
-import {
-  FacebookShareButton,
-  TwitterShareButton,
-  RedditShareButton,
-  LinkedinShareButton,
-} from "react-share";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import RedditIcon from "@material-ui/icons/Reddit";
-import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import * as React from 'react';
+import ErrorPage from 'next/error';
+import { GetStaticProps, GetStaticPaths } from 'next';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Layout from '../../components/Layout';
+import { getClient } from '../../lib/sanity';
+import BlockRenderer from '../../components/BlockRenderer';
+import { FacebookShareButton, TwitterShareButton, RedditShareButton, LinkedinShareButton } from 'react-share';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import RedditIcon from '@material-ui/icons/Reddit';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import {
   Box,
   Breadcrumbs,
@@ -26,34 +21,34 @@ import {
   Theme,
   createStyles,
   useTheme,
-} from "@material-ui/core";
-import PageTitle from "../../components/PageTitle";
-import { fetchUserState } from "../../lib/staticFetching";
-import { usePreviewSubscription, urlFor } from "../../lib/sanity";
-import { SanityClient } from "@sanity/client";
-import { groq } from "next-sanity";
+} from '@material-ui/core';
+import PageTitle from '../../components/PageTitle';
+import { fetchUserState } from '../../lib/staticFetching';
+import { usePreviewSubscription, urlFor } from '../../lib/sanity';
+import { SanityClient } from '@sanity/client';
+import { groq } from 'next-sanity';
 
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
     blockQuote: {
-      marginBottom: "1rem",
+      marginBottom: '1rem',
     },
     breadcrumbs: {
       marginBottom: theme.spacing(4),
-      "& a": {
-        textDecoration: "none",
+      '& a': {
+        textDecoration: 'none',
       },
     },
     media: {
       height: 0,
       //paddingTop: '56.25%', // 16:9
-      paddingTop: "62%",
+      paddingTop: '62%',
       marginBottom: theme.spacing(4),
     },
     postBodyText: {
-      position: "relative",
+      position: 'relative',
       lineHeight: 1.4,
-      "& p": {
+      '& p': {
         marginBottom: theme.spacing(5),
       },
     },
@@ -61,8 +56,8 @@ const useStyles = makeStyles((theme: Theme) => {
       color: theme.palette.text.secondary,
     },
     shareButtonsContainer: {
-      display: "flex",
-      flexDirection: "row",
+      display: 'flex',
+      flexDirection: 'row',
       paddingTop: theme.spacing(2),
     },
     shareButton: {
@@ -95,11 +90,11 @@ type PostType = {
 };
 
 const defaults: PostType = {
-  title: "Title",
-  slug: "slug",
-  author: "Author",
-  mainImage: "/images/placeholder.png",
-  publishedAt: "2000-01-01",
+  title: 'Title',
+  slug: 'slug',
+  author: 'Author',
+  mainImage: '/images/placeholder.png',
+  publishedAt: '2000-01-01',
   body: [],
 };
 
@@ -154,10 +149,10 @@ const Post: React.FC<Props> = ({ pageData, shareUrl, preview }) => {
   // Function that formats our post's date
   const formatDate = (datetime: string): string => {
     const date: Date = new Date(datetime);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     });
   };
 
@@ -171,34 +166,19 @@ const Post: React.FC<Props> = ({ pageData, shareUrl, preview }) => {
             <Typography color="textPrimary"></Typography>
           </Breadcrumbs>
           <PageTitle text={title} />
-          <CardMedia
-            image={urlFor(mainImage).url() ?? mainImage}
-            className={classes.media}
-          />
+          <CardMedia image={urlFor(mainImage).url() ?? mainImage} className={classes.media} />
           <Typography variant="body1" className={classes.postDetails}>
-            {"by " + author + " on " + formatDate(publishedAt)}
+            {'by ' + author + ' on ' + formatDate(publishedAt)}
           </Typography>
-          <Typography
-            variant="body1"
-            className={classes.postBodyText}
-            component="div"
-          >
+          <Typography variant="body1" className={classes.postBodyText} component="div">
             <BlockRenderer content={body} />
           </Typography>
           <Divider />
           <Box className={classes.shareButtonsContainer}>
-            <FacebookShareButton
-              url={shareUrl}
-              quote={title}
-              className={classes.shareButton}
-            >
+            <FacebookShareButton url={shareUrl} quote={title} className={classes.shareButton}>
               <FacebookIcon className={classes.shareIcon} />
             </FacebookShareButton>
-            <TwitterShareButton
-              url={shareUrl}
-              title={title}
-              className={classes.shareButton}
-            >
+            <TwitterShareButton url={shareUrl} title={title} className={classes.shareButton}>
               <TwitterIcon className={classes.shareIcon} />
             </TwitterShareButton>
             <RedditShareButton
@@ -210,11 +190,7 @@ const Post: React.FC<Props> = ({ pageData, shareUrl, preview }) => {
             >
               <RedditIcon className={classes.shareIcon} />
             </RedditShareButton>
-            <LinkedinShareButton
-              url={shareUrl}
-              title={title}
-              className={classes.shareButton}
-            >
+            <LinkedinShareButton url={shareUrl} title={title} className={classes.shareButton}>
               <LinkedInIcon className={classes.shareIcon} />
             </LinkedinShareButton>
           </Box>
@@ -228,10 +204,7 @@ const Post: React.FC<Props> = ({ pageData, shareUrl, preview }) => {
  * Using the paths returned by getStaticPaths, here we get the information
  * for a single post that will be displayed on this page.
  */
-export const getStaticProps: GetStaticProps = async ({
-  params = {},
-  preview = false,
-}) => {
+export const getStaticProps: GetStaticProps = async ({ params = {}, preview = false }) => {
   const sanityClient: SanityClient = getClient(preview);
 
   const { slug } = params;
@@ -269,9 +242,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const sanityClient: SanityClient = getClient(false);
 
   // Call an external API endpoint to get post slugs
-  const slugs = await sanityClient.fetch(
-    groq`*[_type == "post" && defined(slug.current)][].slug.current`
-  );
+  const slugs = await sanityClient.fetch(groq`*[_type == "post" && defined(slug.current)][].slug.current`);
 
   // Get the paths we want to pre-render based on post slugs
   const paths = slugs.map((slug: any) => ({ params: { slug } }));

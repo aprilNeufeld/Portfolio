@@ -14,14 +14,14 @@ module.exports = {
 */
 
 module.exports = {
-	async rewrites() {
-		return {
-			fallback: [
-				{
-					source: '/studio/:path*',
-					destination: 'https://studio-beryl.vercel.app/:path*',
-				},
-			],
-		}
-	},
-}
+  async rewrites() {
+    return {
+      fallback: [
+        {
+          source: '/studio/:path*',
+          destination: 'https://studio-beryl.vercel.app/:path*',
+        },
+      ],
+    };
+  },
+};
