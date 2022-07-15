@@ -74,8 +74,12 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{ts, tsx}": "eslint",
-    "**/*": "prettier --write --ignore-unknown"
+    "*.{ts, tsx}": [
+      "eslint"
+    ],
+    "**/*": [
+      "prettier --write"
+    ]
   },
   "version": "0.0.1",
   "homepage": "https://www.trickstercodess.com"
