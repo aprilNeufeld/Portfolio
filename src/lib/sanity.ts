@@ -1,19 +1,14 @@
-import { SanityClient } from "@sanity/client";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import {
-  createClient,
-  createImageUrlBuilder,
-  createPreviewSubscriptionHook,
-  ProjectConfig,
-} from "next-sanity";
+import { SanityClient } from '@sanity/client';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { createClient, createImageUrlBuilder, createPreviewSubscriptionHook, ProjectConfig } from 'next-sanity';
 
-const API_VERSION = "2021-03-25";
+const API_VERSION = '2021-03-25';
 
 if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
-  throw Error("The Project ID is not set. Check your environment variables.");
+  throw Error('The Project ID is not set. Check your environment variables.');
 }
 if (!process.env.NEXT_PUBLIC_SANITY_DATASET) {
-  throw Error("The Dataset name is not set. Check your environment variables.");
+  throw Error('The Dataset name is not set. Check your environment variables.');
 }
 
 const config: ProjectConfig = {
@@ -25,8 +20,7 @@ const config: ProjectConfig = {
  * Set up a helper function for generating Image URLs with only the asset reference data in your documents.
  * Read more: https://www.sanity.io/docs/image-url
  **/
-export const urlFor = (source: SanityImageSource) =>
-  createImageUrlBuilder(config).image(source);
+export const urlFor = (source: SanityImageSource) => createImageUrlBuilder(config).image(source);
 
 // Set up the live preview subscription hook
 export const usePreviewSubscription = createPreviewSubscriptionHook(config);
@@ -47,5 +41,4 @@ export const previewClient: SanityClient = createClient({
   //withCredentials: true,
 });
 
-export const getClient = (usePreview: boolean) =>
-  usePreview ? previewClient : sanityClient;
+export const getClient = (usePreview: boolean) => (usePreview ? previewClient : sanityClient);

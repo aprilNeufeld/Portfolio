@@ -3,37 +3,36 @@ import { reducers } from './';
 import { useMemo } from 'react';
 
 /*
- * Configure our redux store using redux toolkit. 
+ * Configure our redux store using redux toolkit.
  * Code patterns used from
  * https://github.com/vercel/next.js/blob/canary/examples/with-redux/store.js
  */
 const rootReducer = combineReducers({
-	...reducers
+  ...reducers,
 });
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;
 
 // Create the actual store using redux toolkit
 export const createStore = (initialState?: Partial<RootState>) =>
-	configureStore({
-		reducer: rootReducer,
-		preloadedState: initialState,
-		devTools: true,
-	});
+  configureStore({
+    reducer: rootReducer,
+    preloadedState: initialState,
+    devTools: true,
+  });
 
 // Get the type of our store
 type StoreType = ReturnType<typeof createStore>;
 
 // Get the type of our store's dispatch property
-export type AppDispatch = StoreType["dispatch"];
+export type AppDispatch = StoreType['dispatch'];
 
 let store: StoreType | undefined;
 
 export const initializeStore = (initialState?: Partial<RootState>) => {
+  let _store = store ?? createStore(initialState);
 
-	let _store = store ?? createStore(initialState);
-
-	/*
+  /*
 	 * This is recommended by: https://github.com/vercel/next.js/blob/canary/examples/with-redux/store.js.
 	 * However, in my case, I don't want to create a new Redux store every time I go to
 	 * a page that has initial data because I'm using getStaticProps to initialize data
@@ -54,18 +53,18 @@ export const initializeStore = (initialState?: Partial<RootState>) => {
 	}
 	*/
 
-	// For SSG and SSR always create a new store
-	if (typeof window === 'undefined') return _store
+  // For SSG and SSR always create a new store
+  if (typeof window === 'undefined') return _store;
 
-	// Create the store once in the client
-	if (!store) {
-		store = _store
-	}
+  // Create the store once in the client
+  if (!store) {
+    store = _store;
+  }
 
-	return _store;
-}
+  return _store;
+};
 
 export function useStore(initialState?: RootState) {
-	const store = useMemo(() => initializeStore(initialState), [initialState])
-	return store;
+  const store = useMemo(() => initializeStore(initialState), [initialState]);
+  return store;
 }

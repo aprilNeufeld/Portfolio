@@ -12,21 +12,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "lib": [
-      "es2015",
-      "dom"
-    ],
+    "lib": ["es2015", "dom"],
     "skipLibCheck": true,
     "strict": true,
     "incremental": true
   },
-  "include": [
-    "src"
-  ],
-  "files": [
-    "@types/block-content-to-react.d.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src"],
+  "files": ["@types/block-content-to-react.d.ts"],
+  "exclude": ["node_modules"]
 }

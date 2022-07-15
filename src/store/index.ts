@@ -5,9 +5,9 @@ import * as Blog from './blogSlice';
 import { AppDispatch, RootState } from './configureStore';
 
 export const reducers = {
-    user: User.default,
-    projects: Projects.default,
-    blog: Blog.default,
+  user: User.default,
+  projects: Projects.default,
+  blog: Blog.default,
 };
 
 // Use throughout the app instead of plain `useDispatch` and `useSelector`
