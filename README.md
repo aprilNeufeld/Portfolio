@@ -19,7 +19,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/tricksterCodess/Portfolio/blob/main/public/favicon.ico">
+  <a href="https://github.com/aprilNeufeld/Portfolio/blob/main/public/favicon.ico">
     <img src="/public/favicon.ico" alt="Logo" width="80" height="80">
   </a>
 
@@ -28,9 +28,9 @@
   <p align="center">
     My developer portfolio.
     <br />
-    <a href="https://www.trickstercodess.com">View Deployment</a>
+    <a href="https://www.aprilneufeld.ca">View Deployment</a>
     ·
-    <a href="https://github.com/tricksterCodess/Portfolio/issues">Report a Bug</a>
+    <a href="https://github.com/aprilNeufeld/Portfolio/issues">Report a Bug</a>
   </p>
 </p>
 
@@ -102,7 +102,7 @@ To get a local copy up and running follow these simple example steps.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/tricksterCodess/Portfolio.git
+   git clone https://github.com/aprilNeufeld/Portfolio.git
    ```
 2. Install NPM packages (custom script)
    ```sh
@@ -126,9 +126,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-April Neufeld - [@tricksterCodess](https://gitconnected.com/trickstercodess) - april.neufeld@gmail.com
+April Neufeld - [@aprilNeufeld](https://gitconnected.com/trickstercodess) - april.neufeld@gmail.com
 
-Project Link: [https://github.com/tricksterCodess/Portfolio](https://github.com/tricksterCodess/Portfolio)
+Project Link: [https://github.com/aprilNeufeld/Portfolio](https://github.com/aprilNeufeld/Portfolio)
 
 
 
@@ -144,16 +144,16 @@ Project Link: [https://github.com/tricksterCodess/Portfolio](https://github.com/
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[last-commit-shield]: https://img.shields.io/github/last-commit/tricksterCodess/Portfolio.svg
-[last-commit-url]: https://github.com/tricksterCodess/Portfolio/commits/main
-[license-shield]: https://img.shields.io/github/license/tricksterCodess/Portfolio.svg
-[license-url]: https://github.com/tricksterCodess/Portfolio/blob/main/LICENSE.txt
-[language-shield]: https://img.shields.io/github/languages/top/tricksterCodess/Portfolio.svg
-[next-version-shield]: https://img.shields.io/github/package-json/dependency-version/tricksterCodess/Portfolio/next.svg
-[package-url]: https://github.com/tricksterCodess/Portfolio/blob/main/package.json
+[last-commit-shield]: https://img.shields.io/github/last-commit/aprilNeufeld/Portfolio.svg
+[last-commit-url]: https://github.com/aprilNeufeld/Portfolio/commits/main
+[license-shield]: https://img.shields.io/github/license/aprilNeufeld/Portfolio.svg
+[license-url]: https://github.com/aprilNeufeld/Portfolio/blob/main/LICENSE.txt
+[language-shield]: https://img.shields.io/github/languages/top/aprilNeufeld/Portfolio.svg
+[next-version-shield]: https://img.shields.io/github/package-json/dependency-version/aprilNeufeld/Portfolio/next.svg
+[package-url]: https://github.com/aprilNeufeld/Portfolio/blob/main/package.json
 [product-screenshot]: images/screenshot.png
-[react-version-shield]: https://img.shields.io/github/package-json/dependency-version/tricksterCodess/Portfolio/react.svg
-[redux-version-shield]: https://img.shields.io/github/package-json/dependency-version/tricksterCodess/Portfolio/redux.svg
-[repo-url]: https://github.com/tricksterCodess/Portfolio
-[website-shield]: https://img.shields.io/website?url=https%3A%2F%2Fwww.trickstercodess.com
-[website-url]: https://www.trickstercodess.com
+[react-version-shield]: https://img.shields.io/github/package-json/dependency-version/aprilNeufeld/Portfolio/react.svg
+[redux-version-shield]: https://img.shields.io/github/package-json/dependency-version/aprilNeufeld/Portfolio/redux.svg
+[repo-url]: https://github.com/aprilNeufeld/Portfolio
+[website-shield]: https://img.shields.io/website?url=https%3A%2F%2Fwww.aprilneufeld.ca
+[website-url]: https://www.aprilneufeld.ca

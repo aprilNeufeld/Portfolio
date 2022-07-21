@@ -12,7 +12,7 @@ import { UserState, initialState } from '../store/userSlice';
  * we will move this there so it is only called once.
  */
 export const fetchUserState = async (): Promise<UserState> => {
-  const userResponse = await fetch('https://gitconnected.com/v1/portfolio/tricksterCodess');
+  const userResponse = await fetch('https://gitconnected.com/v1/portfolio/aprilNeufeld');
   if (userResponse.status === 200) {
     const json = await userResponse.json();
 

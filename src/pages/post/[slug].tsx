@@ -209,7 +209,7 @@ export const getStaticProps: GetStaticProps = async ({ params = {}, preview = fa
 
   const { slug } = params;
   const post = await sanityClient.fetch(postQuery, { slug });
-  const shareUrl = `https://www.tricksterCodess.com/post/${slug}`;
+  const shareUrl = `https://www.aprilneufeld.ca/post/${slug}`;
   let initialReduxState = undefined;
 
   // Only bother initializing the user state if it isn't a post

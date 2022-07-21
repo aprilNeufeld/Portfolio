@@ -34,8 +34,8 @@ const Footer: React.FC = () => {
     <Paper className={classes.root}>
       <Container maxWidth="xl" className={classes.content}>
         <Typography variant="body2">
-          © 2021 TricksterCodess: <Link href="https://github.com/tricksterCodess"> gitHub</Link> |{' '}
-          <Link href="https://gitconnected.com/tricksterCodess">gitConnected </Link>
+          © 2021 April Neufeld: <Link href="https://github.com/aprilNeufeld"> gitHub</Link> |{' '}
+          <Link href="https://gitconnected.com/aprilNeufeld">gitConnected </Link>
         </Typography>
       </Container>
     </Paper>
