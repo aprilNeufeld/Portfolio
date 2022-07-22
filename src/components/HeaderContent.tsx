@@ -104,7 +104,7 @@ const HeaderContent: React.FC = () => {
           {user.basics.label}
         </Typography>
         <Typography variant="body1" align="center" gutterBottom>
-          @tricksterCodess: <Link href={`https://github.com/${user.basics.username}`}> gitHub</Link> |{' '}
+          @aprilNeufeld: <Link href={`https://github.com/${user.basics.username}`}> gitHub</Link> |{' '}
           <Link href={`https://gitconnected.com/${user.basics.username}`}>gitConnected </Link>
         </Typography>
         <Box className={classes.chipsContainer}>

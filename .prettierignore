@@ -1,5 +1,7 @@
 # FILES
+*.txt
 *.md
+.prettierignore
 .depcheckrc
 .env
 next-env.d.ts

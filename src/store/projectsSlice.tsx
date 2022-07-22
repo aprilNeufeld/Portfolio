@@ -73,7 +73,7 @@ const getLanguage = (lang: string): string => {
 };
 
 export const fetchProjects = createAsyncThunk('projects/fetch', async (arg, thunkApi) => {
-  const username = 'tricksterCodess';
+  const username = 'aprilNeufeld';
 
   // Get our repos
   const reposResponse = await request({
