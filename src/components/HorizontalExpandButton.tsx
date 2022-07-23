@@ -1,6 +1,6 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import { ButtonBase, IconButton, useTheme, Theme } from '@mui/material';
+import { ButtonBase, buttonBaseClasses, IconButton, useTheme, Theme } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
 import { ExpandMore } from '@mui/icons-material';
@@ -15,16 +15,16 @@ const useStyles = makeStyles((theme: Theme) => {
       width: '100%',
       transition: theme.transitions.create(['min-width', 'background-color'], buttonTransition),
       padding: theme.spacing(0, 0),
-      '&:hover:not($disabled)': {
+      [`&:hover:not(.${buttonBaseClasses.disabled})`]: {
         cursor: 'pointer',
       },
-      '&$expanded': {
+      [`&.${buttonBaseClasses.root}.Mui-expanded`]: {
         minWidth: 64,
       },
-      '&$focused': {
+      [`&.${buttonBaseClasses.root}.Mui-focused`]: {
         backgroundColor: theme.palette.action.focus,
       },
-      '&$disabled': {
+      [`&.${buttonBaseClasses.disabled}`]: {
         opacity: theme.palette.action.disabledOpacity,
       },
     },

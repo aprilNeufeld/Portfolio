@@ -2,14 +2,9 @@ import * as React from 'react';
 import '../custom.css';
 import type { AppProps } from 'next/app';
 import { theme } from '../styles';
-import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { useStore } from '../store/configureStore';
 import { Provider } from 'react-redux';
-
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
 
 const PortfolioApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   // pageProps comes from any pages that use getStaticProps at build time

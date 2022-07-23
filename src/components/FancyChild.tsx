@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => {
       paddingRight: theme.spacing(3),
     },
     divider: {
-      backgroundColor: theme.palette.secondary.main,
+      borderColor: theme.palette.secondary.main,
     },
     contentBox: {
       paddingRight: theme.spacing(3),
