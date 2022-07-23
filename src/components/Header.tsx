@@ -124,7 +124,7 @@ const Header: React.FC<Props> = (props) => {
    *
    * @param newValue the tab index of the selected item.
    */
-  const handleMenuSelection = (event: React.ChangeEvent<{}>, newValue: number) => {
+  const handleMenuSelection = (event: React.SyntheticEvent<{}>, newValue: number) => {
     router.push(pages[newValue].path);
   };
 
