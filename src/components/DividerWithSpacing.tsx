@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Divider, useTheme } from '@material-ui/core';
+import { Box, Divider, useTheme } from '@mui/material';
 
 interface Props {
   spacing?: number;

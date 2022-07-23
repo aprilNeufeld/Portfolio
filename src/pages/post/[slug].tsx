@@ -6,21 +6,13 @@ import Layout from '../../components/Layout';
 import { getClient } from '../../lib/sanity';
 import BlockRenderer from '../../components/BlockRenderer';
 import { FacebookShareButton, TwitterShareButton, RedditShareButton, LinkedinShareButton } from 'react-share';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import RedditIcon from '@material-ui/icons/Reddit';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import {
-  Box,
-  Breadcrumbs,
-  CardMedia,
-  Divider,
-  Typography,
-  makeStyles,
-  Theme,
-  createStyles,
-  useTheme,
-} from '@material-ui/core';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import RedditIcon from '@mui/icons-material/Reddit';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { Box, Breadcrumbs, CardMedia, Divider, Typography, Theme, useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import PageTitle from '../../components/PageTitle';
 import { fetchUserState } from '../../lib/staticFetching';
 import { usePreviewSubscription, urlFor } from '../../lib/sanity';

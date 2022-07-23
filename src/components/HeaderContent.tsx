@@ -1,14 +1,16 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Typography, Box, Chip, makeStyles, Theme, createStyles, useTheme, colors } from '@material-ui/core';
+import { Typography, Box, Chip, Theme, useTheme, colors } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useApplicationState } from '../store';
 
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
     root: {
       paddingBottom: theme.spacing(4),
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         paddingTop: theme.spacing(1),
       },
       [theme.breakpoints.up('md')]: {
@@ -38,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => {
       textAlign: 'center',
     },
     profilePictureContainer: {
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         height: 150,
         width: 150,
       },
@@ -54,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) => {
       marginBottom: theme.spacing(2),
     },
     profilePicture: {
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         width: 150,
         height: 150,
       },

@@ -1,6 +1,9 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import { Box, Divider, makeStyles, Theme, createStyles, useTheme } from '@material-ui/core';
+import { Box, Divider, Theme, useTheme } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({

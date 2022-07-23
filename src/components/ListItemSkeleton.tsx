@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { Box, ListItem, Typography, makeStyles, Theme, createStyles, useTheme } from '@material-ui/core';
-import Skeleton from '@material-ui/lab/Skeleton';
+import { Box, ListItem, Typography, Theme, useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import Skeleton from '@mui/material/Skeleton';
 import DividerWithSpacing from './DividerWithSpacing';
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -91,11 +93,11 @@ const ListItemSkeleton: React.FC<Props> = (props) => {
             <Typography variant="h6" component="div" gutterBottom>
               <Skeleton />
             </Typography>
-            <Skeleton height={100} variant="rect" />
+            <Skeleton height={100} variant="rectangular" />
             <Box className={classes.chipsContainerLeft}>
               {card.chips &&
                 card.chips.map((chip, i: number) => (
-                  <Skeleton key={i} className={classes.chip} width={chip.width} height={'32px'} variant="rect" />
+                  <Skeleton key={i} className={classes.chip} width={chip.width} height={'32px'} variant="rectangular" />
                 ))}
             </Box>
             <DividerWithSpacing spacing={2} />

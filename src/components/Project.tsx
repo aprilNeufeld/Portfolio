@@ -1,18 +1,8 @@
 import * as React from 'react';
 import Link from 'next/link';
-import {
-  Box,
-  Chip,
-  Divider,
-  ListItem,
-  Typography,
-  makeStyles,
-  Theme,
-  createStyles,
-  useTheme,
-  CardContent,
-  Card,
-} from '@material-ui/core';
+import { Box, Chip, Divider, ListItem, Typography, Theme, useTheme, CardContent, Card } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import { ProjectType } from '../store/projectsSlice';
 import Linkify from 'react-linkify';
 import FancyChild from '../components/FancyChild';
@@ -21,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
     listItem: {
       display: 'block',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         paddingRight: 0,
         paddingLeft: 0,
       },

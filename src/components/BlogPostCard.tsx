@@ -9,11 +9,11 @@ import {
   CardMedia,
   Divider,
   Typography,
-  makeStyles,
   Theme,
-  createStyles,
   useTheme,
-} from '@material-ui/core';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import BlockRenderer from './BlockRenderer';
 import { urlFor } from '../lib/sanity';
 

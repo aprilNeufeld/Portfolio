@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Link from 'next/link';
-import { Typography, Box, makeStyles, Theme, createStyles, useTheme, List, ListItem } from '@material-ui/core';
+import { Typography, Box, Theme, useTheme, List, ListItem } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import Layout from '../components/Layout';
 import { useApplicationState } from '../store';
 import FancyChild from '../components/FancyChild';

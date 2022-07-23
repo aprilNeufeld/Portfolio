@@ -10,11 +10,11 @@ import {
   Collapse,
   Divider,
   Typography,
-  makeStyles,
   Theme,
-  createStyles,
   useTheme,
-} from '@material-ui/core';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import HorizontalExpandButton from './HorizontalExpandButton';
 import BlockRenderer from './BlockRenderer';
 
@@ -109,7 +109,7 @@ const BlogPost: React.FC<Props> = (props) => {
         <Divider />
         <CardMedia image={post.mainImage.asset.url} className={classes.media} />
         <Divider />
-        <Collapse in={expanded} timeout="auto" collapsedHeight="200px" className={classes.collapseContainer}>
+        <Collapse in={expanded} timeout="auto" collapsedSize="200px" className={classes.collapseContainer}>
           <Box
             className={clsx(classes.collapse, {
               [classes.collapseOpen]: expanded,

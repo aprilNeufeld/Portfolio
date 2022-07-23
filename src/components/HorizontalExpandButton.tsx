@@ -1,7 +1,9 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import { ButtonBase, createStyles, IconButton, makeStyles, useTheme, Theme } from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
+import { ButtonBase, IconButton, useTheme, Theme } from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
+import { ExpandMore } from '@mui/icons-material';
 
 const useStyles = makeStyles((theme: Theme) => {
   const buttonTransition = {
@@ -80,6 +82,7 @@ const HorizontalExpandButton: React.FC<Props> = (props) => {
         })}
         component="div"
         aria-hidden
+        size="large"
       >
         <ExpandMore />
       </IconButton>

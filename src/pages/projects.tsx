@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { List, makeStyles, Theme, createStyles, useTheme } from '@material-ui/core';
+import { List, Theme, useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import Layout from '../components/Layout';
 import { useApplicationState, useAppDispatch } from '../store';
 import { fetchProjects, ProjectType } from '../store/projectsSlice';

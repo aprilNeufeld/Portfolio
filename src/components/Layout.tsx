@@ -3,7 +3,9 @@ import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import PageTitle from '../components/PageTitle';
-import { Container, Paper, makeStyles, Theme, createStyles, useTheme } from '@material-ui/core';
+import { Container, Paper, Theme, useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import HeaderContent from '../components/HeaderContent';
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) => {
     paper: {
       flexGrow: 1,
       flexBasis: 'auto',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         boxShadow: 'none',
       },
     },
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => {
         paddingRight: theme.spacing(6),
         paddingLeft: theme.spacing(6),
       },
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         paddingRight: 0,
         paddingLeft: 0,
       },

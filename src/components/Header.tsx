@@ -1,21 +1,11 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
-import MenuIcon from '@material-ui/icons/Menu';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import {
-  Tabs,
-  Tab,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Drawer,
-  Paper,
-  makeStyles,
-  Theme,
-  createStyles,
-  useTheme,
-} from '@material-ui/core';
+import MenuIcon from '@mui/icons-material/Menu';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+import { Tabs, Tab, AppBar, Toolbar, IconButton, Drawer, Paper, Theme, useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Page } from '../shared/types';
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -27,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => {
       backgroundSize: 'cover',
     },
     tabsLayout: {
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         visibility: 'hidden',
       },
     },
@@ -163,7 +153,7 @@ const Header: React.FC<Props> = (props) => {
             ))}
             ;
           </Tabs>
-          <IconButton className={classes.drawerButton} color="default" onClick={handleDrawerToggle}>
+          <IconButton className={classes.drawerButton} color="default" onClick={handleDrawerToggle} size="large">
             <MenuIcon />
           </IconButton>
           <Drawer anchor="top" open={drawerOpen} onClose={handleDrawerToggle}>
