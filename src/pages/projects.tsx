@@ -4,9 +4,9 @@ import Layout from '../components/Layout';
 import { useApplicationState, useAppDispatch } from '../store';
 import { fetchProjects, ProjectType } from '../store/projectsSlice';
 import Project from '../components/Project';
-import { GetStaticProps } from 'next';
 import { fetchUserState } from '../lib/staticFetching';
 import ListItemSkeleton from '../components/ListItemSkeleton';
+import { GetStaticProps } from 'next/types';
 
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
@@ -61,7 +61,7 @@ const Projects: React.FC = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async () => {
   const userState = await fetchUserState();
 
   // Return part of our actual state object, which will be integrated

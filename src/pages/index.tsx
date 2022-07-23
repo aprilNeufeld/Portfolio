@@ -4,8 +4,8 @@ import { Typography, Box, makeStyles, Theme, createStyles, useTheme, List, ListI
 import Layout from '../components/Layout';
 import { useApplicationState } from '../store';
 import FancyChild from '../components/FancyChild';
-import { GetStaticProps } from 'next';
 import { fetchUserState } from '../lib/staticFetching';
+import { GetStaticProps } from 'next/types';
 
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({

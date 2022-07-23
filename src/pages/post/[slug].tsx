@@ -1,6 +1,5 @@
 import * as React from 'react';
 import ErrorPage from 'next/error';
-import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
@@ -27,6 +26,7 @@ import { fetchUserState } from '../../lib/staticFetching';
 import { usePreviewSubscription, urlFor } from '../../lib/sanity';
 import { SanityClient } from '@sanity/client';
 import { groq } from 'next-sanity';
+import { GetStaticPaths, GetStaticProps } from 'next/types';
 
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
