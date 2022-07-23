@@ -64,7 +64,4 @@ export const initializeStore = (initialState?: Partial<RootState>) => {
   return _store;
 };
 
-export function useStore(initialState?: RootState) {
-  const store = useMemo(() => initializeStore(initialState), [initialState]);
-  return store;
-}
+export const useStore = (initialState?: RootState) => useMemo(() => initializeStore(initialState), [initialState]);
