@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => {
       },
     },
     tabsLayoutVertical: {
-      [`& ${tabsClasses.flexContainerVertical}`]: {
+      [`& .${tabsClasses.flexContainerVertical}`]: {
         alignItems: 'center',
       },
     },
@@ -32,6 +32,11 @@ const useStyles = makeStyles((theme: Theme) => {
     drawerButton: {
       [theme.breakpoints.up('md')]: {
         display: 'none',
+      },
+    },
+    drawer: {
+      [theme.breakpoints.up('md')]: {
+        visibility: 'hidden',
       },
     },
     /*
@@ -147,21 +152,29 @@ const Header: React.FC<Props> = (props) => {
         })}
       >
         <Toolbar className={classes.toolbar}>
-          <Tabs value={tabValue.current} onChange={handleMenuSelection} className={classes.tabsLayout}>
+          <Tabs
+            value={tabValue.current}
+            onChange={handleMenuSelection}
+            className={classes.tabsLayout}
+            indicatorColor="secondary"
+            textColor="inherit"
+          >
             {pages.map((page: Page) => (
-              <Tab key={page.title} label={page.title} />
+              <Tab sx={{ minWidth: 160 }} key={page.title} label={page.title} />
             ))}
             ;
           </Tabs>
           <IconButton className={classes.drawerButton} color="default" onClick={handleDrawerToggle} size="large">
             <MenuIcon />
           </IconButton>
-          <Drawer anchor="top" open={drawerOpen} onClose={handleDrawerToggle}>
+          <Drawer className={classes.drawer} anchor="top" open={drawerOpen} onClose={handleDrawerToggle}>
             <Tabs
               value={tabValue.current}
               onChange={handleMenuSelection}
               orientation="vertical"
               className={classes.tabsLayoutVertical}
+              indicatorColor="secondary"
+              textColor="inherit"
             >
               {pages.map((page: Page) => (
                 <Tab key={page.title} label={page.title} onClick={handleDrawerToggle} />
