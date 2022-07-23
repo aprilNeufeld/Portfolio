@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import MenuIcon from '@mui/icons-material/Menu';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import { Tabs, Tab, AppBar, Toolbar, IconButton, Drawer, Paper, Theme, useTheme } from '@mui/material';
+import { Tabs, tabsClasses, Tab, AppBar, Toolbar, IconButton, Drawer, Paper, Theme, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import createStyles from '@mui/styles/createStyles';
 import { Page } from '../shared/types';
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => {
       },
     },
     tabsLayoutVertical: {
-      '& .MuiTabs-flexContainerVertical': {
+      [`& ${tabsClasses.flexContainerVertical}`]: {
         alignItems: 'center',
       },
     },
