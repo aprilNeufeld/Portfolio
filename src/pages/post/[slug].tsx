@@ -1,73 +1,62 @@
 import * as React from 'react';
 import ErrorPage from 'next/error';
-import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { getClient } from '../../lib/sanity';
 import BlockRenderer from '../../components/BlockRenderer';
 import { FacebookShareButton, TwitterShareButton, RedditShareButton, LinkedinShareButton } from 'react-share';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import RedditIcon from '@material-ui/icons/Reddit';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import {
-  Box,
-  Breadcrumbs,
-  CardMedia,
-  Divider,
-  Typography,
-  makeStyles,
-  Theme,
-  createStyles,
-  useTheme,
-} from '@material-ui/core';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import RedditIcon from '@mui/icons-material/Reddit';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { Box, Breadcrumbs, CardMedia, Divider, Typography, Theme, useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import PageTitle from '../../components/PageTitle';
 import { fetchUserState } from '../../lib/staticFetching';
 import { usePreviewSubscription, urlFor } from '../../lib/sanity';
 import { SanityClient } from '@sanity/client';
 import { groq } from 'next-sanity';
+import { GetStaticPaths, GetStaticProps } from 'next/types';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    blockQuote: {
-      marginBottom: '1rem',
+const useStyles = makeStyles((theme: Theme) => ({
+  blockQuote: {
+    marginBottom: '1rem',
+  },
+  breadcrumbs: {
+    marginBottom: theme.spacing(4),
+    '& a': {
+      textDecoration: 'none',
     },
-    breadcrumbs: {
-      marginBottom: theme.spacing(4),
-      '& a': {
-        textDecoration: 'none',
-      },
+  },
+  media: {
+    height: 0,
+    //paddingTop: '56.25%', // 16:9
+    paddingTop: '62%',
+    marginBottom: theme.spacing(4),
+  },
+  postBodyText: {
+    position: 'relative',
+    lineHeight: 1.4,
+    '& p': {
+      marginBottom: theme.spacing(5),
     },
-    media: {
-      height: 0,
-      //paddingTop: '56.25%', // 16:9
-      paddingTop: '62%',
-      marginBottom: theme.spacing(4),
-    },
-    postBodyText: {
-      position: 'relative',
-      lineHeight: 1.4,
-      '& p': {
-        marginBottom: theme.spacing(5),
-      },
-    },
-    postDetails: {
-      color: theme.palette.text.secondary,
-    },
-    shareButtonsContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      paddingTop: theme.spacing(2),
-    },
-    shareButton: {
-      marginLeft: theme.spacing(1),
-    },
-    shareIcon: {
-      color: theme.palette.action.disabled,
-    },
-  });
-});
+  },
+  postDetails: {
+    color: theme.palette.text.secondary,
+  },
+  shareButtonsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingTop: theme.spacing(2),
+  },
+  shareButton: {
+    marginLeft: theme.spacing(1),
+  },
+  shareIcon: {
+    color: theme.palette.action.disabled,
+  },
+}));
 
 export const postQuery = groq`*[_type == "post" && slug.current == $slug] | order(_updatedAt desc)[0]{
 				_id,

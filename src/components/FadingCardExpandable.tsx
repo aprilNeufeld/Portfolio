@@ -10,69 +10,66 @@ import {
   Collapse,
   Divider,
   Typography,
-  makeStyles,
   Theme,
-  createStyles,
   useTheme,
-} from '@material-ui/core';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import HorizontalExpandButton from './HorizontalExpandButton';
 import BlockRenderer from './BlockRenderer';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    media: {
-      height: 0,
-      //paddingTop: '56.25%', // 16:9
-      paddingTop: '62%',
+const useStyles = makeStyles((theme: Theme) => ({
+  media: {
+    height: 0,
+    //paddingTop: '56.25%', // 16:9
+    paddingTop: '62%',
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  blockQuote: {
+    marginBottom: '1rem',
+  },
+  cardActions: {
+    padding: 0,
+  },
+  collapseContainer: {
+    position: 'relative',
+  },
+  collapse: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: 10,
+    background:
+      'linear-gradient(0deg, rgba(255,255,255,1) 1%, rgba(255,255,255,0.7) 15%, rgba(255,255,255,0.5747330960854092) 20%, rgba(255,255,255,0) 80%)',
+    transition: theme.transitions.create('background, zIndex'),
+  },
+  collapseOpen: {
+    background: 'none',
+    zIndex: 0,
+    transition: theme.transitions.create('background, zIndex'),
+  },
+  postBodyText: {
+    position: 'relative',
+    fontWeight: 300,
+    lineHeight: 1.4,
+    zIndex: 5,
+    '& p': {
+      marginBottom: theme.spacing(5),
     },
-    expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
-    blockQuote: {
-      marginBottom: '1rem',
-    },
-    cardActions: {
-      padding: 0,
-    },
-    collapseContainer: {
-      position: 'relative',
-    },
-    collapse: {
-      position: 'absolute',
-      top: 0,
-      width: '100%',
-      height: '100%',
-      zIndex: 10,
-      background:
-        'linear-gradient(0deg, rgba(255,255,255,1) 1%, rgba(255,255,255,0.7) 15%, rgba(255,255,255,0.5747330960854092) 20%, rgba(255,255,255,0) 80%)',
-      transition: theme.transitions.create('background, zIndex'),
-    },
-    collapseOpen: {
-      background: 'none',
-      zIndex: 0,
-      transition: theme.transitions.create('background, zIndex'),
-    },
-    postBodyText: {
-      position: 'relative',
-      fontWeight: 300,
-      lineHeight: 1.4,
-      zIndex: 5,
-      '& p': {
-        marginBottom: theme.spacing(5),
-      },
-    },
-    shareIcon: {
-      color: theme.palette.action.disabled,
-    },
-  });
-});
+  },
+  shareIcon: {
+    color: theme.palette.action.disabled,
+  },
+}));
 
 interface Props {
   post: any;
@@ -109,7 +106,7 @@ const BlogPost: React.FC<Props> = (props) => {
         <Divider />
         <CardMedia image={post.mainImage.asset.url} className={classes.media} />
         <Divider />
-        <Collapse in={expanded} timeout="auto" collapsedHeight="200px" className={classes.collapseContainer}>
+        <Collapse in={expanded} timeout="auto" collapsedSize="200px" className={classes.collapseContainer}>
           <Box
             className={clsx(classes.collapse, {
               [classes.collapseOpen]: expanded,

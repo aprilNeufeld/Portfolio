@@ -9,53 +9,50 @@ import {
   CardMedia,
   Divider,
   Typography,
-  makeStyles,
   Theme,
-  createStyles,
   useTheme,
-} from '@material-ui/core';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import BlockRenderer from './BlockRenderer';
 import { urlFor } from '../lib/sanity';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    media: {
-      height: 0,
-      //paddingTop: '56.25%', // 16:9
-      paddingTop: '62%',
+const useStyles = makeStyles((theme: Theme) => ({
+  media: {
+    height: 0,
+    //paddingTop: '56.25%', // 16:9
+    paddingTop: '62%',
+  },
+  cardActions: {
+    padding: theme.spacing(2),
+  },
+  textContainer: {
+    height: '90%',
+    paddingBottom: '0!important',
+    overflow: 'hidden',
+  },
+  textFadeContainer: {
+    position: 'relative',
+    zIndex: 10,
+    height: '150px',
+    overflow: 'hidden',
+  },
+  textFade: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: '110%',
+    zIndex: 10,
+    background:
+      'linear-gradient(0deg, rgba(255,255,255,1) 10%, rgba(255,255,255,0.7) 30%, rgba(255,255,255,0.57) 50%, rgba(255,255,255,0) 80%)',
+  },
+  postBodyText: {
+    position: 'relative',
+    zIndex: 5,
+    '& p': {
+      marginBottom: theme.spacing(5),
     },
-    cardActions: {
-      padding: theme.spacing(2),
-    },
-    textContainer: {
-      height: '90%',
-      paddingBottom: '0!important',
-      overflow: 'hidden',
-    },
-    textFadeContainer: {
-      position: 'relative',
-      zIndex: 10,
-      height: '150px',
-      overflow: 'hidden',
-    },
-    textFade: {
-      position: 'absolute',
-      top: 0,
-      width: '100%',
-      height: '110%',
-      zIndex: 10,
-      background:
-        'linear-gradient(0deg, rgba(255,255,255,1) 10%, rgba(255,255,255,0.7) 30%, rgba(255,255,255,0.57) 50%, rgba(255,255,255,0) 80%)',
-    },
-    postBodyText: {
-      position: 'relative',
-      zIndex: 5,
-      '& p': {
-        marginBottom: theme.spacing(5),
-      },
-    },
-  });
-});
+  },
+}));
 
 interface Props {
   post: any;

@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { Typography, makeStyles, Theme, createStyles, useTheme } from '@material-ui/core';
+import { Typography, Theme, useTheme } from '@mui/material';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    title: {
-      marginBottom: theme.spacing(4),
-      color: theme.palette.primary.main,
-      lineHeight: 1.5,
-    },
-  });
-});
+import makeStyles from '@mui/styles/makeStyles';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  title: {
+    marginBottom: theme.spacing(4),
+    color: theme.palette.primary.main,
+    lineHeight: 1.5,
+  },
+}));
 
 interface Props {
   text: string;

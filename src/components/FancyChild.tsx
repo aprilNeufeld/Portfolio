@@ -1,31 +1,31 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import { Box, Divider, makeStyles, Theme, createStyles, useTheme } from '@material-ui/core';
+import { Box, Divider, Theme, useTheme } from '@mui/material';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    root: {
-      display: 'flex',
-      flexDirection: 'row',
-      '& li': {
-        paddingLeft: 0,
-      },
+import makeStyles from '@mui/styles/makeStyles';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'row',
+    '& li': {
+      paddingLeft: 0,
     },
-    blockQuote: {
-      marginBottom: theme.spacing(5),
-    },
-    dividerBox: {
-      height: 'auto',
-      paddingRight: theme.spacing(3),
-    },
-    divider: {
-      backgroundColor: theme.palette.secondary.main,
-    },
-    contentBox: {
-      paddingRight: theme.spacing(3),
-    },
-  });
-});
+  },
+  blockQuote: {
+    marginBottom: theme.spacing(5),
+  },
+  dividerBox: {
+    height: 'auto',
+    paddingRight: theme.spacing(3),
+  },
+  divider: {
+    borderColor: theme.palette.secondary.main,
+  },
+  contentBox: {
+    paddingRight: theme.spacing(3),
+  },
+}));
 
 type Variant = 'blockquote' | 'list';
 

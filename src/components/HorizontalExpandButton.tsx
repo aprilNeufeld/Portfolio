@@ -1,28 +1,29 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import { ButtonBase, createStyles, IconButton, makeStyles, useTheme, Theme } from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
+import { ButtonBase, buttonBaseClasses, IconButton, useTheme, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { ExpandMore } from '@mui/icons-material';
 
 const useStyles = makeStyles((theme: Theme) => {
   const buttonTransition = {
     duration: theme.transitions.duration.shortest,
   };
-  return createStyles({
+  return {
     root: {
       display: 'flex',
       width: '100%',
       transition: theme.transitions.create(['min-width', 'background-color'], buttonTransition),
       padding: theme.spacing(0, 0),
-      '&:hover:not($disabled)': {
+      [`&:hover:not(.${buttonBaseClasses.disabled})`]: {
         cursor: 'pointer',
       },
-      '&$expanded': {
+      [`&.${buttonBaseClasses.root}.Mui-expanded`]: {
         minWidth: 64,
       },
-      '&$focused': {
+      [`&.${buttonBaseClasses.root}.Mui-focused`]: {
         backgroundColor: theme.palette.action.focus,
       },
-      '&$disabled': {
+      [`&.${buttonBaseClasses.disabled}`]: {
         opacity: theme.palette.action.disabledOpacity,
       },
     },
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) => {
     expanded: {},
     /* Pseudo-class applied if `focused={true}`. */
     focused: {},
-  });
+  };
 });
 
 interface Props {
@@ -80,6 +81,7 @@ const HorizontalExpandButton: React.FC<Props> = (props) => {
         })}
         component="div"
         aria-hidden
+        size="large"
       >
         <ExpandMore />
       </IconButton>

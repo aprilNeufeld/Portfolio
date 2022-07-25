@@ -1,31 +1,31 @@
 import * as React from 'react';
 import Link from 'next/link';
-import { Typography, Container, Paper, makeStyles, Theme, createStyles, useTheme } from '@material-ui/core';
+import { Typography, Container, Paper, Theme, useTheme } from '@mui/material';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    root: {
-      zIndex: 2,
-      backgroundImage: "url('/images/background.png')",
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
-      backgroundPosition: 'top',
-    },
-    content: {
-      padding: theme.spacing(3, 2),
-      color: 'white',
-      '& a': {
-        textDecoration: 'underline',
-        '&:hover': {
-          color: theme.palette.primary.light,
-        },
-        '&:not(:hover)': {
-          color: theme.palette.common.white,
-        },
+import makeStyles from '@mui/styles/makeStyles';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    zIndex: 2,
+    backgroundImage: "url('/images/background.png')",
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'top',
+  },
+  content: {
+    padding: theme.spacing(3, 2),
+    color: 'white',
+    '& a': {
+      textDecoration: 'underline',
+      '&:hover': {
+        color: theme.palette.primary.light,
+      },
+      '&:not(:hover)': {
+        color: theme.palette.common.white,
       },
     },
-  });
-});
+  },
+}));
 
 const Footer: React.FC = () => {
   const classes = useStyles(useTheme());

@@ -2,7 +2,7 @@ import * as React from 'react';
 import '../custom.css';
 import type { AppProps } from 'next/app';
 import { theme } from '../styles';
-import { ThemeProvider } from '@material-ui/core';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { useStore } from '../store/configureStore';
 import { Provider } from 'react-redux';
 
@@ -24,9 +24,11 @@ const PortfolioApp: React.FC<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </StyledEngineProvider>
     </Provider>
   );
 };

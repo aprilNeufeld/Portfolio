@@ -1,77 +1,69 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
-import MenuIcon from '@material-ui/icons/Menu';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import {
-  Tabs,
-  Tab,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Drawer,
-  Paper,
-  makeStyles,
-  Theme,
-  createStyles,
-  useTheme,
-} from '@material-ui/core';
+import MenuIcon from '@mui/icons-material/Menu';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+import { Tabs, tabsClasses, Tab, AppBar, Toolbar, IconButton, Drawer, Paper, Theme, useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { Page } from '../shared/types';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    root: {
-      zIndex: 2,
-      backgroundImage: "url('/images/background.png')",
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    zIndex: 2,
+    backgroundImage: "url('/images/background.png')",
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+  },
+  tabsLayout: {
+    [theme.breakpoints.down('md')]: {
+      visibility: 'hidden',
     },
-    tabsLayout: {
-      [theme.breakpoints.down('sm')]: {
-        visibility: 'hidden',
-      },
+  },
+  tabsLayoutVertical: {
+    [`& .${tabsClasses.flexContainerVertical}`]: {
+      alignItems: 'center',
     },
-    tabsLayoutVertical: {
-      '& .MuiTabs-flexContainerVertical': {
-        alignItems: 'center',
-      },
+  },
+  toolbar: {
+    justifyContent: 'center',
+  },
+  drawerButton: {
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
     },
-    toolbar: {
-      justifyContent: 'center',
+  },
+  drawer: {
+    [theme.breakpoints.up('md')]: {
+      visibility: 'hidden',
     },
-    drawerButton: {
-      [theme.breakpoints.up('md')]: {
-        display: 'none',
-      },
-    },
-    /*
-     * When we are at the top of the screen.
-     */
-    appBar: {
-      backgroundColor: 'transparent',
-      zIndex: 10,
-      boxShadow: 'none',
-      color: theme.palette.grey[100],
-      transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow', 'color'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    /*
-     * When we have scrolled down.
-     */
-    appBarElevated: {
-      backgroundColor: 'white',
-      zIndex: 40,
-      boxShadow: theme.shadows[4],
-      color: theme.palette.text.primary,
-      transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow', 'color'], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-  });
-});
+  },
+  /*
+   * When we are at the top of the screen.
+   */
+  appBar: {
+    backgroundColor: 'transparent',
+    zIndex: 10,
+    boxShadow: 'none',
+    color: theme.palette.grey[100],
+    transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow', 'color'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  /*
+   * When we have scrolled down.
+   */
+  appBarElevated: {
+    backgroundColor: 'white',
+    zIndex: 40,
+    boxShadow: theme.shadows[4],
+    color: theme.palette.text.primary,
+    transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow', 'color'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+}));
 
 /**
  * The collection of pages that we
@@ -129,7 +121,7 @@ const Header: React.FC<Props> = (props) => {
    *
    * @param newValue the tab index of the selected item.
    */
-  const handleMenuSelection = (event: React.ChangeEvent<{}>, newValue: number) => {
+  const handleMenuSelection = (event: React.SyntheticEvent<{}>, newValue: number) => {
     router.push(pages[newValue].path);
   };
 
@@ -157,21 +149,29 @@ const Header: React.FC<Props> = (props) => {
         })}
       >
         <Toolbar className={classes.toolbar}>
-          <Tabs value={tabValue.current} onChange={handleMenuSelection} className={classes.tabsLayout}>
+          <Tabs
+            value={tabValue.current}
+            onChange={handleMenuSelection}
+            className={classes.tabsLayout}
+            indicatorColor="secondary"
+            textColor="inherit"
+          >
             {pages.map((page: Page) => (
-              <Tab key={page.title} label={page.title} />
+              <Tab sx={{ minWidth: 160 }} key={page.title} label={page.title} />
             ))}
             ;
           </Tabs>
-          <IconButton className={classes.drawerButton} color="default" onClick={handleDrawerToggle}>
+          <IconButton className={classes.drawerButton} color="default" onClick={handleDrawerToggle} size="large">
             <MenuIcon />
           </IconButton>
-          <Drawer anchor="top" open={drawerOpen} onClose={handleDrawerToggle}>
+          <Drawer className={classes.drawer} anchor="top" open={drawerOpen} onClose={handleDrawerToggle}>
             <Tabs
               value={tabValue.current}
               onChange={handleMenuSelection}
               orientation="vertical"
               className={classes.tabsLayoutVertical}
+              indicatorColor="secondary"
+              textColor="inherit"
             >
               {pages.map((page: Page) => (
                 <Tab key={page.title} label={page.title} onClick={handleDrawerToggle} />

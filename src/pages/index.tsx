@@ -1,26 +1,25 @@
 import * as React from 'react';
 import Link from 'next/link';
-import { Typography, Box, makeStyles, Theme, createStyles, useTheme, List, ListItem } from '@material-ui/core';
+import { Typography, Box, Theme, useTheme, List, ListItem } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import Layout from '../components/Layout';
 import { useApplicationState } from '../store';
 import FancyChild from '../components/FancyChild';
-import { GetStaticProps } from 'next';
 import { fetchUserState } from '../lib/staticFetching';
+import { GetStaticProps } from 'next/types';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    interests: {
-      fontSize: theme.typography.h6.fontSize,
-    },
-    summary: {
-      whiteSpace: 'pre-wrap',
-    },
-    plug: {
-      marginTop: theme.spacing(4),
-      marginBottom: theme.spacing(4),
-    },
-  });
-});
+const useStyles = makeStyles((theme: Theme) => ({
+  interests: {
+    fontSize: theme.typography.h6.fontSize,
+  },
+  summary: {
+    whiteSpace: 'pre-wrap',
+  },
+  plug: {
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
+  },
+}));
 
 const Home: React.FC = () => {
   const user = useApplicationState((state) => state.user);
