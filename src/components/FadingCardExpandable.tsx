@@ -14,65 +14,62 @@ import {
   useTheme,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import createStyles from '@mui/styles/createStyles';
 import HorizontalExpandButton from './HorizontalExpandButton';
 import BlockRenderer from './BlockRenderer';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    media: {
-      height: 0,
-      //paddingTop: '56.25%', // 16:9
-      paddingTop: '62%',
+const useStyles = makeStyles((theme: Theme) => ({
+  media: {
+    height: 0,
+    //paddingTop: '56.25%', // 16:9
+    paddingTop: '62%',
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  blockQuote: {
+    marginBottom: '1rem',
+  },
+  cardActions: {
+    padding: 0,
+  },
+  collapseContainer: {
+    position: 'relative',
+  },
+  collapse: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: 10,
+    background:
+      'linear-gradient(0deg, rgba(255,255,255,1) 1%, rgba(255,255,255,0.7) 15%, rgba(255,255,255,0.5747330960854092) 20%, rgba(255,255,255,0) 80%)',
+    transition: theme.transitions.create('background, zIndex'),
+  },
+  collapseOpen: {
+    background: 'none',
+    zIndex: 0,
+    transition: theme.transitions.create('background, zIndex'),
+  },
+  postBodyText: {
+    position: 'relative',
+    fontWeight: 300,
+    lineHeight: 1.4,
+    zIndex: 5,
+    '& p': {
+      marginBottom: theme.spacing(5),
     },
-    expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
-    blockQuote: {
-      marginBottom: '1rem',
-    },
-    cardActions: {
-      padding: 0,
-    },
-    collapseContainer: {
-      position: 'relative',
-    },
-    collapse: {
-      position: 'absolute',
-      top: 0,
-      width: '100%',
-      height: '100%',
-      zIndex: 10,
-      background:
-        'linear-gradient(0deg, rgba(255,255,255,1) 1%, rgba(255,255,255,0.7) 15%, rgba(255,255,255,0.5747330960854092) 20%, rgba(255,255,255,0) 80%)',
-      transition: theme.transitions.create('background, zIndex'),
-    },
-    collapseOpen: {
-      background: 'none',
-      zIndex: 0,
-      transition: theme.transitions.create('background, zIndex'),
-    },
-    postBodyText: {
-      position: 'relative',
-      fontWeight: 300,
-      lineHeight: 1.4,
-      zIndex: 5,
-      '& p': {
-        marginBottom: theme.spacing(5),
-      },
-    },
-    shareIcon: {
-      color: theme.palette.action.disabled,
-    },
-  });
-});
+  },
+  shareIcon: {
+    color: theme.palette.action.disabled,
+  },
+}));
 
 interface Props {
   post: any;

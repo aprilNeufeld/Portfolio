@@ -12,7 +12,6 @@ import RedditIcon from '@mui/icons-material/Reddit';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { Box, Breadcrumbs, CardMedia, Divider, Typography, Theme, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import createStyles from '@mui/styles/createStyles';
 import PageTitle from '../../components/PageTitle';
 import { fetchUserState } from '../../lib/staticFetching';
 import { usePreviewSubscription, urlFor } from '../../lib/sanity';
@@ -20,46 +19,44 @@ import { SanityClient } from '@sanity/client';
 import { groq } from 'next-sanity';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    blockQuote: {
-      marginBottom: '1rem',
+const useStyles = makeStyles((theme: Theme) => ({
+  blockQuote: {
+    marginBottom: '1rem',
+  },
+  breadcrumbs: {
+    marginBottom: theme.spacing(4),
+    '& a': {
+      textDecoration: 'none',
     },
-    breadcrumbs: {
-      marginBottom: theme.spacing(4),
-      '& a': {
-        textDecoration: 'none',
-      },
+  },
+  media: {
+    height: 0,
+    //paddingTop: '56.25%', // 16:9
+    paddingTop: '62%',
+    marginBottom: theme.spacing(4),
+  },
+  postBodyText: {
+    position: 'relative',
+    lineHeight: 1.4,
+    '& p': {
+      marginBottom: theme.spacing(5),
     },
-    media: {
-      height: 0,
-      //paddingTop: '56.25%', // 16:9
-      paddingTop: '62%',
-      marginBottom: theme.spacing(4),
-    },
-    postBodyText: {
-      position: 'relative',
-      lineHeight: 1.4,
-      '& p': {
-        marginBottom: theme.spacing(5),
-      },
-    },
-    postDetails: {
-      color: theme.palette.text.secondary,
-    },
-    shareButtonsContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      paddingTop: theme.spacing(2),
-    },
-    shareButton: {
-      marginLeft: theme.spacing(1),
-    },
-    shareIcon: {
-      color: theme.palette.action.disabled,
-    },
-  });
-});
+  },
+  postDetails: {
+    color: theme.palette.text.secondary,
+  },
+  shareButtonsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingTop: theme.spacing(2),
+  },
+  shareButton: {
+    marginLeft: theme.spacing(1),
+  },
+  shareIcon: {
+    color: theme.palette.action.disabled,
+  },
+}));
 
 export const postQuery = groq`*[_type == "post" && slug.current == $slug] | order(_updatedAt desc)[0]{
 				_id,

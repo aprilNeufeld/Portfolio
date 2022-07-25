@@ -1,33 +1,30 @@
 import * as React from 'react';
 import { Box, ListItem, Typography, Theme, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import createStyles from '@mui/styles/createStyles';
 import Skeleton from '@mui/material/Skeleton';
 import DividerWithSpacing from './DividerWithSpacing';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    listItem: {
-      paddingLeft: 0,
-      display: 'block',
+const useStyles = makeStyles((theme: Theme) => ({
+  listItem: {
+    paddingLeft: 0,
+    display: 'block',
+  },
+  chip: {
+    borderRadius: '16px',
+  },
+  chipsContainerLeft: {
+    paddingTop: theme.spacing(1),
+    display: 'flex',
+    justifyContent: 'left',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.5),
     },
-    chip: {
-      borderRadius: '16px',
-    },
-    chipsContainerLeft: {
-      paddingTop: theme.spacing(1),
-      display: 'flex',
-      justifyContent: 'left',
-      flexWrap: 'wrap',
-      '& > *': {
-        margin: theme.spacing(0.5),
-      },
-    },
-    itemName: {
-      marginBottom: theme.spacing(2),
-    },
-  });
-});
+  },
+  itemName: {
+    marginBottom: theme.spacing(2),
+  },
+}));
 
 type SkeletonType = {
   chips: ChipType[];

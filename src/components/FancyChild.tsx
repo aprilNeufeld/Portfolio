@@ -3,32 +3,29 @@ import clsx from 'clsx';
 import { Box, Divider, Theme, useTheme } from '@mui/material';
 
 import makeStyles from '@mui/styles/makeStyles';
-import createStyles from '@mui/styles/createStyles';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    root: {
-      display: 'flex',
-      flexDirection: 'row',
-      '& li': {
-        paddingLeft: 0,
-      },
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'row',
+    '& li': {
+      paddingLeft: 0,
     },
-    blockQuote: {
-      marginBottom: theme.spacing(5),
-    },
-    dividerBox: {
-      height: 'auto',
-      paddingRight: theme.spacing(3),
-    },
-    divider: {
-      borderColor: theme.palette.secondary.main,
-    },
-    contentBox: {
-      paddingRight: theme.spacing(3),
-    },
-  });
-});
+  },
+  blockQuote: {
+    marginBottom: theme.spacing(5),
+  },
+  dividerBox: {
+    height: 'auto',
+    paddingRight: theme.spacing(3),
+  },
+  divider: {
+    borderColor: theme.palette.secondary.main,
+  },
+  contentBox: {
+    paddingRight: theme.spacing(3),
+  },
+}));
 
 type Variant = 'blockquote' | 'list';
 

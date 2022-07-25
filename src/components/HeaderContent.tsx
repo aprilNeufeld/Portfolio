@@ -3,80 +3,77 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Typography, Box, Chip, Theme, useTheme, colors } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import createStyles from '@mui/styles/createStyles';
 import { useApplicationState } from '../store';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    root: {
-      paddingBottom: theme.spacing(4),
-      [theme.breakpoints.down('md')]: {
-        paddingTop: theme.spacing(1),
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    paddingBottom: theme.spacing(4),
+    [theme.breakpoints.down('md')]: {
+      paddingTop: theme.spacing(1),
+    },
+    [theme.breakpoints.up('md')]: {
+      paddingTop: theme.spacing(6),
+    },
+    position: 'relative',
+    color: 'white',
+    '& a': {
+      textDecoration: 'underline',
+      '&:hover': {
+        color: theme.palette.primary.light,
       },
-      [theme.breakpoints.up('md')]: {
-        paddingTop: theme.spacing(6),
-      },
-      position: 'relative',
-      color: 'white',
-      '& a': {
-        textDecoration: 'underline',
-        '&:hover': {
-          color: theme.palette.primary.light,
-        },
-        '&:not(:hover)': {
-          color: theme.palette.common.white,
-        },
+      '&:not(:hover)': {
+        color: theme.palette.common.white,
       },
     },
-    name: {
-      marginRight: theme.spacing(1),
+  },
+  name: {
+    marginRight: theme.spacing(1),
+  },
+  nameAndPronouns: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: theme.spacing(1),
+  },
+  title: {
+    textAlign: 'center',
+  },
+  profilePictureContainer: {
+    [theme.breakpoints.down('md')]: {
+      height: 150,
+      width: 150,
     },
-    nameAndPronouns: {
-      display: 'flex',
-      alignItems: 'center',
-      marginBottom: theme.spacing(1),
+    [theme.breakpoints.up('md')]: {
+      height: 200,
+      width: 200,
     },
-    title: {
-      textAlign: 'center',
+    border: 5,
+    borderColor: colors.common.white,
+    borderStyle: 'solid',
+    borderRadius: 300,
+    backgroundColor: '#ffffff4D',
+    marginBottom: theme.spacing(2),
+  },
+  profilePicture: {
+    [theme.breakpoints.down('md')]: {
+      width: 150,
+      height: 150,
     },
-    profilePictureContainer: {
-      [theme.breakpoints.down('md')]: {
-        height: 150,
-        width: 150,
-      },
-      [theme.breakpoints.up('md')]: {
-        height: 200,
-        width: 200,
-      },
-      border: 5,
-      borderColor: colors.common.white,
-      borderStyle: 'solid',
-      borderRadius: 300,
-      backgroundColor: '#ffffff4D',
-      marginBottom: theme.spacing(2),
+    [theme.breakpoints.up('md')]: {
+      width: 200,
+      height: 200,
     },
-    profilePicture: {
-      [theme.breakpoints.down('md')]: {
-        width: 150,
-        height: 150,
-      },
-      [theme.breakpoints.up('md')]: {
-        width: 200,
-        height: 200,
-      },
-      borderRadius: 300,
+    borderRadius: 300,
+  },
+  chipsContainer: {
+    paddingTop: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.5),
     },
-    chipsContainer: {
-      paddingTop: theme.spacing(2),
-      display: 'flex',
-      justifyContent: 'center',
-      flexWrap: 'wrap',
-      '& > *': {
-        margin: theme.spacing(0.5),
-      },
-    },
-  });
-});
+  },
+}));
 
 const HeaderContent: React.FC = () => {
   const user = useApplicationState((state) => state.user);

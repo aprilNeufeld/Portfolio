@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { List, Theme, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import createStyles from '@mui/styles/createStyles';
 import Layout from '../components/Layout';
 import { useApplicationState, useAppDispatch } from '../store';
 import { fetchProjects, ProjectType } from '../store/projectsSlice';
@@ -10,30 +9,28 @@ import { fetchUserState } from '../lib/staticFetching';
 import ListItemSkeleton from '../components/ListItemSkeleton';
 import { GetStaticProps } from 'next/types';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    list: {
-      padding: 0,
+const useStyles = makeStyles((theme: Theme) => ({
+  list: {
+    padding: 0,
+  },
+  projectSkeleton: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    width: '100%',
+    flexGrow: 1,
+    flexShrink: 1,
+  },
+  chipsContainerLeft: {
+    paddingTop: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'left',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.5),
     },
-    projectSkeleton: {
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%',
-      width: '100%',
-      flexGrow: 1,
-      flexShrink: 1,
-    },
-    chipsContainerLeft: {
-      paddingTop: theme.spacing(2),
-      display: 'flex',
-      justifyContent: 'left',
-      flexWrap: 'wrap',
-      '& > *': {
-        margin: theme.spacing(0.5),
-      },
-    },
-  });
-});
+  },
+}));
 
 const Projects: React.FC = () => {
   const projectsState = useApplicationState((state) => state.projects);

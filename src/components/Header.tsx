@@ -5,68 +5,65 @@ import MenuIcon from '@mui/icons-material/Menu';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import { Tabs, tabsClasses, Tab, AppBar, Toolbar, IconButton, Drawer, Paper, Theme, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import createStyles from '@mui/styles/createStyles';
 import { Page } from '../shared/types';
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    root: {
-      zIndex: 2,
-      backgroundImage: "url('/images/background.png')",
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    zIndex: 2,
+    backgroundImage: "url('/images/background.png')",
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+  },
+  tabsLayout: {
+    [theme.breakpoints.down('md')]: {
+      visibility: 'hidden',
     },
-    tabsLayout: {
-      [theme.breakpoints.down('md')]: {
-        visibility: 'hidden',
-      },
+  },
+  tabsLayoutVertical: {
+    [`& .${tabsClasses.flexContainerVertical}`]: {
+      alignItems: 'center',
     },
-    tabsLayoutVertical: {
-      [`& .${tabsClasses.flexContainerVertical}`]: {
-        alignItems: 'center',
-      },
+  },
+  toolbar: {
+    justifyContent: 'center',
+  },
+  drawerButton: {
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
     },
-    toolbar: {
-      justifyContent: 'center',
+  },
+  drawer: {
+    [theme.breakpoints.up('md')]: {
+      visibility: 'hidden',
     },
-    drawerButton: {
-      [theme.breakpoints.up('md')]: {
-        display: 'none',
-      },
-    },
-    drawer: {
-      [theme.breakpoints.up('md')]: {
-        visibility: 'hidden',
-      },
-    },
-    /*
-     * When we are at the top of the screen.
-     */
-    appBar: {
-      backgroundColor: 'transparent',
-      zIndex: 10,
-      boxShadow: 'none',
-      color: theme.palette.grey[100],
-      transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow', 'color'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    /*
-     * When we have scrolled down.
-     */
-    appBarElevated: {
-      backgroundColor: 'white',
-      zIndex: 40,
-      boxShadow: theme.shadows[4],
-      color: theme.palette.text.primary,
-      transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow', 'color'], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-  });
-});
+  },
+  /*
+   * When we are at the top of the screen.
+   */
+  appBar: {
+    backgroundColor: 'transparent',
+    zIndex: 10,
+    boxShadow: 'none',
+    color: theme.palette.grey[100],
+    transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow', 'color'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  /*
+   * When we have scrolled down.
+   */
+  appBarElevated: {
+    backgroundColor: 'white',
+    zIndex: 40,
+    boxShadow: theme.shadows[4],
+    color: theme.palette.text.primary,
+    transition: theme.transitions.create(['background-color', 'z-index', 'box-shadow', 'color'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+}));
 
 /**
  * The collection of pages that we

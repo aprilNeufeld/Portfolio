@@ -1,7 +1,6 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import { ButtonBase, buttonBaseClasses, IconButton, useTheme, Theme } from '@mui/material';
-import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
 import { ExpandMore } from '@mui/icons-material';
 
@@ -9,7 +8,7 @@ const useStyles = makeStyles((theme: Theme) => {
   const buttonTransition = {
     duration: theme.transitions.duration.shortest,
   };
-  return createStyles({
+  return {
     root: {
       display: 'flex',
       width: '100%',
@@ -47,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) => {
     expanded: {},
     /* Pseudo-class applied if `focused={true}`. */
     focused: {},
-  });
+  };
 });
 
 interface Props {
