@@ -1,8 +1,9 @@
 import * as React from 'react';
-import Link from 'next/link';
 import { Typography, Container, Paper, Theme, useTheme } from '@mui/material';
 
 import makeStyles from '@mui/styles/makeStyles';
+import ContactLinks from './ContactLinks';
+import { theme } from '../styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -13,17 +14,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundPosition: 'top',
   },
   content: {
+    display: 'flex',
+    alignItems: 'center',
     padding: theme.spacing(3, 2),
-    color: 'white',
-    '& a': {
-      textDecoration: 'underline',
-      '&:hover': {
-        color: theme.palette.primary.light,
-      },
-      '&:not(:hover)': {
-        color: theme.palette.common.white,
-      },
-    },
+    color: theme.palette.common.white,
   },
 }));
 
@@ -33,10 +27,10 @@ const Footer: React.FC = () => {
   return (
     <Paper className={classes.root}>
       <Container maxWidth="xl" className={classes.content}>
-        <Typography variant="body2">
-          © 2021 April Neufeld: <Link href="https://github.com/aprilNeufeld"> gitHub</Link> |{' '}
-          <Link href="https://gitconnected.com/aprilNeufeld">gitConnected </Link>
+        <Typography variant="body2" sx={{ paddingRight: theme.spacing(1) }}>
+          © 2021 April Neufeld:
         </Typography>
+        <ContactLinks typography="body2" />
       </Container>
     </Paper>
   );
