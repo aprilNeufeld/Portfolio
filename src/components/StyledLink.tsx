@@ -6,18 +6,24 @@ import { theme } from '../styles';
 interface Props {
   url: string;
   color?: string;
+  isExternal?: boolean;
   typography: TypographyVariant;
 }
 
-const ExternalLink: React.FC<Props> = ({ url, color, typography, children }) => {
+const StyledLink: React.FC<Props> = ({ url, color, typography, isExternal, children }) => {
   return (
     <Typography variant={typography} sx={{ display: 'flex', alignItems: 'center' }}>
-      <Link href={url} underline="hover" target="_blank" rel="noopener noreferrer" sx={{ color }}>
+      <Link
+        href={url}
+        underline="hover"
+        {...(isExternal && { target: '_blank', rel: 'noopener noreferrer' })}
+        sx={{ color }}
+      >
         {children}
       </Link>
-      <OpenInNewIcon fontSize="small" sx={{ paddingLeft: theme.spacing(0.5) }} />
+      {isExternal && <OpenInNewIcon fontSize="small" sx={{ paddingLeft: theme.spacing(0.5) }} />}
     </Typography>
   );
 };
 
-export default ExternalLink;
+export default StyledLink;

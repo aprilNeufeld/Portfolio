@@ -16,15 +16,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: 'column',
     zIndex: 1,
     minHeight: 500,
-    '& a': {
-      color: theme.palette.primary.dark,
-      '&:hover': {
-        textDecoration: 'underline',
-      },
-      '&:not(:hover)': {
-        textDecoration: 'none',
-      },
-    },
   },
   paper: {
     flexGrow: 1,
