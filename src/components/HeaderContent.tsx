@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { Typography, Box, Chip, Theme, useTheme, colors } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useApplicationState } from '../store';
+import ContactLinks from './ContactLinks';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -15,16 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       paddingTop: theme.spacing(6),
     },
     position: 'relative',
-    color: 'white',
-    '& a': {
-      textDecoration: 'underline',
-      '&:hover': {
-        color: theme.palette.primary.light,
-      },
-      '&:not(:hover)': {
-        color: theme.palette.common.white,
-      },
-    },
+    color: theme.palette.common.white,
   },
   name: {
     marginRight: theme.spacing(1),
@@ -102,10 +93,7 @@ const HeaderContent: React.FC = () => {
         <Typography variant="h6" className={classes.title} gutterBottom>
           {user.basics.label}
         </Typography>
-        <Typography variant="body1" align="center" gutterBottom>
-          @aprilNeufeld: <Link href={`https://github.com/${user.basics.username}`}> gitHub</Link> |{' '}
-          <Link href={`https://gitconnected.com/${user.basics.username}`}>gitConnected </Link>
-        </Typography>
+        <ContactLinks />
         <Box className={classes.chipsContainer}>
           {user.skills.map((skill: any, index: number) => (
             <Chip key={index} label={skill.name} color="primary" />
