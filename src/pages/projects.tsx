@@ -4,7 +4,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import Layout from '../components/Layout';
 import { useApplicationState, useAppDispatch } from '../store';
 import { fetchProjects, ProjectType } from '../store/projectsSlice';
-import Project from '../components/Project';
+import ProjectItem from '../components/ProjectItem';
 import { fetchUserState } from '../lib/staticFetching';
 import ListItemSkeleton from '../components/ListItemSkeleton';
 import { GetStaticProps } from 'next/types';
@@ -49,7 +49,7 @@ const Projects: React.FC = () => {
         <List className={classes.list}>
           {projectsState.loaded ? (
             projectsState.projects.map((project: ProjectType, index: number) => (
-              <Project key={index} project={project} />
+              <ProjectItem key={index} project={project} />
             ))
           ) : (
             <ListItemSkeleton />

@@ -4,7 +4,7 @@ import { Box, Chip, Divider, ListItem, Typography, Theme, useTheme, CardContent,
 import makeStyles from '@mui/styles/makeStyles';
 import { ProjectType } from '../store/projectsSlice';
 import Linkify from 'react-linkify';
-import FancyChild from '../components/FancyChild';
+import FancyChild from './FancyChild';
 
 const useStyles = makeStyles((theme: Theme) => ({
   listItem: {
@@ -48,7 +48,7 @@ interface Props {
   project: ProjectType;
 }
 
-const Project: React.FC<Props> = (props) => {
+const ProjectItem: React.FC<Props> = (props) => {
   const { project } = props;
   const classes = useStyles(useTheme());
 
@@ -79,4 +79,4 @@ const Project: React.FC<Props> = (props) => {
   );
 };
 
-export default Project;
+export default ProjectItem;
