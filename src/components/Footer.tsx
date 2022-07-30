@@ -15,9 +15,19 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   content: {
     display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(3, 2),
+    justifyContent: 'space-between',
+    padding: theme.spacing(3, 5),
     color: theme.palette.common.white,
+
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      padding: theme.spacing(4),
+    },
+  },
+  copyright: {
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: theme.spacing(0.5),
+    },
   },
 }));
 
@@ -26,11 +36,11 @@ const Footer: React.FC = () => {
 
   return (
     <Paper className={classes.root}>
-      <Container maxWidth="xl" className={classes.content}>
-        <Typography variant="body2" sx={{ paddingRight: theme.spacing(1) }}>
-          © 2021 April Neufeld:
+      <Container maxWidth="lg" className={classes.content}>
+        <Typography variant="body1" className={classes.copyright}>
+          © 2021 April Neufeld
         </Typography>
-        <ContactLinks typography="body2" />
+        <ContactLinks />
       </Container>
     </Paper>
   );
