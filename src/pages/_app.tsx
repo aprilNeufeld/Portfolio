@@ -5,8 +5,17 @@ import { theme } from '../styles';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { useStore } from '../store/configureStore';
 import { Provider } from 'react-redux';
+import createEmotionCache from '../lib/createEmotionCache';
+import { CacheProvider, EmotionCache } from '@emotion/react';
 
-const PortfolioApp: React.FC<AppProps> = ({ Component, pageProps }) => {
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache();
+
+interface Props extends AppProps {
+  emotionCache?: EmotionCache;
+}
+
+const PortfolioApp: React.FC<Props> = ({ Component, pageProps, emotionCache = clientSideEmotionCache }) => {
   // pageProps comes from any pages that use getStaticProps at build time
   const store = useStore(pageProps.initialReduxState);
 
@@ -23,13 +32,15 @@ const PortfolioApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   }, []);
 
   return (
-    <Provider store={store}>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </StyledEngineProvider>
-    </Provider>
+    <CacheProvider value={emotionCache}>
+      <Provider store={store}>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </StyledEngineProvider>
+      </Provider>
+    </CacheProvider>
   );
 };
 
