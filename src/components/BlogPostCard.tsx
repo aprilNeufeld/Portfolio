@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Link from 'next/link';
 import {
   Box,
   Card,
@@ -15,6 +14,7 @@ import {
 import makeStyles from '@mui/styles/makeStyles';
 import BlockRenderer from './BlockRenderer';
 import { urlFor } from '../lib/sanity';
+import StyledLink from './StyledLink';
 
 const useStyles = makeStyles((theme: Theme) => ({
   media: {
@@ -94,9 +94,9 @@ const BlogPostCard: React.FC<Props> = (props) => {
           </CardContent>
         </Box>
         <CardActions className={classes.cardActions}>
-          <Typography>
-            <Link href={`/post/${encodeURIComponent(post.slug.current)}`}>Read more</Link>
-          </Typography>
+          <StyledLink url={`/post/${encodeURIComponent(post.slug.current)}`} typography="body1">
+            Read more
+          </StyledLink>
         </CardActions>
       </Card>
     </React.Fragment>
