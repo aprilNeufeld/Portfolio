@@ -1,10 +1,10 @@
 import * as React from 'react';
-import Link from 'next/link';
 import { Box, Chip, Divider, ListItem, Typography, Theme, useTheme, CardContent, Card } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { ProjectType } from '../store/projectsSlice';
-import Linkify from 'react-linkify';
-import FancyChild from '../components/FancyChild';
+import FancyChild from './FancyChild';
+import StyledLink from './StyledLink';
+import StyledLinkify from './StyledLinkify';
 
 const useStyles = makeStyles((theme: Theme) => ({
   listItem: {
@@ -48,7 +48,7 @@ interface Props {
   project: ProjectType;
 }
 
-const Project: React.FC<Props> = (props) => {
+const ProjectItem: React.FC<Props> = (props) => {
   const { project } = props;
   const classes = useStyles(useTheme());
 
@@ -59,13 +59,13 @@ const Project: React.FC<Props> = (props) => {
           <Typography variant="caption" display={'inline'}>
             {project.type}s/
           </Typography>{' '}
-          <Typography variant="h6" className={classes.itemName} gutterBottom>
-            <Link href={project.url}>{project.name}</Link>
-          </Typography>
+          <Box className={classes.itemName}>
+            <StyledLink url={project.url} typography="h6" isExternal>
+              {project.name}
+            </StyledLink>
+          </Box>
           <FancyChild>
-            <Linkify>
-              <Typography variant="body1">{project.description}</Typography>
-            </Linkify>
+            <StyledLinkify typography={'body1'}>{project.description}</StyledLinkify>
           </FancyChild>
           <Box className={classes.chipsContainerLeft}>
             {project.keywords.map((keyword: string, index: number) => (
@@ -79,4 +79,4 @@ const Project: React.FC<Props> = (props) => {
   );
 };
 
-export default Project;
+export default ProjectItem;

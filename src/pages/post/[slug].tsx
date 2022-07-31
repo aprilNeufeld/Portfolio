@@ -1,7 +1,6 @@
 import * as React from 'react';
 import ErrorPage from 'next/error';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { getClient } from '../../lib/sanity';
 import BlockRenderer from '../../components/BlockRenderer';
@@ -18,6 +17,7 @@ import { usePreviewSubscription, urlFor } from '../../lib/sanity';
 import { SanityClient } from '@sanity/client';
 import { groq } from 'next-sanity';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
+import StyledLink from '../../components/StyledLink';
 
 const useStyles = makeStyles((theme: Theme) => ({
   blockQuote: {
@@ -150,8 +150,12 @@ const Post: React.FC<Props> = ({ pageData, shareUrl, preview }) => {
       <Layout pageTitle={title} preview={preview}>
         <React.Fragment>
           <Breadcrumbs aria-label="breadcrumb" className={classes.breadcrumbs}>
-            <Link href="/">Home</Link>
-            <Link href="/blog">Blog</Link>
+            <StyledLink url="/" typography="body1">
+              Home
+            </StyledLink>
+            <StyledLink url="/blog" typography="body1">
+              Blog
+            </StyledLink>
             <Typography color="textPrimary"></Typography>
           </Breadcrumbs>
           <PageTitle text={title} />

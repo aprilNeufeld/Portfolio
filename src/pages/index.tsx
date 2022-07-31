@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Link from 'next/link';
 import { Typography, Box, Theme, useTheme, List, ListItem } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import Layout from '../components/Layout';
@@ -7,6 +6,7 @@ import { useApplicationState } from '../store';
 import FancyChild from '../components/FancyChild';
 import { fetchUserState } from '../lib/staticFetching';
 import { GetStaticProps } from 'next/types';
+import StyledLink from '../components/StyledLink';
 
 const useStyles = makeStyles((theme: Theme) => ({
   interests: {
@@ -33,7 +33,7 @@ const Home: React.FC = () => {
             {user.basics.summary}
           </Typography>
           <Typography variant="h6" className={classes.plug}>
-            Check out <Link href="/projects">my repos and gists</Link> for examples of my work!
+            Check out <StyledLink url="/projects">my repos and gists</StyledLink> for examples of my work!
           </Typography>
           <Typography variant="h6" gutterBottom>
             Things I love:

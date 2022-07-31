@@ -3,7 +3,6 @@ import { Typography, Container, Paper, Theme, useTheme } from '@mui/material';
 
 import makeStyles from '@mui/styles/makeStyles';
 import ContactLinks from './ContactLinks';
-import { theme } from '../styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
