@@ -7,7 +7,7 @@ import { useStore } from '../store/configureStore';
 import { Provider } from 'react-redux';
 import createEmotionCache from '../lib/createEmotionCache';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import Head from 'next/head';
+import NextHead from 'next/head';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -33,16 +33,18 @@ const PortfolioApp: React.FC<Props> = ({ Component, pageProps, emotionCache = cl
   }, []);
 
   return (
-    <CacheProvider value={emotionCache}>
-      <Head>
+    <React.Fragment>
+      <NextHead>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
+      </NextHead>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
+          <CacheProvider value={emotionCache}>
+            <Component {...pageProps} />
+          </CacheProvider>
         </ThemeProvider>
       </Provider>
-    </CacheProvider>
+    </React.Fragment>
   );
 };
 
