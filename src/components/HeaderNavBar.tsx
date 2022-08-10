@@ -3,23 +3,35 @@ import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import { Tabs, tabsClasses, Tab, AppBar, Toolbar, IconButton, Drawer, Paper, Theme, useTheme } from '@mui/material';
+import Image from 'next/image';
+import {
+  Box,
+  Tabs,
+  tabsClasses,
+  Tab,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Drawer,
+  Theme,
+  useTheme,
+  Typography,
+  Container,
+  toolbarClasses,
+} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Page } from '../shared/types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   tabsLayout: {
     [theme.breakpoints.down('md')]: {
-      visibility: 'hidden',
+      display: 'none',
     },
   },
   tabsLayoutVertical: {
     [`& .${tabsClasses.flexContainerVertical}`]: {
       alignItems: 'center',
     },
-  },
-  toolbar: {
-    justifyContent: 'center',
   },
   drawerButton: {
     color: theme.palette.grey[100],
@@ -32,8 +44,27 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   drawer: {
     [theme.breakpoints.up('md')]: {
-      visibility: 'hidden',
+      display: 'none',
     },
+  },
+  profilePictureContainer: {
+    height: 50,
+    width: 50,
+    border: 1,
+    borderColor: theme.palette.grey[100],
+    borderStyle: 'solid',
+    borderRadius: 300,
+    backgroundColor: '#ffffff4D',
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
+  profilePictureContainerElevated: {
+    borderColor: theme.palette.grey[800],
+  },
+  profilePicture: {
+    borderRadius: 300,
   },
   /*
    * When we are at the top of the screen.
@@ -82,18 +113,6 @@ const pages: Page[] = [
   },
 ];
 
-/**
- * A header component that holds a navigation menu above arbitrary
- * header content. The nav menu consists of material-ui Tabs. When a Tab
- * is selected, the new path is pushed to browser history.
- *
- * While at the top of the page, the nav menu has a transparent background
- * and is overlaid atop the content.
- *
- * When the user scrolls down, the nav menu elevates above the rest of the
- * header and the page content, and it transitions to an opaque background
- * and contrasting foreground.
- */
 const HeaderNavBar: React.FC = () => {
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -108,27 +127,14 @@ const HeaderNavBar: React.FC = () => {
       : 2,
   );
 
-  /**
-   * Handles a selection of a menu item by
-   * pushing the new path to browser history.
-   *
-   * @param newValue the tab index of the selected item.
-   */
   const handleMenuSelection = (event: React.SyntheticEvent<{}>, newValue: number) => {
     router.push(pages[newValue].path);
   };
 
-  /**
-   * Handles selection of the hamburger menu
-   * icon in mobile.
-   */
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  /**
-   * Handles a scroll event.
-   */
   const scrolled = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
@@ -141,46 +147,66 @@ const HeaderNavBar: React.FC = () => {
           [classes.appBarElevated]: scrolled,
         })}
       >
-        <Toolbar className={classes.toolbar}>
-          <Tabs
-            value={tabValue.current}
-            onChange={handleMenuSelection}
-            className={classes.tabsLayout}
-            indicatorColor="secondary"
-            textColor="inherit"
-          >
-            {pages.map((page: Page) => (
-              <Tab sx={{ minWidth: 160 }} key={page.title} label={page.title} />
-            ))}
-            ;
-          </Tabs>
-          <IconButton
-            className={clsx(classes.drawerButton, {
-              [classes.drawerButtonElevated]: scrolled,
-            })}
-            onClick={handleDrawerToggle}
-            size="large"
-          >
-            <MenuRoundedIcon fontSize="large" />
-          </IconButton>
-          <Drawer className={classes.drawer} anchor="top" open={drawerOpen} onClose={handleDrawerToggle}>
+        <Container maxWidth="lg" sx={{ display: 'flex', minHeight: 80 }}>
+          <Toolbar sx={{ justifyContent: 'space-between', flexGrow: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box
+                className={clsx(classes.profilePictureContainer, {
+                  [classes.profilePictureContainerElevated]: scrolled,
+                })}
+              >
+                <Image
+                  src="/images/avatar.png"
+                  className={classes.profilePicture}
+                  width={'100%'}
+                  height={'100%'}
+                  layout="responsive"
+                  priority
+                  alt="Profile avatar"
+                />
+              </Box>
+              <Typography sx={{ fontSize: '1.2rem', letterSpacing: '0.05em' }}>aprilNeufeld</Typography>
+            </Box>
             <Tabs
               value={tabValue.current}
               onChange={handleMenuSelection}
-              orientation="vertical"
-              className={classes.tabsLayoutVertical}
+              className={classes.tabsLayout}
               indicatorColor="secondary"
               textColor="inherit"
             >
               {pages.map((page: Page) => (
-                <Tab key={page.title} label={page.title} onClick={handleDrawerToggle} />
+                <Tab sx={{ minWidth: 100 }} key={page.title} label={page.title} />
               ))}
               ;
             </Tabs>
-          </Drawer>
-        </Toolbar>
+            <IconButton
+              className={clsx(classes.drawerButton, {
+                [classes.drawerButtonElevated]: scrolled,
+              })}
+              onClick={handleDrawerToggle}
+              size="large"
+            >
+              <MenuRoundedIcon fontSize="inherit" />
+            </IconButton>
+            <Drawer className={classes.drawer} anchor="top" open={drawerOpen} onClose={handleDrawerToggle}>
+              <Tabs
+                value={tabValue.current}
+                onChange={handleMenuSelection}
+                orientation="vertical"
+                className={classes.tabsLayoutVertical}
+                indicatorColor="secondary"
+                textColor="inherit"
+              >
+                {pages.map((page: Page) => (
+                  <Tab key={page.title} label={page.title} onClick={handleDrawerToggle} />
+                ))}
+                ;
+              </Tabs>
+            </Drawer>
+          </Toolbar>
+        </Container>
       </AppBar>
-      <Toolbar />
+      <Toolbar sx={{ height: 80 }} />
     </React.Fragment>
   );
 };

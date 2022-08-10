@@ -6,6 +6,7 @@ import { fetchUserState } from '../lib/staticFetching';
 import { useApplicationState, useAppDispatch } from '../store';
 import { fetchBlogPosts } from '../store/blogSlice';
 import { GetStaticProps } from 'next/types';
+import PageTitle from '../components/PageTitle';
 
 const Blog: React.FC = () => {
   const blog = useApplicationState((state) => state.blog);
@@ -19,7 +20,8 @@ const Blog: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Layout pageTitle="Blog" contentTitle="Blog">
+      <Layout pageTitle="Blog">
+        <PageTitle text="Blog" />
         {blog.loaded ? (
           blog.posts.map((post: any, index: number) => <BlogPostCard key={index} post={post} />)
         ) : (

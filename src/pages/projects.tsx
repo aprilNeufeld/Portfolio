@@ -8,6 +8,7 @@ import ProjectItem from '../components/ProjectItem';
 import { fetchUserState } from '../lib/staticFetching';
 import ListItemSkeleton from '../components/ListItemSkeleton';
 import { GetStaticProps } from 'next/types';
+import PageTitle from '../components/PageTitle';
 
 const useStyles = makeStyles((theme: Theme) => ({
   list: {
@@ -45,7 +46,8 @@ const Projects: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Layout pageTitle="My Work" contentTitle="Projects & Samples">
+      <Layout pageTitle="Projects">
+        <PageTitle text="Projects & Samples" />
         <List className={classes.list}>
           {projectsState.loaded ? (
             projectsState.projects.map((project: ProjectType, index: number) => (
