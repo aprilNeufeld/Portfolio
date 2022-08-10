@@ -2,12 +2,14 @@ import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import createEmotionCache from '../lib/createEmotionCache';
+import { ServerStyleSheets as JSSServerStyleSheets } from '@mui/styles';
 
 class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
         <Head>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}
           {/* Global Site Tag (gtag.js) - Google Analytics */}
@@ -43,6 +45,19 @@ class MyDocument extends Document {
   }
 }
 
+let prefixer: any;
+let cleanCSS: any;
+if (process.env.NODE_ENV === 'production') {
+  /* eslint-disable global-require */
+  const postcss = require('postcss');
+  const autoprefixer = require('autoprefixer');
+  const CleanCSS = require('clean-css');
+  /* eslint-enable global-require */
+
+  prefixer = postcss([autoprefixer]);
+  cleanCSS = new CleanCSS();
+}
+
 /**
  * This is necessary configuration to be able to use Material-UI with static site generation.
  * Taken from https://github.com/mui/material-ui/blob/master/examples/nextjs-with-typescript/pages/_document.tsx
@@ -54,10 +69,14 @@ MyDocument.getInitialProps = async (ctx) => {
   const originalRenderPage = ctx.renderPage;
   const cache = createEmotionCache();
   const { extractCriticalToChunks } = createEmotionServer(cache);
+  const jssSheets = new JSSServerStyleSheets();
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: (App: any) => (props) => <App emotionCache={cache} {...props} />,
+      enhanceApp: (App: any) =>
+        function EnhanceApp(props) {
+          return jssSheets.collect(<App emotionCache={cache} {...props} />);
+        },
     });
 
   const initialProps = await Document.getInitialProps(ctx);
@@ -75,9 +94,27 @@ MyDocument.getInitialProps = async (ctx) => {
     />
   ));
 
+  // Generate the css string for the styles coming from jss
+  let css = jssSheets.toString();
+  // It might be undefined, e.g. after an error.
+  if (css && process.env.NODE_ENV === 'production') {
+    const result1 = await prefixer.process(css, { from: undefined });
+    css = result1.css;
+    css = cleanCSS.minify(css).styles;
+  }
+
   return {
     ...initialProps,
-    emotionStyleTags,
+    styles: [
+      ...emotionStyleTags,
+      <style
+        id="jss-server-side"
+        key="jss-server-side"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: css }}
+      />,
+      ...React.Children.toArray(initialProps.styles),
+    ],
   };
 };
 

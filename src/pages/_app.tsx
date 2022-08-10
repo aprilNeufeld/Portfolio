@@ -27,8 +27,8 @@ const PortfolioApp: React.FC<Props> = ({ Component, pageProps, emotionCache = cl
   React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles && jssStyles.parentElement) {
-      jssStyles.parentElement.removeChild(jssStyles);
+    if (jssStyles) {
+      jssStyles.parentElement?.removeChild(jssStyles);
     }
   }, []);
 
@@ -38,11 +38,11 @@ const PortfolioApp: React.FC<Props> = ({ Component, pageProps, emotionCache = cl
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </NextHead>
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <CacheProvider value={emotionCache}>
+        <CacheProvider value={emotionCache}>
+          <ThemeProvider theme={theme}>
             <Component {...pageProps} />
-          </CacheProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </CacheProvider>
       </Provider>
     </React.Fragment>
   );
