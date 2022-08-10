@@ -2,11 +2,12 @@ import * as React from 'react';
 import '../custom.css';
 import type { AppProps } from 'next/app';
 import { theme } from '../styles';
-import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { useStore } from '../store/configureStore';
 import { Provider } from 'react-redux';
 import createEmotionCache from '../lib/createEmotionCache';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import NextHead from 'next/head';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -26,21 +27,24 @@ const PortfolioApp: React.FC<Props> = ({ Component, pageProps, emotionCache = cl
   React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles && jssStyles.parentElement) {
-      jssStyles.parentElement.removeChild(jssStyles);
+    if (jssStyles) {
+      jssStyles.parentElement?.removeChild(jssStyles);
     }
   }, []);
 
   return (
-    <CacheProvider value={emotionCache}>
+    <React.Fragment>
+      <NextHead>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </NextHead>
       <Provider store={store}>
-        <StyledEngineProvider injectFirst>
+        <CacheProvider value={emotionCache}>
           <ThemeProvider theme={theme}>
             <Component {...pageProps} />
           </ThemeProvider>
-        </StyledEngineProvider>
+        </CacheProvider>
       </Provider>
-    </CacheProvider>
+    </React.Fragment>
   );
 };
 
