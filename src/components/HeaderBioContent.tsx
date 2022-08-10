@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const HeaderContent: React.FC = () => {
+const HeaderBioContent: React.FC = () => {
   const user = useApplicationState((state) => state.user);
   const classes = useStyles(useTheme());
 
@@ -104,4 +104,4 @@ const HeaderContent: React.FC = () => {
   );
 };
 
-export default HeaderContent;
+export default HeaderBioContent;

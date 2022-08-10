@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import PageTitle from '../components/PageTitle';
 import { Container, Paper, Theme, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import HeaderContent from '../components/HeaderContent';
+import HeaderBioContent from './HeaderBioContent';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -59,7 +59,7 @@ const Layout: React.FC<Props> = (props) => {
       <React.Fragment>
         {!preview && (
           <Header>
-            <HeaderContent />
+            <HeaderBioContent />
           </Header>
         )}
         <Container maxWidth="lg" className={classes.root}>
