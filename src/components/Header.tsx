@@ -1,7 +1,7 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import { Tabs, tabsClasses, Tab, AppBar, Toolbar, IconButton, Drawer, Paper, Theme, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
@@ -28,9 +28,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
   },
   drawerButton: {
+    color: theme.palette.grey[100],
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
+  },
+  drawerButtonElevated: {
+    color: theme.palette.text.secondary,
   },
   drawer: {
     [theme.breakpoints.up('md')]: {
@@ -142,7 +146,7 @@ const Header: React.FC<Props> = (props) => {
   });
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} square>
       <AppBar
         className={clsx(classes.appBar, {
           [classes.appBarElevated]: scrolled,
@@ -161,8 +165,14 @@ const Header: React.FC<Props> = (props) => {
             ))}
             ;
           </Tabs>
-          <IconButton className={classes.drawerButton} color="default" onClick={handleDrawerToggle} size="large">
-            <MenuIcon />
+          <IconButton
+            className={clsx(classes.drawerButton, {
+              [classes.drawerButtonElevated]: scrolled,
+            })}
+            onClick={handleDrawerToggle}
+            size="large"
+          >
+            <MenuRoundedIcon fontSize="large" />
           </IconButton>
           <Drawer className={classes.drawer} anchor="top" open={drawerOpen} onClose={handleDrawerToggle}>
             <Tabs
