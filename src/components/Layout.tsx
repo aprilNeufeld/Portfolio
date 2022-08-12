@@ -24,9 +24,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       boxShadow: 'none',
     },
   },
-  contentExpandedPadding: {
-    //paddingTop: theme.spacing(15),
-  },
 }));
 
 interface Props {

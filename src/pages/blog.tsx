@@ -24,7 +24,14 @@ const Blog: React.FC = () => {
     <React.Fragment>
       <Layout pageTitle="Blog">
         <PageTitle text="Blog" />
-        <Box sx={{ mt: theme.spacing(4) }}>
+        <Box
+          sx={{
+            mt: {
+              xs: theme.spacing(2),
+              md: theme.spacing(4),
+            },
+          }}
+        >
           {blog.loaded ? (
             blog.posts.map((post: any, index: number) => <BlogPostCard key={index} post={post} />)
           ) : (
