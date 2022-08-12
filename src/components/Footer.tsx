@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
   const classes = useStyles(useTheme());
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} square>
       <Container maxWidth="lg" className={classes.content}>
         <Typography variant="body1" className={classes.copyright}>
           © 2021 April Neufeld

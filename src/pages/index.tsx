@@ -7,6 +7,7 @@ import FancyChild from '../components/FancyChild';
 import { fetchUserState } from '../lib/staticFetching';
 import { GetStaticProps } from 'next/types';
 import StyledLink from '../components/StyledLink';
+import PageTitle from '../components/PageTitle';
 
 const useStyles = makeStyles((theme: Theme) => ({
   interests: {
@@ -27,8 +28,9 @@ const Home: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Layout pageTitle="About Me" contentTitle="Hi, I'm April.">
+      <Layout pageTitle="Home" showBioContent>
         <Box>
+          <PageTitle text="Hi, I'm April." />
           <Typography variant="h6" className={classes.summary} gutterBottom>
             {user.basics.summary}
           </Typography>

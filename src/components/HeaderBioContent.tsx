@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       paddingTop: theme.spacing(1),
     },
     [theme.breakpoints.up('md')]: {
-      paddingTop: theme.spacing(6),
+      paddingTop: theme.spacing(3),
     },
     position: 'relative',
     color: theme.palette.common.white,
@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const HeaderContent: React.FC = () => {
+const HeaderBioContent: React.FC = () => {
   const user = useApplicationState((state) => state.user);
   const classes = useStyles(useTheme());
 
@@ -104,4 +104,4 @@ const HeaderContent: React.FC = () => {
   );
 };
 
-export default HeaderContent;
+export default HeaderBioContent;
