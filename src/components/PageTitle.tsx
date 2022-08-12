@@ -1,15 +1,7 @@
+import { Typography } from '@mui/material';
 import * as React from 'react';
-import { Typography, Theme, useTheme } from '@mui/material';
 
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  title: {
-    marginBottom: theme.spacing(4),
-    color: theme.palette.primary.main,
-    lineHeight: 1.5,
-  },
-}));
+import { theme } from '../styles';
 
 interface Props {
   text: string;
@@ -17,11 +9,18 @@ interface Props {
 
 const PageTitle: React.FC<Props> = (props) => {
   const { text } = props;
-  const classes = useStyles(useTheme());
 
   return (
     <React.Fragment>
-      <Typography variant="overline" gutterBottom className={classes.title} component="div">
+      <Typography
+        variant="overline"
+        component="div"
+        sx={{
+          pb: theme.spacing(4),
+          color: theme.palette.primary.main,
+          lineHeight: 1.5,
+        }}
+      >
         {text}
       </Typography>
     </React.Fragment>

@@ -7,6 +7,8 @@ import { useApplicationState, useAppDispatch } from '../store';
 import { fetchBlogPosts } from '../store/blogSlice';
 import { GetStaticProps } from 'next/types';
 import PageTitle from '../components/PageTitle';
+import { Box } from '@mui/material';
+import { theme } from '../styles';
 
 const Blog: React.FC = () => {
   const blog = useApplicationState((state) => state.blog);
@@ -22,11 +24,13 @@ const Blog: React.FC = () => {
     <React.Fragment>
       <Layout pageTitle="Blog">
         <PageTitle text="Blog" />
-        {blog.loaded ? (
-          blog.posts.map((post: any, index: number) => <BlogPostCard key={index} post={post} />)
-        ) : (
-          <ListItemSkeleton />
-        )}
+        <Box sx={{ mt: theme.spacing(4) }}>
+          {blog.loaded ? (
+            blog.posts.map((post: any, index: number) => <BlogPostCard key={index} post={post} />)
+          ) : (
+            <ListItemSkeleton />
+          )}
+        </Box>
       </Layout>
     </React.Fragment>
   );

@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import { Container, Paper, Theme, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import HeaderBioContent from './HeaderBioContent';
+import { theme } from '../styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -21,20 +22,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexBasis: 'auto',
     [theme.breakpoints.down('md')]: {
       boxShadow: 'none',
-    },
-  },
-  content: {
-    [theme.breakpoints.up('md')]: {
-      paddingRight: theme.spacing(6),
-      paddingLeft: theme.spacing(6),
-      paddingTop: theme.spacing(10),
-      paddingBottom: theme.spacing(10),
-    },
-    [theme.breakpoints.down('md')]: {
-      paddingRight: 0,
-      paddingLeft: 0,
-      paddingTop: theme.spacing(6),
-      paddingBottom: theme.spacing(6),
     },
   },
   contentExpandedPadding: {
@@ -64,7 +51,27 @@ const Layout: React.FC<Props> = (props) => {
         {!preview && <Header>{showBioContent && <HeaderBioContent />}</Header>}
         <Container maxWidth="lg" className={classes.root}>
           <Paper elevation={2} className={classes.paper}>
-            <Container maxWidth="md" className={classes.content}>
+            <Container
+              maxWidth="md"
+              sx={[
+                {
+                  px: {
+                    xs: theme.spacing(0),
+                    md: theme.spacing(6),
+                  },
+                  py: {
+                    xs: theme.spacing(6),
+                    md: theme.spacing(10),
+                  },
+                },
+                !showBioContent && {
+                  py: {
+                    xs: theme.spacing(8),
+                    lg: theme.spacing(12),
+                  },
+                },
+              ]}
+            >
               {children}
             </Container>
           </Paper>

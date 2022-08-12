@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       paddingTop: theme.spacing(1),
     },
     [theme.breakpoints.up('md')]: {
-      paddingTop: theme.spacing(6),
+      paddingTop: theme.spacing(3),
     },
     position: 'relative',
     color: theme.palette.common.white,

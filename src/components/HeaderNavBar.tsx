@@ -17,10 +17,10 @@ import {
   useTheme,
   Typography,
   Container,
-  toolbarClasses,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Page } from '../shared/types';
+import { theme } from '../styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   tabsLayout: {
@@ -33,42 +33,23 @@ const useStyles = makeStyles((theme: Theme) => ({
       alignItems: 'center',
     },
   },
-  drawerButton: {
-    color: theme.palette.grey[100],
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-  },
-  drawerButtonElevated: {
-    color: theme.palette.text.secondary,
-  },
-  drawer: {
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-  },
   profilePictureContainer: {
     height: 50,
     width: 50,
     border: 1,
-    borderColor: theme.palette.grey[100],
     borderStyle: 'solid',
     borderRadius: 300,
     backgroundColor: '#ffffff4D',
     marginRight: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
-      display: 'none',
+      height: 30,
+      width: 30,
+      marginRight: theme.spacing(1),
     },
-  },
-  profilePictureContainerElevated: {
-    borderColor: theme.palette.grey[800],
   },
   profilePicture: {
     borderRadius: 300,
   },
-  /*
-   * When we are at the top of the screen.
-   */
   appBar: {
     backgroundColor: 'transparent',
     zIndex: 10,
@@ -79,9 +60,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
-  /*
-   * When we have scrolled down.
-   */
   appBarElevated: {
     backgroundColor: 'white',
     zIndex: 40,
@@ -94,10 +72,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-/**
- * The collection of pages that we
- * want to render.
- */
 const pages: Page[] = [
   {
     path: '/',
@@ -135,6 +109,10 @@ const HeaderNavBar: React.FC = () => {
     setDrawerOpen(!drawerOpen);
   };
 
+  const navigateToHome = () => {
+    router.push('/');
+  };
+
   const scrolled = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
@@ -148,12 +126,29 @@ const HeaderNavBar: React.FC = () => {
         })}
       >
         <Container maxWidth="lg" sx={{ display: 'flex', minHeight: 80 }}>
-          <Toolbar sx={{ justifyContent: 'space-between', flexGrow: 1 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Toolbar
+            sx={{
+              justifyContent: 'space-between',
+              flexGrow: 1,
+              px: {
+                xs: theme.spacing(0),
+              },
+            }}
+          >
+            <Box
+              onClick={navigateToHome}
+              sx={{ display: 'flex', alignItems: 'center', pl: theme.spacing(1), cursor: 'pointer' }}
+            >
               <Box
-                className={clsx(classes.profilePictureContainer, {
-                  [classes.profilePictureContainerElevated]: scrolled,
-                })}
+                className={classes.profilePictureContainer}
+                sx={[
+                  {
+                    borderColor: theme.palette.grey[100],
+                  },
+                  scrolled && {
+                    borderColor: theme.palette.grey[800],
+                  },
+                ]}
               >
                 <Image
                   src="/images/avatar.png"
@@ -165,7 +160,17 @@ const HeaderNavBar: React.FC = () => {
                   alt="Profile avatar"
                 />
               </Box>
-              <Typography sx={{ fontSize: '1.2rem', letterSpacing: '0.05em' }}>aprilNeufeld</Typography>
+              <Typography
+                sx={{
+                  fontSize: {
+                    xs: '1rem',
+                    sm: '1.2rem',
+                  },
+                  letterSpacing: '0.05em',
+                }}
+              >
+                aprilNeufeld
+              </Typography>
             </Box>
             <Tabs
               value={tabValue.current}
@@ -180,15 +185,21 @@ const HeaderNavBar: React.FC = () => {
               ;
             </Tabs>
             <IconButton
-              className={clsx(classes.drawerButton, {
-                [classes.drawerButtonElevated]: scrolled,
-              })}
               onClick={handleDrawerToggle}
               size="large"
+              sx={[
+                {
+                  color: theme.palette.grey[100],
+                  display: { md: 'none' },
+                },
+                scrolled && {
+                  color: theme.palette.text.secondary,
+                },
+              ]}
             >
               <MenuRoundedIcon fontSize="inherit" />
             </IconButton>
-            <Drawer className={classes.drawer} anchor="top" open={drawerOpen} onClose={handleDrawerToggle}>
+            <Drawer sx={{ display: { md: 'none' } }} anchor="top" open={drawerOpen} onClose={handleDrawerToggle}>
               <Tabs
                 value={tabValue.current}
                 onChange={handleMenuSelection}
